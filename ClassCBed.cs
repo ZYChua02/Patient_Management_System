@@ -12,6 +12,7 @@ namespace PRG2_T08_Team2
 {
     class ClassCBed
     {
-        //A test
+        //A test 
+        //One more quick test
     }
 }

@@ -6,7 +6,7 @@
 
 /*====================== T O D O ============================
 Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult, 
-         Senior & Child.cs
+         Senior & Child.cs (Wait for Zhe Yu to complete his classes)
 
 Zhe Yu : Implement BedStay, MedicalRecord, Bed, ClassABed, 
          ClassBBed, ClassCBed classes

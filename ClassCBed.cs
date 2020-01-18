@@ -26,7 +26,7 @@ namespace PRG2_T08_Team2
 
         public override string ToString()
         {
-            return base.ToString() + "Portable Tv:"
+            return base.ToString() + "\tPortable Tv: " + PortableTv;
         }
     }
 }

@@ -10,12 +10,30 @@ using System.Text;
 
 namespace PRG2_T08_Team2
 {
-    class ClassABed:Bed
+    class ClassABed : Bed
     {
         public bool AccompanyingPerson { get; set; }
 
-        public ClassABed
+        public ClassABed(int w, int b, double dr, bool a, bool ap) : base(w, b, dr, a)
+        {
+            AccompanyingPerson = ap;
+        }
 
-        
+        public override double CalculateCharges(string citizenStatus, int noOfDays)
+        {
+            //Not done?
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\tAccompanying Person: " + AccompanyingPerson;
+        }
+
+
+
+
+
+
+
     }
 }

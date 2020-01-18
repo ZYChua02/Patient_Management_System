@@ -10,7 +10,23 @@ using System.Text;
 
 namespace PRG2_T08_Team2
 {
-    class ClassBBed
+    class ClassBBed:Bed
     {
+        public bool AirCon { get; set; }
+
+        public ClassBBed(int w, int b, double dr, bool a, bool ac) : base(w, b, dr, a)
+        {
+            AirCon = ac;
+        }
+
+        public override double CalculateCharges(string citizenStatus, int noOfDays)
+        {
+            //Not done?
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\tAir Con: " + AirCon;
+        }
     }
 }

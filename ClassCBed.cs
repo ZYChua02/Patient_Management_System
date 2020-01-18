@@ -10,9 +10,23 @@ using System.Text;
 
 namespace PRG2_T08_Team2
 {
-    class ClassCBed
+    class ClassCBed:Bed
     {
-        //A test 
-        //One more quick test
+        public bool PortableTv { get; set; }
+
+        public ClassCBed(int w, int b, double dr, bool a, bool ptv) : base(w, b, dr, a)
+        {
+            PortableTv = ptv;
+        }
+
+        public override double CalculateCharges(string citizenStatus, int noOfDays)
+        {
+            //Not done?
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "Portable Tv:"
+        }
     }
 }

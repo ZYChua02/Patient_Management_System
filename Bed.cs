@@ -28,10 +28,8 @@ namespace PRG2_T08_Team2
             Available = a;
         }
 
-        public CalculateCharges(string, int)
-        {
-            //Stil figuring this out
-        }
+        public abstract double CalculateCharges(string citizenStatus, int noOfDays);
+        
 
         public override string ToString()
         {

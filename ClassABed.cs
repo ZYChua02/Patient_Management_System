@@ -10,7 +10,12 @@ using System.Text;
 
 namespace PRG2_T08_Team2
 {
-    class ClassABed
+    class ClassABed:Bed
     {
+        public bool AccompanyingPerson { get; set; }
+
+        public ClassABed
+
+        
     }
 }

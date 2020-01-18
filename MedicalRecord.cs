@@ -12,5 +12,22 @@ namespace PRG2_T08_Team2
 {
     class MedicalRecord
     {
+        public string Diagnosis { get; set; }
+
+        public double Temperature { get; set; }
+
+        public DateTime DatetimeEntered { get; set; }
+
+        public MedicalRecord(string d, double t, DateTime dte)
+        {
+            Diagnosis = d;
+            Temperature = t;
+            DatetimeEntered = dte;
+        }
+
+        public override string ToString()
+        {
+            return "Diagnosis: " + Diagnosis + "\tTemperature " + Temperature + "\tDate entered: " + DatetimeEntered;
+        }
     }
 }

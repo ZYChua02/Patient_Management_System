@@ -10,7 +10,33 @@ using System.Text;
 
 namespace PRG2_T08_Team2
 {
-    class Bed
+    abstract class Bed
     {
+        public int WardNo { get; set; }
+
+        public int BedNo { get; set; }
+
+        public double DailyRate { get; set; }
+
+        public bool Available { get; set; }
+
+        public Bed(int w, int b, double dr, bool a)
+        {
+            WardNo = w;
+            BedNo = b;
+            DailyRate = dr;
+            Available = a;
+        }
+
+        public CalculateCharges(string, int)
+        {
+            //Stil figuring this out
+        }
+
+        public override string ToString()
+        {
+            return "Ward No: " + WardNo + "\tBedNo: " + BedNo + "\tDaily rate: " + DailyRate + "\tAvailbility: " + Available;
+        }
+
     }
 }

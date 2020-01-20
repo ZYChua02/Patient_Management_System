@@ -27,6 +27,10 @@ namespace PRG2_T08_Team2
             /*Initialise variable option to enable storing 
               of user input thereafter*/
             string option = "1";
+
+            //PatientList should be accessible to all options
+            List<Patient> patientList = new List<Patient>();
+
             while (option != "0")
             {
                 DisplayMenu();
@@ -36,15 +40,14 @@ namespace PRG2_T08_Team2
 
                 if (option == "1")
                 {
-                    List<Patient> patientList = new List<Patient>();
-                    string [] patientRaw = File.ReadAllLines(@"patients.csv");
+                    string[] patientRaw = File.ReadAllLines(@"patients.csv");
                     Console.WriteLine("Option 1. View All Patients");
-                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}", 
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
                         "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
                     for (int i = 1; i < patientRaw.Length; i++)
                     {
                         string[] pData = patientRaw[i].Split(",");
-                        Patient p = new Patient(pData[0], pData[1], Convert.ToInt32(pData[2]), Convert.ToChar(pData[3]), pData[4],"Registered");
+                        Patient p = new Patient(pData[0], pData[1], Convert.ToInt32(pData[2]), Convert.ToChar(pData[3]), pData[4], "Registered");
                         patientList.Add(p);
                     }
 
@@ -70,11 +73,11 @@ namespace PRG2_T08_Team2
                         // types in data file: string WardType, string WardNo, string Type, string DailyRate (You needa convert "Yes" or "No"
                         // to true/false
                         //also may need to downcast Bed to match Bed Classes as Bed is an abstract class (no implementation)
-                        bedList.Add(new Bed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
+                        //bedList.Add(new Bed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
                     }
                     foreach (Bed b in bedList)
                     {
-                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", b.Type, b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        //Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", b.Type, b.WardNo, b.BedNo, b.DailyRate, b.Available);
                     }
                 }
                 else if (option == "3")
@@ -85,13 +88,52 @@ namespace PRG2_T08_Team2
                     Console.Write("Enter Identification Number: ");
                     string id = Console.ReadLine();
                     Console.Write("Enter Age: ");
-                    int a = Convert.ToInt32(Console.ReadLine());
+                    int age = Convert.ToInt32(Console.ReadLine());
                     Console.Write("Enter Gender [M/F]: ");
                     char g = Convert.ToChar(Console.ReadLine());
                     Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
+                    string cs = Console.ReadLine();
+                    Console.Write("Enter Status: ");
                     string stat = Console.ReadLine();
-                    
 
+                    //child SC
+                    if (age >= 0 && age <= 12 && cs == "SC")
+                    {
+                        Console.Write("Enter CDA Balance: ");
+                        double cda = Convert.ToDouble(Console.ReadLine());
+                        patientList.Add(new Child(id, n, age, g, cs, stat, cda));
+                    }
+
+                    //child PR or child foreigner
+                    else if (age >= 0 && age <= 12 && cs != "SC")
+                    {
+                        patientList.Add(new Child(id, n, age, g, cs, stat, 0.0));
+                    }
+
+                    //adult SC or adult PR
+                    else if (age > 12 && age <= 64 && (cs == "SC" || cs == "PR"))
+                    {
+                        Console.Write("Enter Medisave Balance: ");
+                        double mdb = Convert.ToDouble(Console.ReadLine());
+                        patientList.Add(new Adult(id, n, age, g, cs, stat, mdb));
+                    }
+
+                    //adult foreigner
+                    else if (age > 12 && age <= 64 && cs == "Foreigner")
+                    {
+                        patientList.Add(new Adult(id, n, age, g, cs, stat, 0.0));
+                    }
+
+                    //seniors
+                    else if (age >= 65)
+                    {
+                        patientList.Add(new Senior(id, n, age, g, cs, stat));
+                    }
+                    //validation: any incorrect spellings or attempts
+                    else
+                    {
+                        Console.WriteLine("Invalid Inputs. Please re-enter.");
+                    }
                 }
                 else if (option == "4")
                 {

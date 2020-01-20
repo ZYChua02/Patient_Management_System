@@ -79,6 +79,18 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "3")
                 {
+                    Console.WriteLine("Option 3. Register Patient");
+                    Console.Write("Enter Name: ");
+                    string n = Console.ReadLine();
+                    Console.Write("Enter Identification Number: ");
+                    string id = Console.ReadLine();
+                    Console.Write("Enter Age: ");
+                    int a = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Enter Gender [M/F]: ");
+                    char g = Convert.ToChar(Console.ReadLine());
+                    Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
+                    string stat = Console.ReadLine();
+                    
 
                 }
                 else if (option == "4")

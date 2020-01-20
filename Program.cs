@@ -7,6 +7,7 @@
 /*====================== T O D O ============================
 Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult, 
          Senior & Child.cs (Wait for Zhe Yu to complete his classes)
+         Validations of Options 1 & 3
 
 Zhe Yu : Refer to help notes below.
 
@@ -82,6 +83,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "3")
                 {
+                    //need to check if this is the best way to do the option
                     Console.WriteLine("Option 3. Register Patient");
                     Console.Write("Enter Name: ");
                     string n = Console.ReadLine();
@@ -134,6 +136,8 @@ namespace PRG2_T08_Team2
                     {
                         Console.WriteLine("Invalid Inputs. Please re-enter.");
                     }
+
+                    //Need to Write to CSV file and display status of adding to list
                 }
                 else if (option == "4")
                 {
@@ -179,7 +183,7 @@ namespace PRG2_T08_Team2
                 else
                 {
                     //To catch errors and perform validation of input
-
+                    Console.WriteLine("Invalid Option! Please try again!");
                 }
 
                 Console.ReadKey();

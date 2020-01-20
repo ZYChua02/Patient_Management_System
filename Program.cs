@@ -17,6 +17,7 @@ Both   :
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PRG2_T08_Team2
 {
@@ -36,7 +37,19 @@ namespace PRG2_T08_Team2
 
                 if (option == "1")
                 {
-                   
+                   List<Bed> bedList = new List<Bed>();
+                   Console.WriteLine("Option 2. View All Beds");
+                   Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
+                   string[] csvlines = File.ReadAllLines(@"beds.csv");
+                   for (int i = 0; i < csvlines.Length; i++)
+                   {
+                       string[] bedsdata = csvlines[i].Split(',');
+                       bedList.Add(new Bed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
+                   }
+                   foreach(Bed b in bedList)
+                   {
+                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", b.Type , b.WardNo , b.BedNo, b.DailyRate, b.Available);
+                   }
                 }
                 else if (option == "2")
                 {

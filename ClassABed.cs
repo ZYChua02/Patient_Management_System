@@ -28,12 +28,5 @@ namespace PRG2_T08_Team2
         {
             return base.ToString() + "\tAccompanying Person: " + AccompanyingPerson;
         }
-
-
-
-
-
-
-
     }
 }

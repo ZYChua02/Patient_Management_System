@@ -105,8 +105,8 @@ namespace PRG2_T08_Team2
             List<string> menu = new List<string> 
             {"Exit", "View all patients","View All Beds","Register Patient",
             "Add new bed","Register a Hospital Stay","Retrieve Patient Details","Add Medical Record Entry",
-            "View Medical Records", "Transfer patirnt to another bed","Discharge and Payment", 
-            "Display Currencies Exhange Rate","Display PM 2.5 Information"};
+            "View Medical Records", "Transfer patient to another bed","Discharge and Payment", 
+            "Display Currencies Exchange Rate","Display PM 2.5 Information"};
             
             /*Loop through the list and print the respective string 
               corresponding to the option, starting from 1 (Display Exit at the bottom)*/

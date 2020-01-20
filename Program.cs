@@ -8,8 +8,7 @@
 Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult, 
          Senior & Child.cs (Wait for Zhe Yu to complete his classes)
 
-Zhe Yu : Implement BedStay, MedicalRecord, Bed, ClassABed, 
-         ClassBBed, ClassCBed classes
+Zhe Yu : Refer to help notes below.
 
 Both   :
 
@@ -37,23 +36,46 @@ namespace PRG2_T08_Team2
 
                 if (option == "1")
                 {
-                   List<Bed> bedList = new List<Bed>();
-                   Console.WriteLine("Option 2. View All Beds");
-                   Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
-                   string[] csvlines = File.ReadAllLines(@"beds.csv");
-                   for (int i = 0; i < csvlines.Length; i++)
-                   {
-                       string[] bedsdata = csvlines[i].Split(',');
-                       bedList.Add(new Bed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
-                   }
-                   foreach(Bed b in bedList)
-                   {
-                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", b.Type , b.WardNo , b.BedNo, b.DailyRate, b.Available);
-                   }
+                    List<Patient> patientList = new List<Patient>();
+                    string [] patientRaw = File.ReadAllLines(@"patients.csv");
+                    Console.WriteLine("Option 1. View All Patients");
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}", 
+                        "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
+                    for (int i = 1; i < patientRaw.Length; i++)
+                    {
+                        string[] pData = patientRaw[i].Split(",");
+                        Patient p = new Patient(pData[0], pData[1], Convert.ToInt32(pData[2]), Convert.ToChar(pData[3]), pData[4],"Registered");
+                        patientList.Add(p);
+                    }
+
+                    foreach (Patient pa in patientList)
+                    {
+                        Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                            pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, "Registered");
+                    }
                 }
                 else if (option == "2")
                 {
+                    List<Bed> bedList = new List<Bed>();
+                    Console.WriteLine("Option 2. View All Beds");
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
+                    string[] csvlines = File.ReadAllLines(@"beds.csv");
 
+                    //Zhe Yu to Note: i starts from 1 (remove header)
+                    for (int i = 1; i < csvlines.Length; i++)
+                    {
+                        string[] bedsdata = csvlines[i].Split(',');
+
+                        // types in class: int WardNo, int BedNo, Double DailyRate, Bool Avaliable
+                        // types in data file: string WardType, string WardNo, string Type, string DailyRate (You needa convert "Yes" or "No"
+                        // to true/false
+                        //also may need to downcast Bed to match Bed Classes as Bed is an abstract class (no implementation)
+                        bedList.Add(new Bed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
+                    }
+                    foreach (Bed b in bedList)
+                    {
+                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", b.Type, b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                    }
                 }
                 else if (option == "3")
                 {

@@ -22,6 +22,7 @@ namespace PRG2_T08_Team2
         public override double CalculateCharges(string citizenStatus, int noOfDays)
         {
             //Not done?
+            return 0;
         }
 
         public override string ToString()

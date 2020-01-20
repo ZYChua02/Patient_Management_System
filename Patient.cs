@@ -11,7 +11,7 @@ using System.Text;
 namespace PRG2_T08_Team2
 {
     //Done by Ryan
-    abstract class Patient
+    class Patient
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -30,8 +30,10 @@ namespace PRG2_T08_Team2
             CitizenStatus = cs;
             Status = stat;
         }
-        public abstract double CalculateCharges();
-
+        public virtual double CalculateCharges()
+        {
+            return 0;
+        }
         public override string ToString()
         {
             return "Id: " + Id + "\tName: " + Name +

@@ -83,15 +83,15 @@ namespace PRG2_T08_Team2
                         //    bedList.Add(new ClassABed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
                         //}
 
-                        //else if (bedsdata[0] == "B")
-                        //{
-                        //    bedList.Add(new ClassBBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
-                        //}
+                        /else if (bedsdata[0] == "B")
+                        {
+                            bedList.Add(new ClassBBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
+                        }
                         
-                        //else if (bedsdata[0] == "C")
-                        //{
-                        //    bedList.Add(new ClassCBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
-                        //}
+                        else if (bedsdata[0] == "C")
+                        {
+                            bedList.Add(new ClassCBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
+                        }
                     }
                     foreach (Bed b in bedList)
                     {
@@ -243,6 +243,7 @@ namespace PRG2_T08_Team2
 
             //Line of code to display "Exit" string
             Console.WriteLine("[0] " + menu[0] + "\n");
+            //Solving Ryan errors
         }
     }
 }

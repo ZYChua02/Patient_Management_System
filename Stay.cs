@@ -20,11 +20,9 @@ namespace PRG2_T08_Team2
         public List<BedStay> BedStayList { get; set; } = new List<BedStay>();
         public Patient Patient { get; set; }
 
-        public Stay(DateTime ad, DateTime dd, string amb, Patient p)
+        public Stay(DateTime ad, Patient p)
         {
             AdmittedDate = ad;
-            DischargeDate = dd;
-            AdmittedBy = amb;
             Patient = p;
         }
         public void AddMedicalRecords(MedicalRecord mr)

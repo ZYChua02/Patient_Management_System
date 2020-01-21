@@ -52,24 +52,36 @@ namespace PRG2_T08_Team2
                     {
                         string[] pData = patientRaw[i].Split(",");
 
-                        //need to work on this
+                        /* pData[0] : Name
+                         * pData[1] : Nric Number
+                         * pData[2] : Age
+                         * pData[3] : Gender
+                         * pData[4] : Citizenship
+                         * pData[5] : CDA/Medisave Balance (if any)
+                         */
                         int age = Convert.ToInt32(pData[2]);
                         string cs = pData[4];
+                        string stat = "Registered";
                         if (age >= 0 && age <= 12)
                         {
-                           
+                            if (cs == "SC " || cs == "sc")
+                            {
+                                //                    Name      Nric      Age  Gender                   Cts  status   CDA/Medisave
+                                Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
+                            }
+                            else
+                            {
+
+                            }
                         }
                         else if (age <= 64)
                         {
-
+                            Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
                         }
                         else if (age > 65)
                         {
-
+                            Patient p = new Senior(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat);
                         }
-
-                       
-                        //patientList.Add(p);
                     }
 
                     foreach (Patient pa in patientList)
@@ -81,7 +93,7 @@ namespace PRG2_T08_Team2
                 else if (option == "2")
                 {
                     
-                    Console.WriteLine("Option 2. View All Beds");
+                    /*Console.WriteLine("Option 2. View All Beds");
                     Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
                     string[] csvlines = File.ReadAllLines(@"beds.csv");
 
@@ -98,7 +110,7 @@ namespace PRG2_T08_Team2
                         //    bedList.Add(new ClassABed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
                         //}
 
-                        /else if (bedsdata[0] == "B")
+                        else if (bedsdata[0] == "B")
                         {
                             bedList.Add(new ClassBBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
                         }
@@ -127,7 +139,7 @@ namespace PRG2_T08_Team2
 
                     
                        
-                    }
+                    }*/
                 }
                 else if (option == "3")
                 {

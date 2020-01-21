@@ -54,7 +54,8 @@ namespace PRG2_T08_Team2
 
                         //need to work on this
                         int age = Convert.ToInt32(pData[2]);
-                        if (age >=0 && age <= 12)
+                        string cs = pData[4];
+                        if (age >= 0 && age <= 12)
                         {
                            
                         }
@@ -68,7 +69,7 @@ namespace PRG2_T08_Team2
                         }
 
                        
-                        patientList.Add(p);
+                        //patientList.Add(p);
                     }
 
                     foreach (Patient pa in patientList)

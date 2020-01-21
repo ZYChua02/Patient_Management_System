@@ -53,8 +53,8 @@ namespace PRG2_T08_Team2
                         string[] pData = patientRaw[i].Split(",");
 
                         //need to work on this
-                        Patient p = new Patient(pData[0], pData[1], Convert.ToInt32(pData[2]), Convert.ToChar(pData[3]), pData[4], "Registered");
-                        patientList.Add(p);
+                        //Patient p = new Patient(pData[0], pData[1], Convert.ToInt32(pData[2]), Convert.ToChar(pData[3]), pData[4], "Registered");
+                        //patientList.Add(p);
                     }
 
                     foreach (Patient pa in patientList)

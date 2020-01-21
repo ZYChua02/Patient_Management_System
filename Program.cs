@@ -78,7 +78,21 @@ namespace PRG2_T08_Team2
                     }
                     foreach (Bed b in bedList)
                     {
-                        //Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", b.Type, b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        if (b is ClassABed)
+                        {
+                            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "A", b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        }
+
+                        else if (b is ClassBBed)
+                        {
+                            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "B", b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        }
+
+                        else if (b is ClassCBed)
+                        {
+                            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "C", b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        }
+                       
                     }
                 }
                 else if (option == "3")

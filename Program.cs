@@ -186,7 +186,7 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Invalid Option! Please try again!");
                 }
 
-                Console.ReadKey();
+                Console.ReadLine();
             }
         }
         

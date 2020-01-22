@@ -64,8 +64,8 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "4")
                 {
-                    Bed a = AddBed();
-                    bedList.Add(b)
+                    //Bed a = AddBed();
+                    //bedList.Add(b);
                 }
                 else if (option == "5")
                 {

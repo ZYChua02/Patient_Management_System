@@ -104,22 +104,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "3")
                 {
-                    //need to check if this is the best way to do the option
-                    Console.WriteLine("Option 3. Register Patient");
-                    Console.Write("Enter Name: ");
-                    string n = Console.ReadLine();
-                    Console.Write("Enter Identification Number: ");
-                    string id = Console.ReadLine();
-                    Console.Write("Enter Age: ");
-                    int age = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("Enter Gender [M/F]: ");
-                    char g = Convert.ToChar(Console.ReadLine());
-                    Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
-                    string cs = Console.ReadLine();
-                    Console.Write("Enter Status: ");
-                    string stat = Console.ReadLine();
-
-                 
+                    RegisterPatient(patientList);
                 }
                 else if (option == "4")
                 {
@@ -172,7 +157,7 @@ namespace PRG2_T08_Team2
             }
         }
         
-        //Menu Done by Ryan
+        //Menu 
         static void DisplayMenu()
         {
             //Header of Menu
@@ -192,8 +177,10 @@ namespace PRG2_T08_Team2
 
             //Line of code to display "Exit" string
             Console.WriteLine("[0] " + menu[0] + "\n");
-            //Solv Ryan's errors
+           
         }
+
+        // Ryan's Methods //
         static void AddPatients(List <Patient> patientList)
         {
             string[] patientRaw = File.ReadAllLines(@"patients.csv");
@@ -227,7 +214,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (age <= 64)
                 {
-                    if (cs == "SC " || cs == "sc" || cs == "PR" || cs == "pr") //Validaton for casing
+                    if (cs == "SC" || cs == "sc" || cs == "PR" || cs == "pr") //Validaton for casing
                     {
                         Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
                         patientList.Add(p);
@@ -238,7 +225,7 @@ namespace PRG2_T08_Team2
                         patientList.Add(p);
                     }
                 }
-                else if (age > 65)
+                else if (age >= 65)
                 {
                     Patient p = new Senior(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat);
                     patientList.Add(p);
@@ -253,5 +240,69 @@ namespace PRG2_T08_Team2
                     pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, "Registered");
             }
         }
+        static void RegisterPatient(List <Patient> patientList)
+        {
+            Console.WriteLine("Option 3. Register Patient");
+            Console.Write("Enter Name: ");
+            string n = Console.ReadLine();
+            Console.Write("Enter Identification Number: ");
+            string id = Console.ReadLine();
+            Console.Write("Enter Age: ");
+            int age = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter Gender [M/F]: ");
+            char g = Convert.ToChar(Console.ReadLine());
+            Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
+            string cs = Console.ReadLine();
+            string stat = "Registered";
+            double subsidy = 0.0;
+
+            if (age >= 0 && age <= 12)
+            {
+                // only if condition is met, subsidy will be updated accordingly
+                // if not met, will remain as 0.
+                if (cs == "SC" || cs == "sc")
+                {
+                    Console.Write("Enter CDA Balance: ");
+                    subsidy = Convert.ToDouble(Console.ReadLine());
+                }
+                Patient p = new Child(n, id, age, g, cs, stat, subsidy);
+                patientList.Add(p);
+                using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                {
+                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    file.Write(line);
+                }
+                Console.WriteLine($"\n{n} was successfully registered!\n");
+            }
+            else if (age <= 64)
+            {
+                if (cs == "SC" || cs == "sc" || cs == "PR" || cs == "pr") 
+                {
+                    Console.Write("Enter Medisave Balance: ");
+                    subsidy = Convert.ToDouble(Console.ReadLine());
+                }
+                Patient p = new Adult(n, id, age, g, cs, stat, subsidy);
+                patientList.Add(p);
+                using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                {
+                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    file.Write(line);
+                }
+                Console.WriteLine($"\n{n} was successfully registered!\n");
+            }
+            else if (age >= 65)
+            {
+                Patient p = new Senior(n, id, age, g, cs, stat);
+                patientList.Add(p);
+                using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                {
+                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    file.Write(line);
+                }
+                Console.WriteLine($"\n{n} was successfully registered!\n");
+            }
+
+        }
+        // Zhe Yu's Methods //
     }
 }

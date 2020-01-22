@@ -39,6 +39,5 @@ namespace PRG2_T08_Team2
                 "\tCitizen Status: " + CitizenStatus +
                 "\tStatus: " + Status + "\tStay: " + Stay;
         }
-
     }
 }

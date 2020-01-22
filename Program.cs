@@ -55,7 +55,7 @@ namespace PRG2_T08_Team2
                 {
                     
                     Console.WriteLine("Option 2. View All Beds");
-                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", "No", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} ", "No", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
                     DisplayAllBeds(bedList);
                 }
                 else if (option == "3")
@@ -294,26 +294,33 @@ namespace PRG2_T08_Team2
                     bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
                 }
 
-                foreach(Bed b in bList)
+                
+            }
+            foreach (Bed b in bList)
+            {
+
+                int counter = 1;
+                if (b is ClassABed) //To display according to type
                 {
-                    int counter = 1;
-                    if (b is ClassABed) //To downcast it apporaitely to display
-                    {
-                        
-                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "A", b.WardNo, b.BedNo, b.Available);
-                    }
-
-                    else if (b is ClassBBed)
-                    {
-                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "B", b.WardNo, b.BedNo, b.Available);
-                    }
-
-                    else if (b is ClassCBed)
-                    {
-                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "C" , b.WardNo, b.BedNo, b.Available);
-                    }
                     
+                    ClassABed abed = (ClassABed)b; //Downcasting
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "A", abed.WardNo, abed.BedNo, abed.DailyRate, abed.Available);
                 }
+
+                else if (b is ClassBBed)
+                {
+                    ClassBBed bbed = (ClassBBed)b; //Downcasting
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "B", bbed.WardNo, bbed.BedNo, bbed.DailyRate, bbed.Available);
+                   
+                }
+
+                else if (b is ClassCBed)
+                {
+                    ClassCBed cbed = (ClassCBed)b; //Downcasting
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "C" , cbed.WardNo, cbed.BedNo, cbed.DailyRate, cbed.Available);
+                }
+                counter++;
+
             }
 
         }

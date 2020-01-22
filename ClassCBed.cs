@@ -14,7 +14,7 @@ namespace PRG2_T08_Team2
     {
         public bool PortableTv { get; set; }
 
-        public ClassCBed(int w, int b, double dr, bool a, bool ptv) : base(w, b, dr, a)
+        public ClassCBed(int w, int b, double dr, bool a) : base(w, b, dr, a)
         {
          
         }

@@ -9,7 +9,7 @@ Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult,
          Senior & Child.cs 
          Validations of Options 1 & 3
 
-Zhe Yu : Refer to help notes below.
+Zhe Yu : Option 2 and 4
 
 Both   :
 
@@ -54,53 +54,9 @@ namespace PRG2_T08_Team2
                 else if (option == "2")
                 {
                     
-                    /*Console.WriteLine("Option 2. View All Beds");
-                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
-                    string[] csvlines = File.ReadAllLines(@"beds.csv");
-
-                    //Zhe Yu to Note: i starts from 1 (remove header)
-                    for (int i = 1; i < csvlines.Length; i++)
-                    {
-                        string[] bedsdata = csvlines[i].Split(',');
-                        // types in class: int WardNo, int BedNo, Double DailyRate, Bool Avaliable
-                        // types in data file: string WardType, string WardNo, string Type, string DailyRate (You needa convert "Yes" or "No"
-                        // to true/false
-                        //also may need to downcast Bed to match Bed Classes as Bed is an abstract class (no implementation)
-                        //if (bedsdata[0] == "A")
-                        //{
-                        //    bedList.Add(new ClassABed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
-                        //}
-
-                        else if (bedsdata[0] == "B")
-                        {
-                            bedList.Add(new ClassBBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
-                        }
-                        
-                        else if (bedsdata[0] == "C")
-                        {
-                            bedList.Add(new ClassCBed(Convert.ToInt32(bedsdata[0]), Convert.ToInt32(bedsdata[1]), Convert.ToDouble(bedsdata[2]), Convert.ToBoolean(bedsdata[3])));
-                        }
-                    }
-                    foreach (Bed b in bedList)
-                    {
-                        if (b is ClassABed)
-                        {
-                            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "A", b.WardNo, b.BedNo, b.DailyRate, b.Available);
-                        }
-
-                        else if (b is ClassBBed)
-                        {
-                            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "B", b.WardNo, b.BedNo, b.DailyRate, b.Available);
-                        }
-
-                        else if (b is ClassCBed)
-                        {
-                            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "C", b.WardNo, b.BedNo, b.DailyRate, b.Available);
-                        }
-
-                    
-                       
-                    }*/
+                    Console.WriteLine("Option 2. View All Beds");
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", "No", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
+                    DisplayAllBeds(bedList);
                 }
                 else if (option == "3")
                 {
@@ -312,6 +268,57 @@ namespace PRG2_T08_Team2
 
 
         // Zhe Yu's Methods //
+        static void DisplayAllBeds(List <Bed> bList)
+        {
+            string[] csvlines = File.ReadAllLines(@"beds.csv");
+            for (int i = 1; i<csvlines.Length; i++)
+            {
+                string[] bedsdata = csvlines[i].Split(',');
+                //bedsdata[0] : class of bed
+                //bedsdata[1] : wardno
+                //bedsdata[2] : BedNo
+                //bedsdata[3] : Availabiity (Yes/No)
+                //bedsdata[4] : Daily Rate
+                if (bedsdata[0] == "A") //To check which class is the bed
+                {
+                    bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                }
+
+                else if (bedsdata[0] == "B")
+                {
+                    bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                }
+
+                else if (bedsdata[0] == "C")
+                {
+                    bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                }
+
+                foreach(Bed b in bList)
+                {
+                    int counter = 1;
+                    if (b is ClassABed) //To downcast it apporaitely to display
+                    {
+                        
+                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "A", b.WardNo, b.BedNo, b.Available);
+                    }
+
+                    else if (b is ClassBBed)
+                    {
+                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "B", b.WardNo, b.BedNo, b.Available);
+                    }
+
+                    else if (b is ClassCBed)
+                    {
+                        Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "C" , b.WardNo, b.BedNo, b.Available);
+                    }
+                    
+                }
+            }
+
+        }
+
+    
 
 
 

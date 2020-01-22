@@ -14,7 +14,7 @@ namespace PRG2_T08_Team2
     {
         public bool AirCon { get; set; }
 
-        public ClassBBed(int w, int b, double dr, bool a, bool ac) : base(w, b, dr, a)
+        public ClassBBed(int w, int b, double dr, bool a) : base(w, b, dr, a)
         {
           
         }

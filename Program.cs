@@ -263,7 +263,8 @@ namespace PRG2_T08_Team2
 
         static void RegisterHospitalStay()
         {
-
+            Console.Write("Enter Patient Number: ");
+            int pNo = Convert.ToInt32(Console.ReadLine());
         }
 
 

@@ -44,51 +44,12 @@ namespace PRG2_T08_Team2
 
                 if (option == "1")
                 {
-                    string[] patientRaw = File.ReadAllLines(@"patients.csv");
+                    
                     Console.WriteLine("Option 1. View All Patients");
                     Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
                         "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
-                    for (int i = 1; i < patientRaw.Length; i++)
-                    {
-                        string[] pData = patientRaw[i].Split(",");
-
-                        /* pData[0] : Name
-                         * pData[1] : Nric Number
-                         * pData[2] : Age
-                         * pData[3] : Gender
-                         * pData[4] : Citizenship
-                         * pData[5] : CDA/Medisave Balance (if any)
-                         */
-                        int age = Convert.ToInt32(pData[2]);
-                        string cs = pData[4];
-                        string stat = "Registered";
-                        if (age >= 0 && age <= 12)
-                        {
-                            if (cs == "SC " || cs == "sc")
-                            {
-                                //                    Name      Nric      Age  Gender                   Cts  status   CDA/Medisave
-                                Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        else if (age <= 64)
-                        {
-                            Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
-                        }
-                        else if (age > 65)
-                        {
-                            Patient p = new Senior(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat);
-                        }
-                    }
-
-                    foreach (Patient pa in patientList)
-                    {
-                        Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
-                            pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, "Registered");
-                    }
+                    AddPatients(patientList);
+                    DisplayPatients(patientList);
                 }
                 else if (option == "2")
                 {
@@ -158,46 +119,7 @@ namespace PRG2_T08_Team2
                     Console.Write("Enter Status: ");
                     string stat = Console.ReadLine();
 
-                    //child SC
-                    if (age >= 0 && age <= 12 && cs == "SC")
-                    {
-                        Console.Write("Enter CDA Balance: ");
-                        double cda = Convert.ToDouble(Console.ReadLine());
-                        patientList.Add(new Child(id, n, age, g, cs, stat, cda));
-                    }
-
-                    //child PR or child foreigner
-                    else if (age >= 0 && age <= 12 && cs != "SC")
-                    {
-                        patientList.Add(new Child(id, n, age, g, cs, stat, 0.0));
-                    }
-
-                    //adult SC or adult PR
-                    else if (age > 12 && age <= 64 && (cs == "SC" || cs == "PR"))
-                    {
-                        Console.Write("Enter Medisave Balance: ");
-                        double mdb = Convert.ToDouble(Console.ReadLine());
-                        patientList.Add(new Adult(id, n, age, g, cs, stat, mdb));
-                    }
-
-                    //adult foreigner
-                    else if (age > 12 && age <= 64 && cs == "Foreigner")
-                    {
-                        patientList.Add(new Adult(id, n, age, g, cs, stat, 0.0));
-                    }
-
-                    //seniors
-                    else if (age >= 65)
-                    {
-                        patientList.Add(new Senior(id, n, age, g, cs, stat));
-                    }
-                    //validation: any incorrect spellings or attempts
-                    else
-                    {
-                        Console.WriteLine("Invalid Inputs. Please re-enter.");
-                    }
-
-                    //Need to Write to CSV file and display status of adding to list
+                 
                 }
                 else if (option == "4")
                 {
@@ -246,7 +168,7 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Invalid Option! Please try again!");
                 }
 
-                Console.ReadLine();
+                Console.ReadKey();
             }
         }
         
@@ -270,7 +192,66 @@ namespace PRG2_T08_Team2
 
             //Line of code to display "Exit" string
             Console.WriteLine("[0] " + menu[0] + "\n");
-            //Solving Ryan errors
+            //Solv Ryan's errors
+        }
+        static void AddPatients(List <Patient> patientList)
+        {
+            string[] patientRaw = File.ReadAllLines(@"patients.csv");
+            for (int i = 1; i < patientRaw.Length; i++)
+            {
+                string[] pData = patientRaw[i].Split(",");
+
+                /* pData[0] : Name
+                 * pData[1] : Nric Number
+                 * pData[2] : Age
+                 * pData[3] : Gender
+                 * pData[4] : Citizenship
+                 * pData[5] : CDA/Medisave Balance (if any)
+                 */
+                int age = Convert.ToInt32(pData[2]);
+                string cs = pData[4];
+                string stat = "Registered";
+                if (age >= 0 && age <= 12)
+                {
+                    if (cs == "SC" || cs == "sc")
+                    {
+                        //                    Name      Nric      Age  Gender                   Cts  status   CDA/Medisave
+                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
+                        patientList.Add(p);
+                    }
+                    else if (cs == "Foreigner" || cs == "PR" || cs == "pr")
+                    {
+                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(null));
+                        patientList.Add(p);
+                    }
+                }
+                else if (age <= 64)
+                {
+                    if (cs == "SC " || cs == "sc" || cs == "PR" || cs == "pr") //Validaton for casing
+                    {
+                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
+                        patientList.Add(p);
+                    }
+                    else if (cs == "Foreigner")
+                    {
+                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(null));
+                        patientList.Add(p);
+                    }
+                }
+                else if (age > 65)
+                {
+                    Patient p = new Senior(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat);
+                    patientList.Add(p);
+                }
+            }
+        }
+        static void DisplayPatients(List<Patient> patientList)
+        {
+            foreach (Patient pa in patientList)
+            {
+                Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                    pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, "Registered");
+            }
         }
     }
 }

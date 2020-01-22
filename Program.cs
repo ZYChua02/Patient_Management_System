@@ -6,7 +6,7 @@
 
 /*====================== T O D O ============================
 Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult, 
-         Senior & Child.cs (Wait for Zhe Yu to complete his classes)
+         Senior & Child.cs 
          Validations of Options 1 & 3
 
 Zhe Yu : Refer to help notes below.
@@ -112,6 +112,8 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "5")
                 {
+                    DisplayPatients(patientList);
+                    RegisterHospitalStay();
 
                 }
                 else if (option == "6")
@@ -301,8 +303,17 @@ namespace PRG2_T08_Team2
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
             }
+        }
+
+        static void RegisterHospitalStay()
+        {
 
         }
+
+
         // Zhe Yu's Methods //
+
+
+
     }
 }

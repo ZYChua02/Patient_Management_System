@@ -16,7 +16,7 @@ namespace PRG2_T08_Team2
 
         public ClassBBed(int w, int b, double dr, bool a, bool ac) : base(w, b, dr, a)
         {
-            AirCon = ac;
+          
         }
 
         public override double CalculateCharges(string citizenStatus, int noOfDays)

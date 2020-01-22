@@ -16,7 +16,7 @@ namespace PRG2_T08_Team2
 
         public ClassCBed(int w, int b, double dr, bool a, bool ptv) : base(w, b, dr, a)
         {
-            PortableTv = ptv;
+         
         }
 
         public override double CalculateCharges(string citizenStatus, int noOfDays)

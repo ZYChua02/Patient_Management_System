@@ -14,9 +14,9 @@ namespace PRG2_T08_Team2
     {
         public bool AccompanyingPerson { get; set; }
 
-        public ClassABed(int w, int b, double dr, bool a, bool ap) : base(w, b, dr, a)
+        public ClassABed(int w, int b, double dr, bool a) : base(w, b, dr, a)
         {
-            AccompanyingPerson = ap;
+            
         }
 
         public override double CalculateCharges(string citizenStatus, int noOfDays)

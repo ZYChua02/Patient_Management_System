@@ -298,7 +298,7 @@ namespace PRG2_T08_Team2
                 foreach(Bed b in bList)
                 {
                     int counter = 1;
-                    if (b is ClassABed) //To downcast it apporaitely to display
+                    if (b is ClassABed) //To downcast it appropriately to display
                     {
                         
                         Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} {6, -10}", counter, "A", b.WardNo, b.BedNo, b.Available);

@@ -64,8 +64,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "4")
                 {
-                    //Bed a = AddBed();
-                    //bedList.Add(b);
+                    AddBed(bedList);
                 }
                 else if (option == "5")
                 {
@@ -299,7 +298,7 @@ namespace PRG2_T08_Team2
 
                 
             }
-            int counter = 1;
+            int counter = 1;//for the no of beds
             foreach (Bed b in bList)
             {
                 if (b is ClassABed) //To display according to type
@@ -328,7 +327,7 @@ namespace PRG2_T08_Team2
             
 
         }
-        /*static void AddBed(List<Bed> bList)
+        static void AddBed(List<Bed> bList)
         {
             //inputs
             Console.Write("Enter Ward Type[A/B/C]");
@@ -343,45 +342,45 @@ namespace PRG2_T08_Team2
             string available = Console.ReadLine();
             if (wardtype == "A" && available == "Y") //Find out the class and availability
             {
-                ClassABed newabed = new ClassABed(wardno, bedno, drate, true);
-                return newabed;
+                ClassABed newabedtrue = new ClassABed(wardno, bedno, drate, true);
+                bList.Add(newabedtrue);
             }
 
             else if (wardtype == "A" && available == "N") //if availability is no
             {
-                ClassABed newabed = new ClassABed(wardno, bedno, drate, false);
-                return newabed;
+                ClassABed newabedfalse = new ClassABed(wardno, bedno, drate, false);
+                bList.Add(newabedfalse);
 
             }
 
             if (wardtype == "B" && available == "Y")
             {
-                ClassBBed newbbed = new ClassBBed(wardno, bedno, drate, true);
-                return newbbed;
+                ClassBBed newbbedtrue = new ClassBBed(wardno, bedno, drate, true);
+                bList.Add(newbbedtrue);
             }
 
             else if (wardtype == "B" && available == "N")
             {
-                ClassBBed newbbed = new ClassBBed(wardno, bedno, drate, false);
-                return newbbed;
+                ClassBBed newbbedfalse = new ClassBBed(wardno, bedno, drate, false);
+                bList.Add(newbbedfalse);
             }
 
             if (wardtype == "C" && available == "Y")
             {
-                ClassCBed newcbed = new ClassCBed(wardno, bedno, drate, true);
-                return newcbed;
+                ClassCBed newcbedtrue = new ClassCBed(wardno, bedno, drate, true);
+                bList.Add(newcbedtrue);
             }
 
-            else 
+            else if (wardtype == "C" && available == "N")
             {
-                ClassCBed newcbed = new ClassCBed(wardno, bedno, drate, false);
-                return newcbed;
+                ClassCBed newcbedfalse = new ClassCBed(wardno, bedno, drate, false);
+                bList.Add(newcbedfalse);
             }
             
 
 
 
-        }*/
+        }
 
     }
 }

@@ -327,7 +327,7 @@ namespace PRG2_T08_Team2
             
 
         }
-        static Bed AddBed()
+        static void AddBed(List<Bed> bList)
         {
             //inputs
             Console.Write("Enter Ward Type[A/B/C]");

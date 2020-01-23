@@ -281,6 +281,7 @@ namespace PRG2_T08_Team2
                 //bedsdata[2] : BedNo
                 //bedsdata[3] : Availabiity (Yes/No)
                 //bedsdata[4] : Daily Rate
+                
                 if (bedsdata[0] == "A") //To check which class is the bed
                 {
                     bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
@@ -298,9 +299,9 @@ namespace PRG2_T08_Team2
 
                 
             }
+            int counter = 1;
             foreach (Bed b in bList)
             {
-                int counter = 1;
                 if (b is ClassABed) //To display according to type
                 {
                     
@@ -320,14 +321,14 @@ namespace PRG2_T08_Team2
                     ClassCBed cbed = (ClassCBed)b; //Downcasting
                     Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "C" , cbed.WardNo, cbed.BedNo, cbed.DailyRate, cbed.Available);
                 }
-                //counter = counter + 1;
+                counter++;
 
             }
 
             
 
         }
-        static void AddBed(List<Bed> bList)
+        /*static void AddBed(List<Bed> bList)
         {
             //inputs
             Console.Write("Enter Ward Type[A/B/C]");
@@ -380,11 +381,7 @@ namespace PRG2_T08_Team2
 
 
 
-        }
-
-
-
-
+        }*/
 
     }
 }

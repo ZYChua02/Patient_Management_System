@@ -283,17 +283,44 @@ namespace PRG2_T08_Team2
                 
                 if (bedsdata[0] == "A") //To check which class is the bed
                 {
-                    bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    if (bedsdata[3] == "Yes")
+                    {
+                        bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    }
+
+                    else if (bedsdata[3] == "No")
+                    {
+                        bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
+                    }
                 }
+                
+                    
 
                 else if (bedsdata[0] == "B")
                 {
-                    bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    if (bedsdata[3] == "Yes")
+                    {
+                        bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    }
+
+                    else if (bedsdata[3] == "No")
+                    {
+                        bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
+                    }
+            
                 }
 
                 else if (bedsdata[0] == "C")
                 {
-                    bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                     if (bedsdata[3] == "Yes")
+                     {
+                        bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                     }
+
+                    else if (bedsdata[3] == "No")
+                    {
+                        bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
+                    }
                 }
 
                 
@@ -340,14 +367,17 @@ namespace PRG2_T08_Team2
             double drate = Convert.ToDouble(Console.ReadLine());
             Console.Write("Enter Available[Y/N]: ");
             string available = Console.ReadLine();
+            string bedtrue = "Yes";
+            string bedfalse = "No";
+            
             if (wardtype == "A" && available == "Y") //Find out the class and availability
             {
                 ClassABed newabedtrue = new ClassABed(wardno, bedno, drate, true);
                 bList.Add(newabedtrue);
                 using (StreamWriter file = new StreamWriter(@"beds.csv", true))
                 {
-                    string line = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + Convert.ToString(true) + ',' + drate;
-                    file.Write(line);
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
+                    file.Write(bed);
                 }
                 
             }
@@ -356,6 +386,11 @@ namespace PRG2_T08_Team2
             {
                 ClassABed newabedfalse = new ClassABed(wardno, bedno, drate, false);
                 bList.Add(newabedfalse);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
+                    file.Write(bed);
+                }
 
             }
 
@@ -363,24 +398,44 @@ namespace PRG2_T08_Team2
             {
                 ClassBBed newbbedtrue = new ClassBBed(wardno, bedno, drate, true);
                 bList.Add(newbbedtrue);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
+                    file.Write(bed);
+                }
             }
 
             else if (wardtype == "B" && available == "N")
             {
                 ClassBBed newbbedfalse = new ClassBBed(wardno, bedno, drate, false);
                 bList.Add(newbbedfalse);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
+                    file.Write(bed);
+                }
             }
 
             if (wardtype == "C" && available == "Y")
             {
                 ClassCBed newcbedtrue = new ClassCBed(wardno, bedno, drate, true);
                 bList.Add(newcbedtrue);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
+                    file.Write(bed);
+                }
             }
 
             else if (wardtype == "C" && available == "N")
             {
                 ClassCBed newcbedfalse = new ClassCBed(wardno, bedno, drate, false);
                 bList.Add(newcbedfalse);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
+                    file.Write(bed);
+                }
             }
            
             

@@ -344,6 +344,11 @@ namespace PRG2_T08_Team2
             {
                 ClassABed newabedtrue = new ClassABed(wardno, bedno, drate, true);
                 bList.Add(newabedtrue);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                {
+                    string bed = "\n" + wardtype + ',' + bedno + ',' + wardno + ',' + true + ',' + drate;
+                    file.WriteLine(bed);
+                }
             }
 
             else if (wardtype == "A" && available == "N") //if availability is no

@@ -283,12 +283,12 @@ namespace PRG2_T08_Team2
                 
                 if (bedsdata[0] == "A") //To check which class is the bed
                 {
-                    if (bedsdata[3] == "Yes")
+                    if (bedsdata[3] == "Yes") //To check the availabity of the bed
                     {
                         bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
                     }
 
-                    else if (bedsdata[3] == "No")
+                    else if (bedsdata[3] == "No") //To check the availabity of the bed
                     {
                         bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
                     }
@@ -298,12 +298,12 @@ namespace PRG2_T08_Team2
 
                 else if (bedsdata[0] == "B")
                 {
-                    if (bedsdata[3] == "Yes")
+                    if (bedsdata[3] == "Yes") //To check the availability of the bed
                     {
                         bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
                     }
 
-                    else if (bedsdata[3] == "No")
+                    else if (bedsdata[3] == "No") //To check the availability of the bed
                     {
                         bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
                     }
@@ -312,12 +312,12 @@ namespace PRG2_T08_Team2
 
                 else if (bedsdata[0] == "C")
                 {
-                     if (bedsdata[3] == "Yes")
-                     {
+                     if (bedsdata[3] == "Yes") //To check the availabity of the bed
+                    {
                         bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
                      }
 
-                    else if (bedsdata[3] == "No")
+                    else if (bedsdata[3] == "No") //To check the availabity of the bed
                     {
                         bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
                     }

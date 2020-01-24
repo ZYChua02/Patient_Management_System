@@ -346,9 +346,10 @@ namespace PRG2_T08_Team2
                 bList.Add(newabedtrue);
                 using (StreamWriter file = new StreamWriter(@"beds.csv", true))
                 {
-                    string bed = "\n" + wardtype + ',' + bedno + ',' + wardno + ',' + true + ',' + drate;
-                    file.WriteLine(bed);
+                    string line = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + Convert.ToString(true) + ',' + drate;
+                    file.Write(line);
                 }
+                
             }
 
             else if (wardtype == "A" && available == "N") //if availability is no
@@ -381,6 +382,8 @@ namespace PRG2_T08_Team2
                 ClassCBed newcbedfalse = new ClassCBed(wardno, bedno, drate, false);
                 bList.Add(newcbedfalse);
             }
+           
+            
 
 
         }

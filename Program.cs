@@ -357,7 +357,7 @@ namespace PRG2_T08_Team2
         static void AddBed(List<Bed> bList)
         {
             //inputs
-            Console.Write("Enter Ward Type[A/B/C]");
+            Console.Write("Enter Ward Type[A/B/C]: ");
             string wardtype = Console.ReadLine();
             Console.Write("Enter Ward No: ");
             int wardno = Convert.ToInt32(Console.ReadLine());

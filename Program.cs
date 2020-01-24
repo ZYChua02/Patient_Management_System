@@ -376,8 +376,6 @@ namespace PRG2_T08_Team2
                 ClassCBed newcbedfalse = new ClassCBed(wardno, bedno, drate, false);
                 bList.Add(newcbedfalse);
             }
-            
-
 
 
         }

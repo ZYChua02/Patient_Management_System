@@ -363,12 +363,14 @@ namespace PRG2_T08_Team2
             int wardno = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Bed No: ");
             int bedno = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter Daily Rate: ");
+            Console.Write("Enter Daily Rate:$ ");
             double drate = Convert.ToDouble(Console.ReadLine());
             Console.Write("Enter Available[Y/N]: ");
             string available = Console.ReadLine();
             string bedtrue = "Yes";
             string bedfalse = "No";
+            Console.WriteLine();
+            Console.WriteLine("Bed added successfully");
             
             if (wardtype == "A" && available == "Y") //Find out the class and availability
             {

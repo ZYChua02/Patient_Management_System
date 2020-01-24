@@ -78,7 +78,10 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "7")
                 {
-
+                    Console.WriteLine("Option 7 Add Medical record entry");
+                    AddPatients(patientList);
+                    DisplayPatients(patientList);
+                    
                 }
                 else if (option == "8")
                 {
@@ -269,6 +272,8 @@ namespace PRG2_T08_Team2
 
 
         // Zhe Yu's Methods //
+
+        //For option 2
         static void DisplayAllBeds(List <Bed> bList)
         {
             string[] csvlines = File.ReadAllLines(@"beds.csv");
@@ -354,6 +359,8 @@ namespace PRG2_T08_Team2
             
 
         }
+        
+        //For Option 4
         static void AddBed(List<Bed> bList)
         {
             //inputs
@@ -376,7 +383,7 @@ namespace PRG2_T08_Team2
             {
                 ClassABed newabedtrue = new ClassABed(wardno, bedno, drate, true);
                 bList.Add(newabedtrue);
-                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
                 {
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
                     file.Write(bed);
@@ -388,7 +395,7 @@ namespace PRG2_T08_Team2
             {
                 ClassABed newabedfalse = new ClassABed(wardno, bedno, drate, false);
                 bList.Add(newabedfalse);
-                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
                 {
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
                     file.Write(bed);
@@ -400,7 +407,7 @@ namespace PRG2_T08_Team2
             {
                 ClassBBed newbbedtrue = new ClassBBed(wardno, bedno, drate, true);
                 bList.Add(newbbedtrue);
-                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
                 {
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
                     file.Write(bed);
@@ -411,7 +418,7 @@ namespace PRG2_T08_Team2
             {
                 ClassBBed newbbedfalse = new ClassBBed(wardno, bedno, drate, false);
                 bList.Add(newbbedfalse);
-                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
                 {
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
                     file.Write(bed);
@@ -422,7 +429,7 @@ namespace PRG2_T08_Team2
             {
                 ClassCBed newcbedtrue = new ClassCBed(wardno, bedno, drate, true);
                 bList.Add(newcbedtrue);
-                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
                 {
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
                     file.Write(bed);
@@ -433,7 +440,7 @@ namespace PRG2_T08_Team2
             {
                 ClassCBed newcbedfalse = new ClassCBed(wardno, bedno, drate, false);
                 bList.Add(newcbedfalse);
-                using (StreamWriter file = new StreamWriter(@"beds.csv", true))
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
                 {
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
                     file.Write(bed);
@@ -443,6 +450,13 @@ namespace PRG2_T08_Team2
             
 
 
+        }
+        //For option 7
+        static void AddMedicalRecord()
+        {
+            Console.Write("Enter patient ID number: ");
+            string patientid = Console.ReadLine();
+            //Retrieve the patient
         }
 
     }

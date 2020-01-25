@@ -70,7 +70,7 @@ namespace PRG2_T08_Team2
                 else if (option == "5")
                 {
                     DisplayPatients(patientList);
-                    RegisterHospitalStay();
+                    RegisterHospitalStay(patientList, bedList);
 
                 }
                 else if (option == "6")
@@ -262,10 +262,24 @@ namespace PRG2_T08_Team2
             }
         }
 
-        static void RegisterHospitalStay()
+        static void RegisterHospitalStay(List<Patient> patientList, List<Bed> bedList)
         {
             Console.Write("Enter Patient Number: ");
-            int pNo = Convert.ToInt32(Console.ReadLine());
+            string pNo = Console.ReadLine();
+            foreach (Patient p in patientList)
+            {
+                if (pNo == p.Id)
+                {
+                    p.ToString();
+                    DisplayAllBeds(bedList);
+                    Console.Write("Enter Bed No.: ");
+                    int bed = Convert.ToInt32(Console.ReadLine());
+                    foreach (Bed b in bedList)
+                    {
+                        b.ToString();
+                    }
+                }
+            }
         }
 
 

@@ -64,8 +64,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "4")
                 {
-                    //Bed a = AddBed();
-                    //bedList.Add(b);
+                    AddBed(bedList);
                 }
                 else if (option == "5")
                 {
@@ -79,7 +78,10 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "7")
                 {
-
+                    Console.WriteLine("Option 7 Add Medical record entry");
+                    AddPatients(patientList);
+                    DisplayPatients(patientList);
+                    
                 }
                 else if (option == "8")
                 {
@@ -284,6 +286,8 @@ namespace PRG2_T08_Team2
 
 
         // Zhe Yu's Methods //
+
+        //For option 2
         static void DisplayAllBeds(List <Bed> bList)
         {
             string[] csvlines = File.ReadAllLines(@"beds.csv");
@@ -298,22 +302,49 @@ namespace PRG2_T08_Team2
                 
                 if (bedsdata[0] == "A") //To check which class is the bed
                 {
-                    bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    if (bedsdata[3] == "Yes") //To check the availabity of the bed
+                    {
+                        bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    }
+
+                    else if (bedsdata[3] == "No") //To check the availabity of the bed
+                    {
+                        bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
+                    }
                 }
+                
+                    
 
                 else if (bedsdata[0] == "B")
                 {
-                    bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    if (bedsdata[3] == "Yes") //To check the availability of the bed
+                    {
+                        bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                    }
+
+                    else if (bedsdata[3] == "No") //To check the availability of the bed
+                    {
+                        bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
+                    }
+            
                 }
 
                 else if (bedsdata[0] == "C")
                 {
-                    bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                     if (bedsdata[3] == "Yes") //To check the availabity of the bed
+                    {
+                        bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
+                     }
+
+                    else if (bedsdata[3] == "No") //To check the availabity of the bed
+                    {
+                        bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
+                    }
                 }
 
                 
             }
-            int counter = 1;
+            int counter = 1;//for the no of beds
             foreach (Bed b in bList)
             {
                 if (b is ClassABed) //To display according to type
@@ -342,60 +373,105 @@ namespace PRG2_T08_Team2
             
 
         }
-        /*static void AddBed(List<Bed> bList)
+        
+        //For Option 4
+        static void AddBed(List<Bed> bList)
         {
             //inputs
-            Console.Write("Enter Ward Type[A/B/C]");
+            Console.Write("Enter Ward Type[A/B/C]: ");
             string wardtype = Console.ReadLine();
             Console.Write("Enter Ward No: ");
             int wardno = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Bed No: ");
             int bedno = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter Daily Rate: ");
+            Console.Write("Enter Daily Rate:$ ");
             double drate = Convert.ToDouble(Console.ReadLine());
             Console.Write("Enter Available[Y/N]: ");
             string available = Console.ReadLine();
+            string bedtrue = "Yes";
+            string bedfalse = "No";
+            Console.WriteLine();
+            Console.WriteLine("Bed added successfully");
+            
             if (wardtype == "A" && available == "Y") //Find out the class and availability
             {
-                ClassABed newabed = new ClassABed(wardno, bedno, drate, true);
-                return newabed;
+                ClassABed newabedtrue = new ClassABed(wardno, bedno, drate, true);
+                bList.Add(newabedtrue);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
+                    file.Write(bed);
+                }
+                
             }
 
             else if (wardtype == "A" && available == "N") //if availability is no
             {
-                ClassABed newabed = new ClassABed(wardno, bedno, drate, false);
-                return newabed;
+                ClassABed newabedfalse = new ClassABed(wardno, bedno, drate, false);
+                bList.Add(newabedfalse);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
+                    file.Write(bed);
+                }
 
             }
 
             if (wardtype == "B" && available == "Y")
             {
-                ClassBBed newbbed = new ClassBBed(wardno, bedno, drate, true);
-                return newbbed;
+                ClassBBed newbbedtrue = new ClassBBed(wardno, bedno, drate, true);
+                bList.Add(newbbedtrue);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
+                    file.Write(bed);
+                }
             }
 
             else if (wardtype == "B" && available == "N")
             {
-                ClassBBed newbbed = new ClassBBed(wardno, bedno, drate, false);
-                return newbbed;
+                ClassBBed newbbedfalse = new ClassBBed(wardno, bedno, drate, false);
+                bList.Add(newbbedfalse);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
+                    file.Write(bed);
+                }
             }
 
             if (wardtype == "C" && available == "Y")
             {
-                ClassCBed newcbed = new ClassCBed(wardno, bedno, drate, true);
-                return newcbed;
+                ClassCBed newcbedtrue = new ClassCBed(wardno, bedno, drate, true);
+                bList.Add(newcbedtrue);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
+                    file.Write(bed);
+                }
             }
 
-            else 
+            else if (wardtype == "C" && available == "N")
             {
-                ClassCBed newcbed = new ClassCBed(wardno, bedno, drate, false);
-                return newcbed;
+                ClassCBed newcbedfalse = new ClassCBed(wardno, bedno, drate, false);
+                bList.Add(newcbedfalse);
+                using (StreamWriter file = new StreamWriter(@"beds.csv", true)) //append csv file
+                {
+                    string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedfalse + ',' + drate;
+                    file.Write(bed);
+                }
             }
+            Console.WriteLine(bList.Count);
             
 
 
-
-        }*/
+        }
+        //For option 7
+        static void AddMedicalRecord()
+        {
+            Console.Write("Enter patient ID number: ");
+            string patientid = Console.ReadLine();
+            //Retrieve the patient
+        }
 
     }
 }

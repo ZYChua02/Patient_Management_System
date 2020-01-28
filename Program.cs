@@ -200,7 +200,7 @@ namespace PRG2_T08_Team2
             foreach (Patient pa in patientList)
             {
                 Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
-                    pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, "Registered");
+                    pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
             }
         }
         static void RegisterPatient(List <Patient> patientList)
@@ -279,7 +279,10 @@ namespace PRG2_T08_Team2
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to Stay: ");
                     int bed = Convert.ToInt32(Console.ReadLine());
-                    
+                    for (int i = 0; i < bedList.Count; i++)
+                    {
+
+                    }
                 }
                 else
                 {

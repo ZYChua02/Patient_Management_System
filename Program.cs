@@ -464,8 +464,7 @@ namespace PRG2_T08_Team2
                     file.Write(bed);
                 }
             }
-            Console.WriteLine(bList.Count);
-            
+           
 
 
         }

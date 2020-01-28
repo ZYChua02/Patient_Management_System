@@ -157,8 +157,6 @@ namespace PRG2_T08_Team2
                  * pData[5] : CDA/Medisave Balance (if any)
                  */
 
-                //used for validation
-                string nric = pData[1];
                 
                 int age = Convert.ToInt32(pData[2]);
                 string cs = pData[4];
@@ -220,51 +218,60 @@ namespace PRG2_T08_Team2
             string cs = Console.ReadLine();
             string stat = "Registered";
             double subsidy = 0.0;
-
-            if (age >= 0 && age <= 12)
+            foreach (Patient p in patientList)
             {
-                // only if condition is met, subsidy will be updated accordingly
-                // if not met, will remain as 0.
-                if (cs == "SC" || cs == "sc")
+                if (p.Id == id)
                 {
-                    Console.Write("Enter CDA Balance: ");
-                    subsidy = Convert.ToDouble(Console.ReadLine());
+                    break;
                 }
-                Patient p = new Child(n, id, age, g, cs, stat, subsidy);
-                patientList.Add(p);
-                using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                else
                 {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
-                    file.Write(line);
+                    if (age >= 0 && age <= 12)
+                    {
+                        // only if condition is met, subsidy will be updated accordingly
+                        // if not met, will remain as 0.
+                        if (cs == "SC" || cs == "sc")
+                        {
+                            Console.Write("Enter CDA Balance: ");
+                            subsidy = Convert.ToDouble(Console.ReadLine());
+                        }
+                        Patient p = new Child(n, id, age, g, cs, stat, subsidy);
+                        patientList.Add(p);
+                        using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                        {
+                            string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                            file.Write(line);
+                        }
+                        Console.WriteLine($"\n{n} was successfully registered!\n");
+                    }
+                    else if (age <= 64)
+                    {
+                        if (cs == "SC" || cs == "sc" || cs == "PR" || cs == "pr")
+                        {
+                            Console.Write("Enter Medisave Balance: ");
+                            subsidy = Convert.ToDouble(Console.ReadLine());
+                        }
+                        Patient p = new Adult(n, id, age, g, cs, stat, subsidy);
+                        patientList.Add(p);
+                        using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                        {
+                            string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                            file.Write(line);
+                        }
+                        Console.WriteLine($"\n{n} was successfully registered!\n");
+                    }
+                    else if (age >= 65)
+                    {
+                        Patient p = new Senior(n, id, age, g, cs, stat);
+                        patientList.Add(p);
+                        using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
+                        {
+                            string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                            file.Write(line);
+                        }
+                        Console.WriteLine($"\n{n} was successfully registered!\n");
+                    }
                 }
-                Console.WriteLine($"\n{n} was successfully registered!\n");
-            }
-            else if (age <= 64)
-            {
-                if (cs == "SC" || cs == "sc" || cs == "PR" || cs == "pr") 
-                {
-                    Console.Write("Enter Medisave Balance: ");
-                    subsidy = Convert.ToDouble(Console.ReadLine());
-                }
-                Patient p = new Adult(n, id, age, g, cs, stat, subsidy);
-                patientList.Add(p);
-                using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
-                {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
-                    file.Write(line);
-                }
-                Console.WriteLine($"\n{n} was successfully registered!\n");
-            }
-            else if (age >= 65)
-            {
-                Patient p = new Senior(n, id, age, g, cs, stat);
-                patientList.Add(p);
-                using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
-                {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
-                    file.Write(line);
-                }
-                Console.WriteLine($"\n{n} was successfully registered!\n");
             }
         }
 

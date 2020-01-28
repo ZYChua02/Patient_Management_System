@@ -34,6 +34,7 @@ namespace PRG2_T08_Team2
 
             //BedList
             List<Bed> bedList = new List<Bed>();
+           
 
             while (option != "0")
             {
@@ -295,10 +296,11 @@ namespace PRG2_T08_Team2
         // Zhe Yu's Methods //
 
         //For option 2
-        static void DisplayAllBeds(List <Bed> bList)
+
+        static void InitBedList(List<Bed> bList)
         {
             string[] csvlines = File.ReadAllLines(@"beds.csv");
-            for (int i = 1; i<csvlines.Length; i++)
+            for (int i = 1; i < csvlines.Length; i++)
             {
                 string[] bedsdata = csvlines[i].Split(',');
                 //bedsdata[0] : class of bed
@@ -306,7 +308,7 @@ namespace PRG2_T08_Team2
                 //bedsdata[2] : BedNo
                 //bedsdata[3] : Availabiity (Yes/No)
                 //bedsdata[4] : Daily Rate
-                
+
                 if (bedsdata[0] == "A") //To check which class is the bed
                 {
                     if (bedsdata[3] == "Yes") //To check the availabity of the bed
@@ -319,8 +321,8 @@ namespace PRG2_T08_Team2
                         bList.Add(new ClassABed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
                     }
                 }
-                
-                    
+
+
 
                 else if (bedsdata[0] == "B")
                 {
@@ -333,15 +335,15 @@ namespace PRG2_T08_Team2
                     {
                         bList.Add(new ClassBBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), false));
                     }
-            
+
                 }
 
                 else if (bedsdata[0] == "C")
                 {
-                     if (bedsdata[3] == "Yes") //To check the availabity of the bed
+                    if (bedsdata[3] == "Yes") //To check the availabity of the bed
                     {
                         bList.Add(new ClassCBed(Convert.ToInt32(bedsdata[1]), Convert.ToInt32(bedsdata[2]), Convert.ToDouble(bedsdata[4]), true));
-                     }
+                    }
 
                     else if (bedsdata[3] == "No") //To check the availabity of the bed
                     {
@@ -349,8 +351,12 @@ namespace PRG2_T08_Team2
                     }
                 }
 
-                
+
             }
+        }
+        static void DisplayAllBeds(List <Bed> bList)
+        {
+           
             int counter = 1;//for the no of beds
             foreach (Bed b in bList)
             {
@@ -468,6 +474,15 @@ namespace PRG2_T08_Team2
 
 
         }
+
+
+
+
+
+
+
+
+
         //For option 7
         static void AddMedicalRecord()
         {

@@ -36,6 +36,7 @@ namespace PRG2_T08_Team2
             List<Bed> bedList = new List<Bed>();
 
             InitPatients(patientList);
+            InitBedList(bedList);
             while (option != "0")
             {
                 DisplayMenu();

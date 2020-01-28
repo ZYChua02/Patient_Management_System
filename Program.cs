@@ -34,8 +34,8 @@ namespace PRG2_T08_Team2
 
             //BedList
             List<Bed> bedList = new List<Bed>();
-           
 
+            InitPatients(patientList);
             while (option != "0")
             {
                 DisplayMenu();
@@ -45,11 +45,10 @@ namespace PRG2_T08_Team2
 
                 if (option == "1")
                 {
-                    
                     Console.WriteLine("Option 1. View All Patients");
                     Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
                         "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
-                    AddPatients(patientList);
+                   
                     DisplayPatients(patientList);
                 }
                 else if (option == "2")
@@ -80,8 +79,6 @@ namespace PRG2_T08_Team2
                 else if (option == "7")
                 {
                     Console.WriteLine("Option 7 Add Medical record entry");
-                    AddPatients(patientList);
-                    DisplayPatients(patientList);
                     
                 }
                 else if (option == "8")
@@ -143,7 +140,7 @@ namespace PRG2_T08_Team2
         }
 
         // Ryan's Methods //
-        static void AddPatients(List <Patient> patientList)
+        static void InitPatients(List <Patient> patientList)
         {
             string[] patientRaw = File.ReadAllLines(@"patients.csv");
             for (int i = 1; i < patientRaw.Length; i++)

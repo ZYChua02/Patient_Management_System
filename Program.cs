@@ -268,25 +268,56 @@ namespace PRG2_T08_Team2
 
         static void RegisterHospitalStay(List<Patient> patientList, List<Bed> bedList)
         {
+            //Prompt for and read patient NRIC number
             Console.Write("Enter Patient Number: ");
             string pNo = Console.ReadLine();
-            foreach (Patient p in patientList)
-            {
-                if (pNo == p.Id)
-                {
-                    DisplayAllBeds(bedList);
-                    Console.Write("Select Bed to Stay: ");
-                    int bed = Convert.ToInt32(Console.ReadLine());
-                    for (int i = 0; i < bedList.Count; i++)
-                    {
 
-                    }
-                }
-                else
+            
+            Patient p = SearchPatient(patientList, pNo);
+
+            //Prompt for and read preferred bed
+            Console.Write("Select bed to stay: ");
+            int bNo = Convert.ToInt32(Console.ReadLine());
+
+            Bed b = SearchBed(bedList, bNo);
+
+            Console.Write("Enter date of admission [DD/MM/YYYY]: ");
+            DateTime admDate= Convert.ToDateTime(Console.ReadLine());
+            if (b is ClassABed)
+            {
+                Console.WriteLine("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
+
+            }
+            else if (b is ClassBBed)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        static Patient SearchPatient(List<Patient> patientList, string j)
+        {
+            for (int i = 0; i < patientList.Count; i++)
+            {
+                if (patientList[i].Id == j)
                 {
-                    Console.WriteLine("No Registered Patient Found. Please register Patient.");
+                    return patientList[i];
                 }
             }
+            return null;
+        }
+        static Bed SearchBed(List<Bed> bedList, int j)
+        {
+            for (int i = 0; i < bedList.Count; i++)
+            {
+                if (bedList[i].BedNo == j)
+                {
+                    return bedList[i];
+                }
+            }
+            return null;
         }
 
 
@@ -467,9 +498,6 @@ namespace PRG2_T08_Team2
                     file.Write(bed);
                 }
             }
-           
-
-
         }
 
 

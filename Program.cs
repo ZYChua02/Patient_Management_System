@@ -272,48 +272,78 @@ namespace PRG2_T08_Team2
             string pNo = Console.ReadLine();
 
             Patient p = SearchPatient(patientList, pNo);
-
-            //Prompt for and read preferred bed
-            Console.Write("Select bed to stay: ");
-            int bNo = Convert.ToInt32(Console.ReadLine());
-
-            Bed b = SearchBed(bedList, bNo);
-
-            Console.Write("Enter date of admission [DD/MM/YYYY]: ");
-            DateTime admDate= Convert.ToDateTime(Console.ReadLine());
-            if (b is ClassABed)
+            if (p != null)
             {
-                Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
-                string accGuest = Console.ReadLine().ToUpper();
-                
-                if(accGuest == "Y")
-                {
-                    ClassABed cab = new ClassABed(b.WardNo, b.BedNo, b.DailyRate + 100, b.Available);
-                    BedStay bs = new BedStay(admDate, null, cab);
+                DisplayAllBeds(bedList);
+                //Prompt for and read preferred bed
+                Console.Write("Select bed to stay: ");
+                int bNo = Convert.ToInt32(Console.ReadLine());
+
+                Bed b = SearchBed(bedList, bNo);
+                if (b != null) { 
+                    Console.Write("Enter date of admission [DD/MM/YYYY]: ");
+                    DateTime admDate= Convert.ToDateTime(Console.ReadLine());
+
+                    Stay s = new Stay(admDate, p);
+
+                    //initialisation of BedStay to prevent errors
+                    BedStay bs = new BedStay(admDate, b);
+                    if (b is ClassABed)
+                    {
+                        Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
+                        string accGuest = Console.ReadLine().ToUpper();
+                        ClassABed cab = (ClassABed)b;
+                        cab.AccompanyingPerson = CheckOption(accGuest);
+                        bs = new BedStay(admDate, cab);
+                    }
+                    else if (b is ClassBBed)
+                    {
+                        Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
+                        string ac = Console.ReadLine().ToUpper();
+                        ClassBBed cbb = (ClassBBed)b;
+                        cbb.AirCon = CheckOption(ac);
+                        bs = new BedStay(admDate, cbb);
+                    }
+                    else if (b is ClassCBed)
+                    {
+                        Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
+                        string pTV = Console.ReadLine();
+                        ClassCBed ccb = (ClassCBed)b;
+                        ccb.PortableTv = CheckOption(pTV);
+                        bs = new BedStay(admDate, ccb);
+                    }
+                    s.BedStayList.Add(bs);
+                    p.Stay = s;
+                    p.Status = "Admitted";
+                    Console.WriteLine("Stay registration successful!");
                 }
-                else if (accGuest == "N")
+                else
                 {
-                    ClassABed cab = new ClassABed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
-                    BedStay bs = new BedStay(admDate, null, cab);
-                }
-                Stay s = new Stay(admDate, p);
-            }
-            else if (b is ClassBBed)
-            {
-                Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
-                string acVariant = Console.ReadLine().ToUpper();
-                if (acVariant == "Y")
-                {
-                    ClassBBed cbb = new ClassBBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                    Console.WriteLine("Stay registration unsuccessful!");
                 }
             }
             else
             {
-                Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
-                string pTV = Console.ReadLine();
-                Stay s = new Stay(admDate, p);
-                BedStay bs = new BedStay(admDate, null, b);
+                Console.WriteLine("Patient not found!");
             }
+        }
+        static bool CheckOption(string opt)
+        {
+            bool agreeToOption = false;
+            while (!agreeToOption)
+            {
+                if (string.Equals(opt, "Y"))
+                {
+                    return true;
+                }
+
+                if (string.Equals(opt, "N"))
+                {
+                    return false;
+                }
+                Console.WriteLine("Invalid Input. Please try again!");
+            }
+            return false;
         }
         static Patient SearchPatient(List<Patient> patientList, string j)
         {
@@ -328,7 +358,7 @@ namespace PRG2_T08_Team2
         }
         static Bed SearchBed(List<Bed> bedList, int j)
         {
-            for (int i = 0; i < bedList.Count; i++)
+            for (int i = 1; i < bedList.Count; i++)
             {
                 if (bedList[i].BedNo == j)
                 {

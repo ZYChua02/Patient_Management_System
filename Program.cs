@@ -262,8 +262,6 @@ namespace PRG2_T08_Team2
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
-                    
-              
             }
         }
 
@@ -273,7 +271,6 @@ namespace PRG2_T08_Team2
             Console.Write("Enter Patient Number: ");
             string pNo = Console.ReadLine();
 
-            
             Patient p = SearchPatient(patientList, pNo);
 
             //Prompt for and read preferred bed
@@ -287,21 +284,35 @@ namespace PRG2_T08_Team2
             if (b is ClassABed)
             {
                 Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
-                string accGuest = Console.ReadLine();
+                string accGuest = Console.ReadLine().ToUpper();
+                
+                if(accGuest == "Y")
+                {
+                    ClassABed cab = new ClassABed(b.WardNo, b.BedNo, b.DailyRate + 100, b.Available);
+                    BedStay bs = new BedStay(admDate, null, cab);
+                }
+                else if (accGuest == "N")
+                {
+                    ClassABed cab = new ClassABed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                    BedStay bs = new BedStay(admDate, null, cab);
+                }
                 Stay s = new Stay(admDate, p);
-                BedStay bs = new BedStay(admDate, null, b);
             }
             else if (b is ClassBBed)
             {
                 Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
-                string acVariant = Console.ReadLine();
-                Stay s = new Stay(admDate, p);
+                string acVariant = Console.ReadLine().ToUpper();
+                if (acVariant == "Y")
+                {
+                    ClassBBed cbb = new ClassBBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                }
             }
             else
             {
                 Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
                 string pTV = Console.ReadLine();
                 Stay s = new Stay(admDate, p);
+                BedStay bs = new BedStay(admDate, null, b);
             }
         }
         static Patient SearchPatient(List<Patient> patientList, string j)

@@ -12,7 +12,7 @@ namespace PRG2_T08_Team2
 {
     class BedStay
     {
-        public DateTime StartBedstay { get; set; }
+        public DateTime StartBedStay { get; set; }
 
         public DateTime EndBedStay { get; set; }
 
@@ -20,14 +20,14 @@ namespace PRG2_T08_Team2
         
         public BedStay(DateTime start, DateTime end, Bed b)
         {
-            StartBedstay = start;
+            StartBedStay = start;
             EndBedStay = end;
             Bed = b;
         }
 
         public override string ToString()
         {
-            return "Start of Stay: " + StartBedstay + "\tEnd of stay: " + EndBedStay+ "\tBed" + Bed;
+            return "Start of Stay: " + StartBedStay + "\tEnd of stay: " + EndBedStay+ "\tBed" + Bed;
         }
         
     }

@@ -286,16 +286,22 @@ namespace PRG2_T08_Team2
             DateTime admDate= Convert.ToDateTime(Console.ReadLine());
             if (b is ClassABed)
             {
-                Console.WriteLine("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
-
+                Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
+                string accGuest = Console.ReadLine();
+                Stay s = new Stay(admDate, p);
+                //BedStay b = new BedStay();
             }
             else if (b is ClassBBed)
             {
-
+                Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
+                string acVariant = Console.ReadLine();
+                Stay s = new Stay(admDate, p);
             }
             else
             {
-
+                Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
+                string pTV = Console.ReadLine();
+                Stay s = new Stay(admDate, p);
             }
         }
         static Patient SearchPatient(List<Patient> patientList, string j)

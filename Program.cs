@@ -72,7 +72,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "6")
                 {
-
+                    RetrievePatientDetails(patientList);
                 }
                 else if (option == "7")
                 {
@@ -267,7 +267,7 @@ namespace PRG2_T08_Team2
         static void RegisterHospitalStay(List<Patient> patientList, List<Bed> bedList)
         {
             //Prompt for and read patient NRIC number
-            Console.Write("Enter Patient Number: ");
+            Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
 
             Patient p = SearchPatient(patientList, pNo);
@@ -367,7 +367,15 @@ namespace PRG2_T08_Team2
             }
             return null;
         }
-
+        static void RetrievePatientDetails(List<Patient> patientList)
+        {
+            DisplayPatients(patientList);
+            //Prompt for and read patient NRIC number
+            Console.Write("Enter Patient ID Number: ");
+            string pNo = Console.ReadLine();
+            Patient p = SearchPatient(patientList, pNo);
+            
+        }
 
         // Zhe Yu's Methods //
 

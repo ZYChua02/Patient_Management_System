@@ -289,7 +289,7 @@ namespace PRG2_T08_Team2
                 Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
                 string accGuest = Console.ReadLine();
                 Stay s = new Stay(admDate, p);
-                //BedStay b = new BedStay();
+                BedStay bs = new BedStay(admDate, null, b);
             }
             else if (b is ClassBBed)
             {

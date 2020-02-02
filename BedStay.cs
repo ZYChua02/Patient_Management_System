@@ -18,7 +18,7 @@ namespace PRG2_T08_Team2
 
         public Bed Bed { get; set; }
         
-        public BedStay(DateTime start, DateTime end, Bed b)
+        public BedStay(DateTime start, DateTime? end, Bed b)
         {
             StartBedStay = start;
             EndBedStay = end;

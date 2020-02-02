@@ -47,9 +47,6 @@ namespace PRG2_T08_Team2
                 if (option == "1")
                 {
                     Console.WriteLine("Option 1. View All Patients");
-                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
-                        "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
-                   
                     DisplayPatients(patientList);
                 }
                 else if (option == "2")
@@ -196,6 +193,8 @@ namespace PRG2_T08_Team2
         }
         static void DisplayPatients(List<Patient> patientList)
         {
+            Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                        "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
             foreach (Patient pa in patientList)
             {
                 Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
@@ -324,7 +323,8 @@ namespace PRG2_T08_Team2
             }
             else
             {
-                Console.WriteLine("Patient not found!");
+                //Console.WriteLine("Patient not found!");
+                Console.WriteLine(p);
             }
         }
         static bool CheckOption(string opt)

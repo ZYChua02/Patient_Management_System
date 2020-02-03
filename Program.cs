@@ -47,9 +47,6 @@ namespace PRG2_T08_Team2
                 if (option == "1")
                 {
                     Console.WriteLine("Option 1. View All Patients");
-                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
-                        "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
-                   
                     DisplayPatients(patientList);
                 }
                 else if (option == "2")
@@ -75,7 +72,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "6")
                 {
-
+                    RetrievePatientDetails(patientList);
                 }
                 else if (option == "7")
                 {
@@ -114,8 +111,9 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Invalid Option! Please try again!");
                 }
 
-                Console.ReadKey();
+                
             }
+            Console.ReadKey();
         }
         
         //Menu 
@@ -171,7 +169,7 @@ namespace PRG2_T08_Team2
                     }
                     else if (cs == "Foreigner" || cs == "PR" || cs == "pr")
                     {
-                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(null));
+                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
                         patientList.Add(p);
                     }
                 }
@@ -184,7 +182,7 @@ namespace PRG2_T08_Team2
                     }
                     else if (cs == "Foreigner")
                     {
-                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(null));
+                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
                         patientList.Add(p);
                     }
                 }
@@ -197,6 +195,8 @@ namespace PRG2_T08_Team2
         }
         static void DisplayPatients(List<Patient> patientList)
         {
+            Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                        "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
             foreach (Patient pa in patientList)
             {
                 Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
@@ -263,62 +263,108 @@ namespace PRG2_T08_Team2
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
-                    
-              
             }
         }
 
         static void RegisterHospitalStay(List<Patient> patientList, List<Bed> bedList)
         {
             //Prompt for and read patient NRIC number
-            Console.Write("Enter Patient Number: ");
+            Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
-
-            
+                       
             Patient p = SearchPatient(patientList, pNo);
-
-            //Prompt for and read preferred bed
-            Console.Write("Select bed to stay: ");
-            int bNo = Convert.ToInt32(Console.ReadLine());
-
-            Bed b = SearchBed(bedList, bNo);
-
-            Console.Write("Enter date of admission [DD/MM/YYYY]: ");
-            DateTime admDate= Convert.ToDateTime(Console.ReadLine());
-            if (b is ClassABed)
+            Console.WriteLine("Search Successful {0}", p.Name);
+            if (p != null)
             {
-                Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
-                string accGuest = Console.ReadLine();
-                Stay s = new Stay(admDate, p);
-                //BedStay b = new BedStay();
-            }
-            else if (b is ClassBBed)
-            {
-                Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
-                string acVariant = Console.ReadLine();
-                Stay s = new Stay(admDate, p);
+
+                DisplayAllBeds(bedList);
+                //Prompt for and read preferred bed
+                Console.Write("Select bed to stay: ");
+                int bNo = Convert.ToInt32(Console.ReadLine());
+
+                Bed b = SearchBed(bedList, bNo);
+                Console.WriteLine("Search Successful {0}", b.WardNo);
+                if (b != null) { 
+                    Console.Write("Enter date of admission [DD/MM/YYYY]: ");
+                    DateTime admDate= Convert.ToDateTime(Console.ReadLine());
+
+                    Stay s = new Stay(admDate, p);
+
+                    //initialisation of BedStay to prevent errors
+                    BedStay bs = new BedStay(admDate, b);
+                    if (b is ClassABed)
+                    {
+                        Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
+                        string accGuest = Console.ReadLine().ToUpper();
+                        ClassABed cab = (ClassABed)b;
+                        cab.AccompanyingPerson = CheckOption(accGuest);
+                        bs = new BedStay(admDate, cab);
+                    }
+                    else if (b is ClassBBed)
+                    {
+                        Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
+                        string ac = Console.ReadLine().ToUpper();
+                        ClassBBed cbb = (ClassBBed)b;
+                        cbb.AirCon = CheckOption(ac);
+                        bs = new BedStay(admDate, cbb);
+                    }
+                    else if (b is ClassCBed)
+                    {
+                        Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
+                        string pTV = Console.ReadLine();
+                        ClassCBed ccb = (ClassCBed)b;
+                        ccb.PortableTv = CheckOption(pTV);
+                        bs = new BedStay(admDate, ccb);
+                    }
+                    s.BedStayList.Add(bs);
+                    p.Stay = s;
+                    p.Status = "Admitted";
+                    b.Available = false;
+                    Console.WriteLine("Stay registration successful!");
+                }
+                else
+                {
+                    Console.WriteLine("Stay registration unsuccessful!");
+                }
             }
             else
             {
-                Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
-                string pTV = Console.ReadLine();
-                Stay s = new Stay(admDate, p);
+                //Console.WriteLine("Patient not found!");
+                Console.WriteLine(p);
             }
+        }
+        static bool CheckOption(string opt)
+        {
+            bool agreeToOption = false;
+            while (!agreeToOption)
+            {
+                if (string.Equals(opt, "Y"))
+                {
+                    return true;
+                }
+
+                if (string.Equals(opt, "N"))
+                {
+                    return false;
+                }
+                Console.WriteLine("Invalid Input. Please try again!");
+            }
+            return false;
         }
         static Patient SearchPatient(List<Patient> patientList, string j)
         {
-            for (int i = 0; i < patientList.Count; i++)
+            foreach (Patient p in patientList)
             {
-                if (patientList[i].Id == j)
+                if(p.Id == j)
                 {
-                    return patientList[i];
+                    return p;
                 }
             }
             return null;
         }
         static Bed SearchBed(List<Bed> bedList, int j)
         {
-            for (int i = 0; i < bedList.Count; i++)
+            for (int i = 1; i < bedList.Count; i++)
             {
                 if (bedList[i].BedNo == j)
                 {
@@ -327,7 +373,15 @@ namespace PRG2_T08_Team2
             }
             return null;
         }
-
+        static void RetrievePatientDetails(List<Patient> patientList)
+        {
+            DisplayPatients(patientList);
+            //Prompt for and read patient NRIC number
+            Console.Write("Enter Patient ID Number: ");
+            string pNo = Console.ReadLine();
+            Patient p = SearchPatient(patientList, pNo);
+            
+        }
 
         // Zhe Yu's Methods //
 

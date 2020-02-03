@@ -13,7 +13,7 @@ namespace PRG2_T08_Team2
     class Stay
     {
         public DateTime AdmittedDate { get; set; }
-        public DateTime DischargeDate { get; set; }
+        public DateTime? DischargeDate { get; set; }
         public string AdmittedBy { get; set; }
         public bool IsPaid { get; set; }
         public List<MedicalRecord> MedicalRecordList { get; set; } = new List<MedicalRecord>();

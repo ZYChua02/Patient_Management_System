@@ -589,10 +589,8 @@ namespace PRG2_T08_Team2
                     MedRecord = p;
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("Invalid Patient Id. Please try again");
-                }
+                
+               
             }
             Console.Write("Patient temperature: ");
             double temperature = Convert.ToDouble(Console.ReadLine());
@@ -615,7 +613,8 @@ namespace PRG2_T08_Team2
             Console.Write("Enter patient ID number: ");
             string patientid = Console.ReadLine();
             Patient viewmedrecord = null;
-            foreach(Patient p in patientlist)
+            int counter = 1;
+            foreach (Patient p in patientlist)
             {
                 if (patientid == p.Id)
                 {
@@ -625,9 +624,26 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
                     Console.WriteLine("Gender: {0}", p.Gender);
                     Console.WriteLine("Status :{0}", p.Status);
+                    foreach (MedicalRecord m in MedicalRecordList)
+                    {
+                        Console.WriteLine("======Record #{0} =======", counter);
+                        Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
+                        Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
+                        Console.WriteLine("Diganosis: {0}", m.Diagnosis);
+                        Console.WriteLine();
+                        counter = counter + 1;
+                    }
                     break;
                 }
             }
+           
+            Console.WriteLine("=====Stay=====");
+
+            Console.WriteLine("Admission date: ");
+            Console.WriteLine("Discharge date: ");
+            
+          
+
         }
 
     }

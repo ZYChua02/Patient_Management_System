@@ -5,8 +5,7 @@
 //============================================================
 
 /*====================== T O D O ============================
-Ryan   : Option 5 & 6 Problems: Admission Date has Time, Payment Status returns
-false, Bed Number Wrong
+Ryan   : Option 5 & 6 Problems: Admission Date has Time,  Bed Number Wrong
 
 Zhe Yu : Option 2 and 4
 
@@ -394,7 +393,15 @@ namespace PRG2_T08_Team2
                 if(p.Status == "Admitted")
                 {
                     Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate + "\n" +
-                    "Discharge Date: " + p.Stay.DischargeDate + "\n" + "Payment Status: " + p.Stay.IsPaid + "\n");
+                    "Discharge Date: " + p.Stay.DischargeDate + "\n");
+                    if (p.Stay.IsPaid == true)
+                    {
+                        Console.WriteLine("Payment Status: Paid");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Payment Status: Unpaid");
+                    }
                     Console.WriteLine("======================\n");
                 }
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)

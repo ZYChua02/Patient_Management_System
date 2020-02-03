@@ -110,8 +110,9 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Invalid Option! Please try again!");
                 }
 
-                Console.ReadKey();
+                
             }
+            Console.ReadKey();
         }
         
         //Menu 
@@ -167,7 +168,7 @@ namespace PRG2_T08_Team2
                     }
                     else if (cs == "Foreigner" || cs == "PR" || cs == "pr")
                     {
-                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(null));
+                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
                         patientList.Add(p);
                     }
                 }
@@ -180,7 +181,7 @@ namespace PRG2_T08_Team2
                     }
                     else if (cs == "Foreigner")
                     {
-                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(null));
+                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
                         patientList.Add(p);
                     }
                 }
@@ -269,16 +270,19 @@ namespace PRG2_T08_Team2
             //Prompt for and read patient NRIC number
             Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
-
+                       
             Patient p = SearchPatient(patientList, pNo);
+            Console.WriteLine("Search Successful {0}", p.Name);
             if (p != null)
             {
+
                 DisplayAllBeds(bedList);
                 //Prompt for and read preferred bed
                 Console.Write("Select bed to stay: ");
                 int bNo = Convert.ToInt32(Console.ReadLine());
 
                 Bed b = SearchBed(bedList, bNo);
+                Console.WriteLine("Search Successful {0}", b.WardNo);
                 if (b != null) { 
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     DateTime admDate= Convert.ToDateTime(Console.ReadLine());
@@ -314,6 +318,7 @@ namespace PRG2_T08_Team2
                     s.BedStayList.Add(bs);
                     p.Stay = s;
                     p.Status = "Admitted";
+                    b.Available = false;
                     Console.WriteLine("Stay registration successful!");
                 }
                 else
@@ -347,11 +352,11 @@ namespace PRG2_T08_Team2
         }
         static Patient SearchPatient(List<Patient> patientList, string j)
         {
-            for (int i = 0; i < patientList.Count; i++)
+            foreach (Patient p in patientList)
             {
-                if (patientList[i].Id == j)
+                if(p.Id == j)
                 {
-                    return patientList[i];
+                    return p;
                 }
             }
             return null;

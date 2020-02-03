@@ -594,10 +594,10 @@ namespace PRG2_T08_Team2
                     DateTime today = DateTime.Now;
                     MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, today);
                     MedicalRecordList.Add(newrecord);
-                    foreach (MedicalRecord m in MedicalRecordList)
-                    {
-                        Console.WriteLine(m);
-                    }
+                    //foreach (MedicalRecord m in MedicalRecordList)
+                    //{
+                    //    Console.WriteLine(m);
+                    //}
                     break;
                 }
                 
@@ -625,6 +625,9 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
                     Console.WriteLine("Gender: {0}", p.Gender);
                     Console.WriteLine("Status :{0}", p.Status);
+                    Console.WriteLine("=====Stay=====");
+                    Console.WriteLine("Admission date: ");
+                    Console.WriteLine("Discharge date: ");
                     foreach (MedicalRecord m in MedicalRecordList)
                     {
                         Console.WriteLine("======Record #{0} =======", counter);
@@ -638,10 +641,6 @@ namespace PRG2_T08_Team2
                 }
             }
            
-            Console.WriteLine("=====Stay=====");
-
-            Console.WriteLine("Admission date: ");
-            Console.WriteLine("Discharge date: ");
             
           
 

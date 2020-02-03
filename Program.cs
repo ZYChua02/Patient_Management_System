@@ -35,6 +35,9 @@ namespace PRG2_T08_Team2
             //BedList
             List<Bed> bedList = new List<Bed>();
 
+            //Medical record list
+            List<MedicalRecord> MedicalRecordList = new List<MedicalRecord>();
+
             InitPatients(patientList);
             InitBedList(bedList);
             while (option != "0")
@@ -77,11 +80,14 @@ namespace PRG2_T08_Team2
                 {
                     Console.WriteLine("Option 7 Add Medical record entry");
                     DisplayPatients(patientList);
+                    AddMedicalRecord(patientList, MedicalRecordList);
                     
                 }
                 else if (option == "8")
                 {
-
+                    Console.WriteLine("Option 8 View Patient Medical Record");
+                    DisplayPatients(patientList);
+                    ViewMedicalRecords(patientList, MedicalRecordList);
                 }
                 else if (option == "9")
                 {
@@ -568,7 +574,7 @@ namespace PRG2_T08_Team2
 
 
         //For option 7
-        static void AddMedicalRecord(List<Patient> patientlist)
+        static void AddMedicalRecord(List<Patient> patientlist, List<MedicalRecord> MedicalRecordList)
         {
             //Initalise Patient
             Patient MedRecord = null;
@@ -594,13 +600,34 @@ namespace PRG2_T08_Team2
             string diagonsis = Console.ReadLine();
             DateTime test = new DateTime(2010, 10, 13);
             MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, test);
-            //MedicalRecord.Add(newrecord);
-            //foreach (MedicalRecord m in MedicalRecordList)
-            //{
-            //    Console.WriteLine(m);
-            //}
+            MedicalRecordList.Add(newrecord);
+            foreach (MedicalRecord m in MedicalRecordList)
+            {
+                Console.WriteLine(m);
+            }
 
 
+        }
+
+        //For option 8 
+        static void ViewMedicalRecords(List<Patient> patientlist, List<MedicalRecord> MedicalRecordList)
+        {
+            Console.Write("Enter patient ID number: ");
+            string patientid = Console.ReadLine();
+            Patient viewmedrecord = null;
+            foreach(Patient p in patientlist)
+            {
+                if (patientid == p.Id)
+                {
+                    viewmedrecord = p;
+                    Console.WriteLine("Name of patient: {0}", p.Name);
+                    Console.WriteLine("ID number: {0}", p.Id);
+                    Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+                    Console.WriteLine("Gender: {0}", p.Gender);
+                    Console.WriteLine("Status :{0}", p.Status);
+                    break;
+                }
+            }
         }
 
     }

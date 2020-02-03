@@ -288,7 +288,7 @@ namespace PRG2_T08_Team2
                 if (b != null) { 
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
-                    DateTime admDate= Convert.ToDateTime(Console.ReadLine());
+                    DateTime admDate= Convert.ToDateTime(Console.ReadLine()).Date;
 
                     Stay s = new Stay(admDate, p);
 
@@ -373,7 +373,7 @@ namespace PRG2_T08_Team2
             {
                 if (bedList[i+1].BedNo == j)
                 {
-                    return bedList[i];
+                    return bedList[i+1];
                 }
             }
             return null;
@@ -439,7 +439,7 @@ namespace PRG2_T08_Team2
                         "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
                     Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
                     pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
-
+                    Stay s = pa.Stay;
                     Console.Write("Enter Patient ID Number: ");
                     string pNo = Console.ReadLine();
                    

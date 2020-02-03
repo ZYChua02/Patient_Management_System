@@ -593,7 +593,8 @@ namespace PRG2_T08_Team2
                     string diagonsis = Console.ReadLine();
                     DateTime today = DateTime.Now;
                     MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, today);
-                    MedicalRecordList.Add(newrecord);
+                    //MedicalRecordList.AddMedicalRecords(newrecord);
+                    // Remember to a look at that!
                     //foreach (MedicalRecord m in MedicalRecordList)
                     //{
                     //    Console.WriteLine(m);
@@ -620,11 +621,11 @@ namespace PRG2_T08_Team2
                 if (patientid == p.Id)
                 {
                     viewmedrecord = p;
-                    Console.WriteLine("Name of patient: {0}", p.Name);
-                    Console.WriteLine("ID number: {0}", p.Id);
-                    Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
-                    Console.WriteLine("Gender: {0}", p.Gender);
-                    Console.WriteLine("Status :{0}", p.Status);
+                    Console.WriteLine("Name of patient: {0}", viewmedrecord.Name);
+                    Console.WriteLine("ID number: {0}", viewmedrecord.Id);
+                    Console.WriteLine("Citizenship status: {0}", viewmedrecord.CitizenStatus);
+                    Console.WriteLine("Gender: {0}", viewmedrecord.Gender);
+                    Console.WriteLine("Status :{0}", viewmedrecord.Status);
                     Console.WriteLine("=====Stay=====");
                     Console.WriteLine("Admission date: ");
                     Console.WriteLine("Discharge date: ");

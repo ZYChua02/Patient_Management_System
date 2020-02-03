@@ -74,7 +74,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "6")
                 {
-                    RetrievePatientDetails(patientList);
+                    RetrievePatientDetails(patientList, bedList);
                 }
                 else if (option == "7")
                 {
@@ -379,14 +379,28 @@ namespace PRG2_T08_Team2
             }
             return null;
         }
-        static void RetrievePatientDetails(List<Patient> patientList)
+        static void RetrievePatientDetails(List<Patient> patientList, List<Bed> bedList)
         {
             DisplayPatients(patientList);
             //Prompt for and read patient NRIC number
             Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
             Patient p = SearchPatient(patientList, pNo);
-            
+            if (p != null)
+            {
+                Console.WriteLine("Name of Patient: " + p.Name + "\n" + 
+                    "ID Number: " + p.Id + "\n" + "Citizenship Status: " + p.CitizenStatus + "\n" +
+                    "Gender: " + p.Gender + "\n" + "Status: " + p.Status + "\n\n");
+                Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate + "\n" +
+                    "Discharge Date: " + p.Stay.DischargeDate + "\n" + "Payment Status: " + p.Stay.IsPaid + "\n");
+                Console.WriteLine("======================");
+
+                for (int i = 0; i < bedList.Count; i++)
+                {
+
+                }
+                Console.WriteLine("Ward Number: " + p.Stay.BedStayList);
+            }
         }
 
         // Zhe Yu's Methods //

@@ -169,13 +169,13 @@ namespace PRG2_T08_Team2
                 {
                     if (cs == "SC" || cs == "sc")
                     {
-                        //                    Name      Nric      Age  Gender                   Cts  status   CDA/Medisave
-                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
+                        //                    Nric       Name     Age  Gender                   Cts  status   CDA/Medisave
+                        Patient p = new Child(pData[1], pData[0], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
                         patientList.Add(p);
                     }
                     else if (cs == "Foreigner" || cs == "PR" || cs == "pr")
                     {
-                        Patient p = new Child(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
+                        Patient p = new Child(pData[1], pData[0], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
                         patientList.Add(p);
                     }
                 }
@@ -183,18 +183,18 @@ namespace PRG2_T08_Team2
                 {
                     if (cs == "SC" || cs == "sc" || cs == "PR" || cs == "pr") //Validaton for casing
                     {
-                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
+                        Patient p = new Adult(pData[1], pData[0], age, Convert.ToChar(pData[3]), cs, stat, Convert.ToDouble(pData[5]));
                         patientList.Add(p);
                     }
                     else if (cs == "Foreigner")
                     {
-                        Patient p = new Adult(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
+                        Patient p = new Adult(pData[1], pData[0], age, Convert.ToChar(pData[3]), cs, stat, 0.0);
                         patientList.Add(p);
                     }
                 }
                 else if (age >= 65)
                 {
-                    Patient p = new Senior(pData[0], pData[1], age, Convert.ToChar(pData[3]), cs, stat);
+                    Patient p = new Senior(pData[1], pData[0], age, Convert.ToChar(pData[3]), cs, stat);
                     patientList.Add(p);
                 }
             }
@@ -202,7 +202,7 @@ namespace PRG2_T08_Team2
         static void DisplayPatients(List<Patient> patientList)
         {
             Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
-                        "Name", "ID No.", "Age", "Gender", "Citizenship", "Status");
+                        "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
             foreach (Patient pa in patientList)
             {
                 Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
@@ -234,11 +234,11 @@ namespace PRG2_T08_Team2
                     Console.Write("Enter CDA Balance: ");
                     subsidy = Convert.ToDouble(Console.ReadLine());
                 }
-                Patient p = new Child(n, id, age, g, cs, stat, subsidy);
+                Patient p = new Child(id, n, age, g, cs, stat, subsidy);
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -250,22 +250,22 @@ namespace PRG2_T08_Team2
                     Console.Write("Enter Medisave Balance: ");
                     subsidy = Convert.ToDouble(Console.ReadLine());
                 }
-                Patient p = new Adult(n, id, age, g, cs, stat, subsidy);
+                Patient p = new Adult(id, n, age, g, cs, stat, subsidy);
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
             }
             else if (age >= 65)
             {
-                Patient p = new Senior(n, id, age, g, cs, stat);
+                Patient p = new Senior(id, n, age, g, cs, stat);
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");

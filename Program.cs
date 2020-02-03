@@ -590,24 +590,24 @@ namespace PRG2_T08_Team2
                 if (patientid == p.Id)
                 {
                     MedRecord = p;
+                    Console.Write("Patient temperature: ");
+                    double temperature = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Please enter patient observation: ");
+                    string diagonsis = Console.ReadLine();
+                    DateTime today = DateTime.Now;
+                    MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, today);
+                    //MedicalRecordList.AddMedicalRecords(newrecord);
+                    // Remember to a look at that!
+                    //foreach (MedicalRecord m in MedicalRecordList)
+                    //{
+                    //    Console.WriteLine(m);
+                    //}
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("Invalid Patient Id. Please try again");
-                }
+                
+               
             }
-            Console.Write("Patient temperature: ");
-            double temperature = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Please enter patient observation: ");
-            string diagonsis = Console.ReadLine();
-            DateTime test = new DateTime(2010, 10, 13);
-            MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, test);
-            MedicalRecordList.Add(newrecord);
-            foreach (MedicalRecord m in MedicalRecordList)
-            {
-                Console.WriteLine(m);
-            }
+           
 
 
         }
@@ -618,19 +618,36 @@ namespace PRG2_T08_Team2
             Console.Write("Enter patient ID number: ");
             string patientid = Console.ReadLine();
             Patient viewmedrecord = null;
-            foreach(Patient p in patientlist)
+            int counter = 1;
+            foreach (Patient p in patientlist)
             {
                 if (patientid == p.Id)
                 {
                     viewmedrecord = p;
-                    Console.WriteLine("Name of patient: {0}", p.Name);
-                    Console.WriteLine("ID number: {0}", p.Id);
-                    Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
-                    Console.WriteLine("Gender: {0}", p.Gender);
-                    Console.WriteLine("Status :{0}", p.Status);
+                    Console.WriteLine("Name of patient: {0}", viewmedrecord.Name);
+                    Console.WriteLine("ID number: {0}", viewmedrecord.Id);
+                    Console.WriteLine("Citizenship status: {0}", viewmedrecord.CitizenStatus);
+                    Console.WriteLine("Gender: {0}", viewmedrecord.Gender);
+                    Console.WriteLine("Status :{0}", viewmedrecord.Status);
+                    Console.WriteLine("=====Stay=====");
+                    Console.WriteLine("Admission date: ");
+                    Console.WriteLine("Discharge date: ");
+                    foreach (MedicalRecord m in MedicalRecordList)
+                    {
+                        Console.WriteLine("======Record #{0} =======", counter);
+                        Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
+                        Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
+                        Console.WriteLine("Diganosis: {0}", m.Diagnosis);
+                        Console.WriteLine();
+                        counter = counter + 1;
+                    }
                     break;
                 }
             }
+           
+            
+          
+
         }
 
     }

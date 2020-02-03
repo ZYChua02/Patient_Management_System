@@ -89,7 +89,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "9")
                 {
-
+                    TransferPatientToAnotherBed(patientList, bedList);
                 }
                 else if (option == "10")
                 {
@@ -426,6 +426,28 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay);
                         Console.WriteLine("End of Bed Stay: " + p.Stay.BedStayList[i].EndBedStay);
                     }
+                }
+            }
+        }
+        static void TransferPatientToAnotherBed(List<Patient> patientList, List<Bed> bedList)
+        {
+            foreach (Patient pa in patientList)
+            {
+                if (pa.Status == "Admitted")
+                {
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                        "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                    pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
+
+                    Console.Write("Enter Patient ID Number: ");
+                    string pNo = Console.ReadLine();
+                   
+                    DisplayAllBeds(bedList);
+                    Console.Write("Select Bed to transfer to: ");
+                    int newBNo = Convert.ToInt32(Console.ReadLine());
+                    Bed b = SearchBed(bedList, newBNo);
+
                 }
             }
         }

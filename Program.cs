@@ -587,22 +587,23 @@ namespace PRG2_T08_Team2
                 if (patientid == p.Id)
                 {
                     MedRecord = p;
+                    Console.Write("Patient temperature: ");
+                    double temperature = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Please enter patient observation: ");
+                    string diagonsis = Console.ReadLine();
+                    DateTime today = DateTime.Now;
+                    MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, today);
+                    MedicalRecordList.Add(newrecord);
+                    foreach (MedicalRecord m in MedicalRecordList)
+                    {
+                        Console.WriteLine(m);
+                    }
                     break;
                 }
                 
                
             }
-            Console.Write("Patient temperature: ");
-            double temperature = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Please enter patient observation: ");
-            string diagonsis = Console.ReadLine();
-            DateTime test = new DateTime(2010, 10, 13);
-            MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, test);
-            MedicalRecordList.Add(newrecord);
-            foreach (MedicalRecord m in MedicalRecordList)
-            {
-                Console.WriteLine(m);
-            }
+           
 
 
         }

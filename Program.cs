@@ -5,9 +5,8 @@
 //============================================================
 
 /*====================== T O D O ============================
-Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult, 
-         Senior & Child.cs 
-         Validations of Options 1 & 3
+Ryan   : Option 5 & 6 Problems: Admission Date has Time, Payment Status returns
+false, Bed Number Wrong
 
 Zhe Yu : Option 2 and 4
 
@@ -289,6 +288,7 @@ namespace PRG2_T08_Team2
                 Console.WriteLine("Search Successful {0}", b.WardNo);
                 if (b != null) { 
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
+                    //Issue with Time at the end
                     DateTime admDate= Convert.ToDateTime(Console.ReadLine());
 
                     Stay s = new Stay(admDate, p);
@@ -391,15 +391,35 @@ namespace PRG2_T08_Team2
                 Console.WriteLine("Name of Patient: " + p.Name + "\n" + 
                     "ID Number: " + p.Id + "\n" + "Citizenship Status: " + p.CitizenStatus + "\n" +
                     "Gender: " + p.Gender + "\n" + "Status: " + p.Status + "\n\n");
-                Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate + "\n" +
-                    "Discharge Date: " + p.Stay.DischargeDate + "\n" + "Payment Status: " + p.Stay.IsPaid + "\n");
-                Console.WriteLine("======================");
-
-                for (int i = 0; i < bedList.Count; i++)
+                if(p.Status == "Admitted")
                 {
-
+                    Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate + "\n" +
+                    "Discharge Date: " + p.Stay.DischargeDate + "\n" + "Payment Status: " + p.Stay.IsPaid + "\n");
+                    Console.WriteLine("======================\n");
                 }
-                Console.WriteLine("Ward Number: " + p.Stay.BedStayList);
+                for (int i = 0; i < p.Stay.BedStayList.Count; i++)
+                {
+                    if (p.Stay.AdmittedDate == p.Stay.BedStayList[i].StartBedStay)
+                    {
+                        Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
+                        //ISSUE with this
+                        Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
+                        if(p.Stay.BedStayList[i].Bed is ClassABed)
+                        {
+                            Console.WriteLine("Ward Class: A");
+                        }
+                        else if (p.Stay.BedStayList[i].Bed is ClassBBed)
+                        {
+                            Console.WriteLine("Ward Class: B");
+                        }
+                        else if (p.Stay.BedStayList[i].Bed is ClassCBed)
+                        {
+                            Console.WriteLine("Ward Class: C");
+                        }
+                        Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay);
+                        Console.WriteLine("End of Bed Stay: " + p.Stay.BedStayList[i].EndBedStay);
+                    }
+                }
             }
         }
 

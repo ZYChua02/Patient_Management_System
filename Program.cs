@@ -53,7 +53,6 @@ namespace PRG2_T08_Team2
                 {
                     
                     Console.WriteLine("Option 2. View All Beds");
-                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} ", "No", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
                     DisplayAllBeds(bedList);
                 }
                 else if (option == "3")
@@ -273,16 +272,14 @@ namespace PRG2_T08_Team2
             string pNo = Console.ReadLine();
                        
             Patient p = SearchPatient(patientList, pNo);
-            Console.WriteLine("Search Successful {0}", p.Name);
+           
             if (p != null)
             {
-
                 DisplayAllBeds(bedList);
                 //Prompt for and read preferred bed
                 Console.Write("Select bed to stay: ");
-                int bNo = Convert.ToInt32(Console.ReadLine());
-
-                Bed b = SearchBed(bedList, bNo);
+                int bedNo = Convert.ToInt32(Console.ReadLine());
+                Bed b = SearchBed(bedList, bedNo);
                 Console.WriteLine("Search Successful {0}", b.WardNo);
                 if (b != null) { 
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
@@ -364,9 +361,9 @@ namespace PRG2_T08_Team2
         }
         static Bed SearchBed(List<Bed> bedList, int j)
         {
-            for (int i = 1; i < bedList.Count; i++)
+            for (int i = 0; i < bedList.Count; i++)
             {
-                if (bedList[i].BedNo == j)
+                if (bedList[i+1].BedNo == j)
                 {
                     return bedList[i];
                 }
@@ -446,7 +443,7 @@ namespace PRG2_T08_Team2
         }
         static void DisplayAllBeds(List <Bed> bList)
         {
-           
+            Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} ", "No", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
             int counter = 1;//for the no of beds
             foreach (Bed b in bList)
             {

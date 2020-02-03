@@ -223,7 +223,7 @@ namespace PRG2_T08_Team2
             Console.Write("Enter Gender [M/F]: ");
             char g = Convert.ToChar(Console.ReadLine());
             Console.Write("Enter Citizenship Status [SC/PR/Foreigner]: ");
-            string cs = Console.ReadLine();
+            string cs = Console.ReadLine().ToUpper();
             string stat = "Registered";
             double subsidy = 0.0;
             
@@ -231,7 +231,7 @@ namespace PRG2_T08_Team2
             {
                 // only if condition is met, subsidy will be updated accordingly
                 // if not met, will remain as 0.
-                if (cs == "SC" || cs == "sc")
+                if (cs == "SC")
                 {
                     Console.Write("Enter CDA Balance: ");
                     subsidy = Convert.ToDouble(Console.ReadLine());
@@ -247,7 +247,7 @@ namespace PRG2_T08_Team2
             }
             else if (age <= 64)
             {
-                if (cs == "SC" || cs == "sc" || cs == "PR" || cs == "pr")
+                if (cs == "SC" || cs == "PR")
                 {
                     Console.Write("Enter Medisave Balance: ");
                     subsidy = Convert.ToDouble(Console.ReadLine());
@@ -302,27 +302,30 @@ namespace PRG2_T08_Team2
                     {
                         Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
                         string accGuest = Console.ReadLine().ToUpper();
-                        ClassABed cab = (ClassABed)b;
-                        cab.AccompanyingPerson = CheckOption(accGuest);
-                        bs = new BedStay(admDate, cab);
+                        //ClassABed cab = (ClassABed)b;
+                        ClassABed clab = new ClassABed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        clab.AccompanyingPerson = CheckOption(accGuest);
+                        bs = new BedStay(admDate, clab);
                     }
                     else if (b is ClassBBed)
                     {
                         Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
                         string ac = Console.ReadLine().ToUpper();
-                        ClassBBed cbb = (ClassBBed)b;
-                        cbb.AirCon = CheckOption(ac);
-                        bs = new BedStay(admDate, cbb);
+                        //ClassBBed cbb = (ClassBBed)b;
+                        ClassBBed clbb = new ClassBBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        clbb.AirCon = CheckOption(ac);
+                        bs = new BedStay(admDate, clbb);
                     }
                     else if (b is ClassCBed)
                     {
                         Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
                         string pTV = Console.ReadLine();
-                        ClassCBed ccb = (ClassCBed)b;
-                        ccb.PortableTv = CheckOption(pTV);
-                        bs = new BedStay(admDate, ccb);
+                        //ClassCBed ccb = (ClassCBed)b;
+                        ClassCBed clcb = new ClassCBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                        clcb.PortableTv = CheckOption(pTV);
+                        bs = new BedStay(admDate, clcb);
                     }
-                    s.BedStayList.Add(bs);
+                    s.AddBedStay(bs);
                     p.Stay = s;
                     p.Status = "Admitted";
                     b.Available = false;

@@ -5,9 +5,7 @@
 //============================================================
 
 /*====================== T O D O ============================
-Ryan   : ToString() of Stay.cs, CalculateCharges() for Adult, 
-         Senior & Child.cs 
-         Validations of Options 1 & 3
+Ryan   : Option 5 & 6 Problems: Admission Date has Time,  Bed Number Wrong
 
 Zhe Yu : Option 2 and 4
 
@@ -77,7 +75,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "6")
                 {
-                    RetrievePatientDetails(patientList);
+                    RetrievePatientDetails(patientList, bedList);
                 }
                 else if (option == "7")
                 {
@@ -94,7 +92,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "9")
                 {
-
+                    TransferPatientToAnotherBed(patientList, bedList);
                 }
                 else if (option == "10")
                 {
@@ -292,7 +290,8 @@ namespace PRG2_T08_Team2
                 Console.WriteLine("Search Successful {0}", b.WardNo);
                 if (b != null) { 
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
-                    DateTime admDate= Convert.ToDateTime(Console.ReadLine());
+                    //Issue with Time at the end
+                    DateTime admDate= Convert.ToDateTime(Console.ReadLine()).Date;
 
                     Stay s = new Stay(admDate, p);
 
@@ -377,19 +376,83 @@ namespace PRG2_T08_Team2
             {
                 if (bedList[i+1].BedNo == j)
                 {
-                    return bedList[i];
+                    return bedList[i+1];
                 }
             }
             return null;
         }
-        static void RetrievePatientDetails(List<Patient> patientList)
+        static void RetrievePatientDetails(List<Patient> patientList, List<Bed> bedList)
         {
             DisplayPatients(patientList);
             //Prompt for and read patient NRIC number
             Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
             Patient p = SearchPatient(patientList, pNo);
-            
+            if (p != null)
+            {
+                Console.WriteLine("Name of Patient: " + p.Name + "\n" + 
+                    "ID Number: " + p.Id + "\n" + "Citizenship Status: " + p.CitizenStatus + "\n" +
+                    "Gender: " + p.Gender + "\n" + "Status: " + p.Status + "\n\n");
+                if(p.Status == "Admitted")
+                {
+                    Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate + "\n" +
+                    "Discharge Date: " + p.Stay.DischargeDate + "\n");
+                    if (p.Stay.IsPaid == true)
+                    {
+                        Console.WriteLine("Payment Status: Paid");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Payment Status: Unpaid");
+                    }
+                    Console.WriteLine("======================\n");
+                }
+                for (int i = 0; i < p.Stay.BedStayList.Count; i++)
+                {
+                    if (p.Stay.AdmittedDate == p.Stay.BedStayList[i].StartBedStay)
+                    {
+                        Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
+                        //ISSUE with this
+                        Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
+                        if(p.Stay.BedStayList[i].Bed is ClassABed)
+                        {
+                            Console.WriteLine("Ward Class: A");
+                        }
+                        else if (p.Stay.BedStayList[i].Bed is ClassBBed)
+                        {
+                            Console.WriteLine("Ward Class: B");
+                        }
+                        else if (p.Stay.BedStayList[i].Bed is ClassCBed)
+                        {
+                            Console.WriteLine("Ward Class: C");
+                        }
+                        Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay);
+                        Console.WriteLine("End of Bed Stay: " + p.Stay.BedStayList[i].EndBedStay);
+                    }
+                }
+            }
+        }
+        static void TransferPatientToAnotherBed(List<Patient> patientList, List<Bed> bedList)
+        {
+            foreach (Patient pa in patientList)
+            {
+                if (pa.Status == "Admitted")
+                {
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                        "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                    pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
+                    Stay s = pa.Stay;
+                    Console.Write("Enter Patient ID Number: ");
+                    string pNo = Console.ReadLine();
+                   
+                    DisplayAllBeds(bedList);
+                    Console.Write("Select Bed to transfer to: ");
+                    int newBNo = Convert.ToInt32(Console.ReadLine());
+                    Bed b = SearchBed(bedList, newBNo);
+
+                }
+            }
         }
 
         // Zhe Yu's Methods //

@@ -80,6 +80,7 @@ namespace PRG2_T08_Team2
                 else if (option == "7")
                 {
                     Console.WriteLine("Option 7 Add Medical record entry");
+                    DisplayPatients(patientList);
                     
                 }
                 else if (option == "8")
@@ -516,11 +517,39 @@ namespace PRG2_T08_Team2
 
 
         //For option 7
-        static void AddMedicalRecord()
+        static void AddMedicalRecord(List<Patient> patientlist)
         {
+            //Initalise Patient
+            Patient MedRecord = null;
+            //prompt user to enter patient ID number
             Console.Write("Enter patient ID number: ");
             string patientid = Console.ReadLine();
             //Retrieve the patient
+            foreach(Patient p in patientlist)
+            {
+                if (patientid == p.Id)
+                {
+                    MedRecord = p;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Patient Id. Please try again");
+                }
+            }
+            Console.Write("Patient temperature: ");
+            double temperature = Convert.ToDouble(Console.Readline());
+            Console.Write("Please enter patient observation: ");
+            string diagonsis = Console.ReadLine();
+            DateTime test = new DateTime(2010, 10, 13);
+            MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, test);
+            MedicalRecord.Add(newrecord);
+            foreach (MedicalRecord m in MedicalRecordList)
+            {
+                Console.WriteLine(m);
+            }
+
+
         }
 
     }

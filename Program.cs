@@ -439,15 +439,15 @@ namespace PRG2_T08_Team2
                         "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
                     Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
                     pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
-                    Stay s = pa.Stay;
                     Console.Write("Enter Patient ID Number: ");
                     string pNo = Console.ReadLine();
-                   
+                    Stay s = pa.Stay;
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
                     Bed b = SearchBed(bedList, newBNo);
-
+                    Console.Write("Date of transfer [DD/MM/YYYY]: ");
+                    DateTime transferDate = Convert.ToDateTime(Console.ReadLine()).Date;
                 }
             }
         }

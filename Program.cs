@@ -300,10 +300,8 @@ namespace PRG2_T08_Team2
                 Console.Write("Select bed to stay: ");
                 int index = Convert.ToInt32(Console.ReadLine());
                 //Bed b = SearchBed(bedList, bedNo);
-                
-        
-                if (bedList.Count<=index)
-                {
+                if (index <=bedList.Count)
+                {                                                                                                                                                                                                                                                   
                     Bed b = bedList[index - 1];
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
@@ -460,7 +458,7 @@ namespace PRG2_T08_Team2
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
-                    Bed b = SearchBed(bedList, newBNo);
+                    Bed b = bedList[newBNo - 1];
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
                     b.Available = false;
@@ -686,13 +684,6 @@ namespace PRG2_T08_Team2
         }
 
 
-
-
-
-
-
-
-
         //For option 7
         static void AddMedicalRecord(List<Patient> patientlist)
         {
@@ -727,9 +718,6 @@ namespace PRG2_T08_Team2
 
 
             }
-
-
-
         }
 
         //For option 8 

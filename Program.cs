@@ -830,7 +830,10 @@ namespace PRG2_T08_Team2
         }
         static void DischargePayment(List<Patient> patientlist, List<Bed> bList)
         {
-            double totalcharges = 0;
+            double adailyrate = 500;
+            double bdailyrate = 300;
+            double cdailyrate = 100;
+            double total = 0;
             int counter = 1;
             Console.Write("Enter patient ID number to discharge: ");
             string patientid = Console.ReadLine();
@@ -869,13 +872,17 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Ward Number: {0}", bes.Bed.WardNo);
                         Console.WriteLine("Start of bed stay: ", p.Stay.AdmittedDate);
                         Console.WriteLine("End of bed stay: {0}", bes.EndBedStay);
-                       
-                        
+                        int staydays = (Convert.ToDateTime(bes.EndBedStay) - Convert.ToDateTime(bes.StartBedStay)).Days;
+
                         if (bes.Bed is ClassABed)
                         {
                             ClassABed abed = (ClassABed)bes.Bed;
                             Console.WriteLine("Ward Class: A");
                             Console.WriteLine("Accompanying Person: {0} ", abed.AccompanyingPerson);
+                            if (abed.AccompanyingPerson == true)
+                            {
+                                total = total + 100;
+                            }
                         }
 
                         else if (bes.Bed is ClassBBed)
@@ -883,6 +890,14 @@ namespace PRG2_T08_Team2
                             ClassBBed bbed = (ClassBBed)bes.Bed;
                             Console.WriteLine("Ward Class: B");
                             Console.WriteLine("Air con: {0}", bbed.AirCon);
+                            if (bbed.AirCon == true && staydays>=8)
+                            {
+                                total = total + 100; 
+                            }
+                            else if (bbed.AirCon == true)
+                            {
+                                total = total + 50;
+                            }
                         }
 
                         else if (bes.Bed is ClassCBed)
@@ -890,17 +905,23 @@ namespace PRG2_T08_Team2
                             ClassCBed cbed = (ClassCBed)bes.Bed;
                             Console.WriteLine("Ward Class: C");
                             Console.WriteLine("Portable TV {0}", cbed.PortableTv);
+                            if (cbed.PortableTv == true)
+                            {
+                                total = total + 30;
+                            }
                         }
                         Console.WriteLine();
-                        int staydays = (Convert.ToDateTime(bes.EndBedStay) - Convert.ToDateTime(bes.StartBedStay)).Days;
+                       
                         Console.WriteLine("Number of days stayed: {0}", staydays);
                         bes.Bed.Available = true;
 
                         counter++;
+                        if (bes)
+
 
                     }
                     Console.WriteLine("============");
-                    Console.WriteLine("Total Charges pending: {0}", )
+                    Console.WriteLine("Total Charges pending: {0}");
 
                     
                     
@@ -913,10 +934,7 @@ namespace PRG2_T08_Team2
 
 
         }
-        static void charges()
-        {
-
-        }
+        
 
     } 
 }

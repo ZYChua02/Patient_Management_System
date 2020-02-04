@@ -118,7 +118,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "12")
                 {
-
+                    DisplayPMinfo();
                 }
                 else if (option == "0")
                 {
@@ -254,8 +254,9 @@ namespace PRG2_T08_Team2
             }
             Console.Write("Enter Gender [M/F]: ");
             string g = Console.ReadLine().Trim().ToUpper();
-            
-            if (g != "M" && g != "F") {
+
+            if (g != "M" && g != "F")
+            {
                 Console.WriteLine("Incorrect Input type! Enter a character either M or F!");
                 return;
             }
@@ -284,7 +285,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line =  n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -320,14 +321,14 @@ namespace PRG2_T08_Team2
         //validation
         public static bool readID(string id)
         {
-            
+
             if (id.Length == 9 && Char.IsLetter(id[0]) && Char.IsLetter(id[8]))
             {
-                for (int i = 1; i < id.Length -1; i++)
+                for (int i = 1; i < id.Length - 1; i++)
                 {
                     if (!Char.IsDigit(id[i]))
                     {
-            
+
                         return false;
                     }
                 }
@@ -351,8 +352,8 @@ namespace PRG2_T08_Team2
                 Console.Write("Select bed to stay: ");
                 int index = Convert.ToInt32(Console.ReadLine());
                 //Bed b = SearchBed(bedList, bedNo);
-                if (index <=bedList.Count && index > 0)
-                {                                                                                                                                                                                                                                                   
+                if (index <= bedList.Count && index > 0)
+                {
                     Bed b = bedList[index - 1];
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
@@ -466,26 +467,26 @@ namespace PRG2_T08_Team2
                 //May have issue
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)
                 {
-                    
-                        Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
-                        
-                        Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
-                        if (p.Stay.BedStayList[i].Bed is ClassABed)
-                        {
-                            Console.WriteLine("Ward Class: A");
-                        }
-                        else if (p.Stay.BedStayList[i].Bed is ClassBBed)
-                        {
-                            Console.WriteLine("Ward Class: B");
-                        }
-                        else if (p.Stay.BedStayList[i].Bed is ClassCBed)
-                        {
-                            Console.WriteLine("Ward Class: C");
-                        }
-                        string startDate = DateToString(p.Stay.BedStayList[i].StartBedStay);
-                        Console.WriteLine("Start of Bed Stay: " + startDate);
-                        string endDate = DateToString(p.Stay.BedStayList[i].EndBedStay);
-                        Console.WriteLine("End of Bed Stay: " + endDate);
+
+                    Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
+
+                    Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
+                    if (p.Stay.BedStayList[i].Bed is ClassABed)
+                    {
+                        Console.WriteLine("Ward Class: A");
+                    }
+                    else if (p.Stay.BedStayList[i].Bed is ClassBBed)
+                    {
+                        Console.WriteLine("Ward Class: B");
+                    }
+                    else if (p.Stay.BedStayList[i].Bed is ClassCBed)
+                    {
+                        Console.WriteLine("Ward Class: C");
+                    }
+                    string startDate = DateToString(p.Stay.BedStayList[i].StartBedStay);
+                    Console.WriteLine("Start of Bed Stay: " + startDate);
+                    string endDate = DateToString(p.Stay.BedStayList[i].EndBedStay);
+                    Console.WriteLine("End of Bed Stay: " + endDate);
                 }
             }
             else
@@ -569,13 +570,13 @@ namespace PRG2_T08_Team2
                     clcb.PortableTv = CheckOption(pTV);
                     transferBed = new BedStay(transferDate, clcb);
                 }
-                
+
             }
             else
             {
                 Console.WriteLine("No such bed found!");
             }
-            
+
         }
         static void DisplayCurrencyExchange()
         {
@@ -611,9 +612,9 @@ namespace PRG2_T08_Team2
             }
         }
 
-    
 
-     
+
+
         // Zhe Yu's Methods //
 
         //For option 2
@@ -890,16 +891,16 @@ namespace PRG2_T08_Team2
         }
         static void DischargePayment(List<Patient> patientlist, List<Bed> bList)
         {
-             double total = 0;
+            double total = 0;
             int counter = 1;
             Console.Write("Enter patient ID number to discharge: ");
             string patientid = Console.ReadLine();
             Console.Write("Date of discharge (DD/MM/YYYY): ");
             DateTime disdate = Convert.ToDateTime(Console.ReadLine()).Date;
-            
-            foreach(Patient p in patientlist)
+
+            foreach (Patient p in patientlist)
             {
-                if(p.Id == patientid)
+                if (p.Id == patientid)
                 {
                     Console.WriteLine("Name of patient: {0}", p.Name);
                     Console.WriteLine("ID number: {0}", p.Id);
@@ -920,11 +921,11 @@ namespace PRG2_T08_Team2
                     {
                         Console.WriteLine("Payment status: Unpaid");
                     }
-                    
-                    
-                    foreach(BedStay bes in p.Stay.BedStayList)
+
+
+                    foreach (BedStay bes in p.Stay.BedStayList)
                     {
-                      
+
                         Console.WriteLine("======Bed #{0}=======", counter);
                         Console.WriteLine("Ward Number: {0}", bes.Bed.WardNo);
                         Console.WriteLine("Start of bed stay: {0}", bes.StartBedStay);
@@ -953,9 +954,9 @@ namespace PRG2_T08_Team2
                             ClassBBed bbed = (ClassBBed)bes.Bed;
                             Console.WriteLine("Ward Class: B");
                             Console.WriteLine("Air con: {0}", bbed.AirCon);
-                            if (bbed.AirCon == true && staydays>=8)
+                            if (bbed.AirCon == true && staydays >= 8)
                             {
-                                total = total + 100; 
+                                total = total + 100;
                             }
                             else if (bbed.AirCon == true)
                             {
@@ -976,30 +977,30 @@ namespace PRG2_T08_Team2
                             }
                             double classcrate = bes.Bed.DailyRate;
                             total = classcrate * staydays;
-                            
+
                         }
                         Console.WriteLine();
                         Console.WriteLine("Number of days stayed: {0}", staydays);
                         bes.Bed.Available = true;
                         counter++;
-                        
+
 
 
                     }
-                  
+
 
                     Console.WriteLine("============");
-                    total = p.CalculateCharges() + total; 
+                    total = p.CalculateCharges() + total;
                     Console.WriteLine("Total Charges pending: {0}", total);
 
-                    
-                    
-                   
+
+
+
                 }
-                
+
 
             }
-           
+
 
 
         }
@@ -1010,43 +1011,46 @@ namespace PRG2_T08_Team2
 
                 client.BaseAddress = new Uri("https://api.data.gov.sg");
 
-            // HTTP GET
-            Task<HttpResponseMessage> responseTask
-                = client.GetAsync("/v1/environment/pm25");
-            responseTask.Wait();
+                // HTTP GET
+                Task<HttpResponseMessage> responseTask
+                    = client.GetAsync("/v1/environment/pm25");
+                responseTask.Wait();
 
-            // Response
-            HttpResponseMessage result = responseTask.Result;
-            if (result.IsSuccessStatusCode)
-            {
-                Task<string> readTask = result.Content.ReadAsStringAsync();
-                readTask.Wait();
-
-                string data = readTask.Result;
-                RootObject obj = JsonConvert.DeserializeObject<RootObject>(data);
-
-                // header
-                Console.WriteLine("Region\t");
-                foreach (var item in obj.items)
+                // Response
+                HttpResponseMessage result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
                 {
-                    for (int i = 0; i < item.RegionMetaData.Count; i++)
+                    Task<string> readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+
+                    string data = readTask.Result;
+                    RootObject obj = JsonConvert.DeserializeObject<RootObject>(data);
+
+                   
+                    foreach (var item in obj.items)
                     {
-                        string region = item.RegionMetaData[i].Carpark_number;
-                        int availLots =
-                            Convert.ToInt32(item.Carpark_data[i].Carpark_info[0].Lots_available);
-                        Console.WriteLine($"{carparkNumber}\t{availLots}");
+                        // header
+                        Console.WriteLine("Timestamp: " + item.timestamp);
+                        Console.WriteLine("West: " + item.readings.pm25_one_hourly.west);
+                        Console.WriteLine("East: " + item.readings.pm25_one_hourly.east);
+                        Console.WriteLine("Central: " + item.readings.pm25_one_hourly.central);
+                        Console.WriteLine("South: " + item.readings.pm25_one_hourly.south);
+                        Console.WriteLine("North: " + item.readings.pm25_one_hourly.north);
+
+
+
+
 
                     }
 
 
-
                 }
 
 
-                }
-
-            
             }
+        }
+    }
+}
 
 
 

@@ -452,9 +452,14 @@ namespace PRG2_T08_Team2
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine()).Date;
                     b.Available = false;
-                    
-
-                    BedStay transfBed = new BedStay(transferDate, b);
+                    for (int i = 0; i < pa.Stay.BedStayList.Count; i++)
+                    {
+                        pa.Stay.BedStayList[i].EndBedStay = transferDate;
+                    }
+                    BedStay transferBed = new BedStay(transferDate, b);
+                    s.AddBedStay(transferBed);
+                    Console.WriteLine(pa.Name + " will be transferred to Ward " + b.WardNo + 
+                        " Bed " + b.BedNo + " on " + transferDate + ".\n");
                 }
             }
         }

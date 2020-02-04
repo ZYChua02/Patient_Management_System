@@ -451,6 +451,10 @@ namespace PRG2_T08_Team2
                     Bed b = SearchBed(bedList, newBNo);
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine()).Date;
+                    b.Available = false;
+                    
+
+                    BedStay transfBed = new BedStay(transferDate, b);
                 }
             }
         }

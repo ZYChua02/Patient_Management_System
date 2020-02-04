@@ -523,13 +523,7 @@ namespace PRG2_T08_Team2
             {
                 return;
             }
-            for (int i = 0; i < p.Stay.BedStayList.Count; i++)
-            {
-                if(p.Stay.BedStayList[i].EndBedStay == null)
-                {
-                    p.Stay.BedStayList[i].Bed.Available = true;
-                }
-            }
+            
             Stay s = p.Stay;
             
             DisplayAllBeds(bedList);
@@ -541,12 +535,13 @@ namespace PRG2_T08_Team2
                 Bed b = bedList[newBNo - 1];
                
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
-                DateTime transferDate;
-                if (!DateTime.TryParse(Console.ReadLine(), out transferDate))
-                {
-                    Console.WriteLine("Invalid date. Please match the requested format.");
-                    return;
-                }
+                DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
+                //DateTime transferDate;
+                //if (!DateTime.TryParse(Console.ReadLine(), out transferDate))
+                //{
+                //    Console.WriteLine("Invalid date. Please match the requested format.");
+                //    return;
+                //}
                 
                 b.Available = false;
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)

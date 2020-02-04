@@ -460,7 +460,7 @@ namespace PRG2_T08_Team2
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
-                    Bed b = SearchBed(bedList, newBNo);
+                    Bed b = bedList[newBNo - 1];
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
                     b.Available = false;

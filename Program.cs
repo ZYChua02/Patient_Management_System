@@ -85,14 +85,23 @@ namespace PRG2_T08_Team2
                 {
                     Console.WriteLine("Option 7 Add Medical record entry");
                     DisplayPatients(patientList);
-                    AddMedicalRecord(patientList, StayList);
+                    AddMedicalRecord(patientList);
 
                 }
                 else if (option == "8")
                 {
                     Console.WriteLine("Option 8 View Patient Medical Record");
                     DisplayPatients(patientList);
-                    ViewMedicalRecords(patientList, StayList);
+                    //Get patient ID
+                    Console.Write("Enter patient ID number: ");
+                    string patientid = Console.ReadLine();
+                    foreach(Patient p in patientList)
+                    {
+                        if (p.Id == patientid)
+                        {
+                            ViewMedicalRecords(p);
+                        }
+                    }
                 }
                 else if (option == "9")
                 {
@@ -289,11 +298,13 @@ namespace PRG2_T08_Team2
                 DisplayAllBeds(bedList);
                 //Prompt for and read preferred bed
                 Console.Write("Select bed to stay: ");
-                int bedNo = Convert.ToInt32(Console.ReadLine());
-                Bed b = SearchBed(bedList, bedNo);
+                int index = Convert.ToInt32(Console.ReadLine());
+                //Bed b = SearchBed(bedList, bedNo);
+                
                 Console.WriteLine("Search Successful {0}", b.WardNo);
-                if (b != null)
+                if (bedList.Count<=index)
                 {
+                    Bed b = bedList[index - 1];
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
                     DateTime admDate = Convert.ToDateTime(Console.ReadLine()).Date;
@@ -381,7 +392,7 @@ namespace PRG2_T08_Team2
             {
                 if (bedList[i + 1].BedNo == j)
                 {
-                    return bedList[i+1];
+                    return bedList[i + 1];
                 }
             }
             return null;
@@ -402,7 +413,7 @@ namespace PRG2_T08_Team2
                 {
                     Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate.ToString("dd/MM/yyyy") + "\n" +
                     "Discharge Date: " + p.Stay.DischargeDate + "\n");
-                    
+
 
                     if (p.Stay.IsPaid == true)
                     {
@@ -687,7 +698,7 @@ namespace PRG2_T08_Team2
 
 
         //For option 7
-        static void AddMedicalRecord(List<Patient> patientlist, List<Stay> StayList)
+        static void AddMedicalRecord(List<Patient> patientlist)
         {
             //Initalise Patient
             Patient MedRecord = null;
@@ -706,13 +717,8 @@ namespace PRG2_T08_Team2
                     string diagonsis = Console.ReadLine();
                     DateTime today = DateTime.Now;
                     MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, today);
-                    Stay s = new Stay(today, MedRecord);
-                    StayList.Add(s);
-                    s.AddMedicalRecords(newrecord);
+                    p.Stay.AddMedicalRecords(newrecord);
                     break;
-
-
-
                 }
 
 
@@ -726,55 +732,36 @@ namespace PRG2_T08_Team2
         }
 
         //For option 8 
-        static void ViewMedicalRecords(List<Patient> patientlist, List<Stay> StayList)
+        static void ViewMedicalRecords(Patient p)
         {
-            //Get patient ID
-            Console.Write("Enter patient ID number: ");
-            string patientid = Console.ReadLine();
-            //Initalise Patient
-            Patient viewmedrecord = null;
+            
+            
             int counter = 1;
-            foreach (Patient p in patientlist)
+
+            
+
+            Console.WriteLine("Name of patient: {0}", p.Name);
+            Console.WriteLine("ID number: {0}", p.Id);
+            Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
+            Console.WriteLine("Gender: {0}", p.Gender);
+            Console.WriteLine("Status: {0}", p.Status);
+            Console.WriteLine("=====Stay=====");
+            Console.WriteLine("Admission date: {0}", p.Stay.AdmittedDate);
+            Console.WriteLine("Discharge date: {0}", p.Stay.DischargeDate);
+            foreach (MedicalRecord m in p.Stay.MedicalRecordList)
             {
-                if (p.Id == patientid)
-                {
-                    viewmedrecord = p;
-                    Console.WriteLine("Name of patient: {0}", viewmedrecord.Name);
-                    Console.WriteLine("ID number: {0}", viewmedrecord.Id);
-                    Console.WriteLine("Citizenship status: {0}", viewmedrecord.CitizenStatus);
-                    Console.WriteLine("Gender: {0}", viewmedrecord.Gender);
-                    Console.WriteLine("Status: {0}", viewmedrecord.Status);
-                    foreach (Stay s in StayList)
-                    {
-                        if (s.Patient == viewmedrecord)
-                        {
-                            Console.WriteLine("=====Stay=====");
-                            Console.WriteLine("Admission date: {0}", s.AdmittedDate);
-                            Console.WriteLine("Discharge date: ", s.DischargeDate);
-                            foreach (MedicalRecord m in s.MedicalRecordList)
-                            {
-                                Console.WriteLine("======Record #{0} =======", counter);
-                                Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
-                                Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
-                                Console.WriteLine("Diganosis: {0}", m.Diagnosis);
-                                Console.WriteLine();
-                                counter = counter + 1;
-
-                            }
-                        }
-
-
-                    }
-
-                    break;
-                }
+                Console.WriteLine("======Record #{0} =======", counter);
+                Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
+                Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
+                Console.WriteLine("Diganosis: {0}", m.Diagnosis);
+                Console.WriteLine();
+                counter = counter + 1;
 
             }
 
-
-
-
+            }
         }
+
         //static void DischargePayment(List<Patient> patientlist)
         //{
         //    //Initalise patient
@@ -791,12 +778,13 @@ namespace PRG2_T08_Team2
         //    {
         //        if (p.Id ==  )
         //    }
-            
+
 
         //}
 
 
 
 
-    }
+    
 }
+

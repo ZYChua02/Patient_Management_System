@@ -665,11 +665,12 @@ namespace PRG2_T08_Team2
                     Stay s = new Stay(today, MedRecord);
                     StayList.Add(s);
                     s.AddMedicalRecords(newrecord);
+                    break;
                     
 
 
                 }
-                break;
+               
 
 
 
@@ -683,8 +684,10 @@ namespace PRG2_T08_Team2
         //For option 8 
         static void ViewMedicalRecords(List<Patient> patientlist, List<Stay> StayList)
         {
+            //Get patient ID
             Console.Write("Enter patient ID number: ");
             string patientid = Console.ReadLine();
+            //Initalise Patient
             Patient viewmedrecord = null;
             int counter = 1;
             foreach (Patient p in patientlist)
@@ -699,19 +702,24 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Status: {0}", viewmedrecord.Status);
                     foreach (Stay s in StayList)
                     {
-                        Console.WriteLine("=====Stay=====");
-                        Console.WriteLine("Admission date: {0}", s.AdmittedDate);
-                        Console.WriteLine("Discharge date: ", s.DischargeDate);
-                        foreach (MedicalRecord m in s.MedicalRecordList)
+                        if (s.Patient == viewmedrecord)
                         {
-                            Console.WriteLine("======Record #{0} =======", counter);
-                            Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
-                            Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
-                            Console.WriteLine("Diganosis: {0}", m.Diagnosis);
-                            Console.WriteLine();
-                            counter = counter + 1;
-                            
+                            Console.WriteLine("=====Stay=====");
+                            Console.WriteLine("Admission date: {0}", s.AdmittedDate);
+                            Console.WriteLine("Discharge date: ", s.DischargeDate);
+                            foreach (MedicalRecord m in s.MedicalRecordList)
+                            {
+                                Console.WriteLine("======Record #{0} =======", counter);
+                                Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
+                                Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
+                                Console.WriteLine("Diganosis: {0}", m.Diagnosis);
+                                Console.WriteLine();
+                                counter = counter + 1;
+
+                            }
                         }
+                     
+                        
                     }
 
                 break;

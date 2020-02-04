@@ -240,7 +240,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -256,7 +256,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -289,9 +289,8 @@ namespace PRG2_T08_Team2
                 Console.Write("Select bed to stay: ");
                 int bedNo = Convert.ToInt32(Console.ReadLine());
                 Bed b = SearchBed(bedList, bedNo);
-                Console.WriteLine("Search Successful {0}", b.WardNo);
-                if (b != null)
-                {
+               
+                if (b != null) { 
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
                     DateTime admDate = Convert.ToDateTime(Console.ReadLine()).Date;
@@ -377,7 +376,7 @@ namespace PRG2_T08_Team2
         {
             for (int i = 0; i < bedList.Count; i++)
             {
-                if (bedList[i + 1].BedNo == j)
+                if (bedList[i+1].BedNo == j)
                 {
                     return bedList[i+1];
                 }
@@ -457,7 +456,11 @@ namespace PRG2_T08_Team2
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
-                    Bed b = SearchBed(bedList, newBNo);
+                    Bed b =  bedList[newBNo-1];
+                    if (b == null)
+                    {
+                        Console.WriteLine("Hi");
+                    }
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
                     b.Available = false;

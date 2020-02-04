@@ -332,7 +332,7 @@ namespace PRG2_T08_Team2
                     else if (b is ClassCBed)
                     {
                         Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
-                        string pTV = Console.ReadLine();
+                        string pTV = Console.ReadLine().ToUpper();
                         //ClassCBed ccb = (ClassCBed)b;
                         ClassCBed clcb = new ClassCBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
                         clcb.PortableTv = CheckOption(pTV);

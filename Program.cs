@@ -114,7 +114,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "11")
                 {
-                    //DisplayCurrencyExchange();
+                    DisplayCurrencyExchange();
                 }
                 else if (option == "12")
                 {
@@ -526,7 +526,12 @@ namespace PRG2_T08_Team2
                 Bed b = bedList[newBNo - 1];
 
                 Console.Write("Date of transfer [DD/MM/YYYY]: ");
-                DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
+                DateTime transferDate;
+                if (!DateTime.TryParse(Console.ReadLine(), out transferDate))
+                {
+                    Console.WriteLine("Invalid date. Please match the requested format.");
+                    return;
+                }
 
                 b.Available = false;
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)
@@ -572,40 +577,43 @@ namespace PRG2_T08_Team2
             }
             
         }
-        //static void DisplayCurrencyExchange()
-        //{
-        //    //https://api.exchangeratesapi.io/latest?base=SGD
+        static void DisplayCurrencyExchange()
+        {
+            Currency currency;
+            Console.WriteLine("Option 11. Display currencies exchange rate");
+            string response = "/latest?base=SGD";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://api.exchangeratesapi.io");
+                    Task<HttpResponseMessage> responseTask = client.GetAsync(response);
+                    responseTask.Wait();
+                    HttpResponseMessage result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        Task<string> readTask = result.Content.ReadAsStringAsync();
+                        readTask.Wait();
+                        string data = readTask.Result;
+                        currency = JsonConvert.DeserializeObject<Currency>(data);
+                        Console.WriteLine("SGD 1 can be exchanged for the following: ");
+                        foreach (var p in currency.rates.GetType().GetProperties())
+                        {
+                            //format to max 2dp
+                            Console.WriteLine(p.Name + ": " + Convert.ToDouble(p.GetValue(currency.rates)).ToString("#,##0.00"));
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Unable to get currency information. Did you not connnect to the Internet?");
+            }
+        }
 
-        //    Rates currency;
-        //    Console.WriteLine("Option 11. Display currencies exchange rate");
-        //    string response = "/latest?base=SGD";
-        //    try
-        //    {
-        //        using (HttpClient client = new HttpClient())
-        //        {
-        //            client.BaseAddress = new Uri("https://api.exchangeratesapi.io");
-        //            Task<HttpResponseMessage> responseTask = client.GetAsync(response);
-        //            responseTask.Wait();
-        //            HttpResponseMessage result = responseTask.Result;
-        //            if (result.IsSuccessStatusCode)
-        //            {
-        //                Task<string> readTask = result.Content.ReadAsStringAsync();
-        //                readTask.Wait();
-        //                string data = readTask.Result;
-        //                currency = JsonConvert.DeserializeObject<Rates>(data);
-        //                Console.WriteLine("1 SGD can be exchanged for: ");
-        //                foreach (var property in currency.rates.GetType().GetProperties())
-        //                {
-        //                    Console.WriteLine(property.Name + ": " + Convert.ToDouble(property.GetValue(currency.rates)).ToString("#,##0.00"));
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        Console.WriteLine("Unable to get currency information. Did you not connnect to the Internet?");
-        //    }
-        //}
+    
+
+     
         // Zhe Yu's Methods //
 
         //For option 2

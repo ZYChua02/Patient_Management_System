@@ -724,7 +724,7 @@ namespace PRG2_T08_Team2
         }
 
         //For option 8 
-        static void ViewMedicalRecords(List<Patient> patientlist, List<Stay> StayList)
+        static void ViewMedicalRecords(Patient P, List<Patient> patientlist)
         {
             //Get patient ID
             Console.Write("Enter patient ID number: ");
@@ -732,6 +732,26 @@ namespace PRG2_T08_Team2
             //Initalise Patient
             Patient viewmedrecord = null;
             int counter = 1;
+            foreach(Patient p in patientlist)
+            {
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             foreach (Patient p in patientlist)
             {
                 if (p.Id == patientid)

@@ -32,7 +32,7 @@ namespace PRG2_T08_Team2
         }
         //public abstract double CalculateCharges();
         
-        public virtual double CalculateCharges()
+        public double CalculateCharges()
         {
             double total = 0;
             foreach(BedStay bes in Stay.BedStayList)

@@ -6,7 +6,6 @@ namespace PRG2_T08_Team2
 {
     class Record
     {
-        
             public string End_of_month { get; set; }
             public string Preliminary { get; set; }
             public string Eur_sgd { get; set; }
@@ -31,5 +30,10 @@ namespace PRG2_T08_Team2
             public string Aed_sgd_100 { get; set; }
             public string Vnd_sgd_100 { get; set; }
             public string Timestamp { get; set; }
+
+        public Record(string eem, string prelim, string eur, string gbp, string usd, string aud, string cad, string cny, string hkd)
+        {
+
+        }
     }
 }

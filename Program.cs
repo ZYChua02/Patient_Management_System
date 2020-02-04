@@ -104,7 +104,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "11")
                 {
-
+                    DisplayCurrencyExchange();
                 }
                 else if (option == "12")
                 {

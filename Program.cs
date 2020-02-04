@@ -460,11 +460,12 @@ namespace PRG2_T08_Team2
                     }
                     Console.WriteLine("======================\n");
                 }
+                //May have issue
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)
                 {
                     
                         Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
-                        //ISSUE with this
+                        
                         Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
                         if (p.Stay.BedStayList[i].Bed is ClassABed)
                         {
@@ -547,10 +548,10 @@ namespace PRG2_T08_Team2
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://ictonejourney.com");
+                client.BaseAddress = new Uri("https://eservices.mas.gov.sg");
 
                 //HTTP GET: Goes to specified URI
-                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/books");
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6&limit=10&sort=end_of_month desc");
 
                 //wait for task to complete execution
                 responseTask.Wait();
@@ -914,7 +915,7 @@ namespace PRG2_T08_Team2
 
                     }
                     Console.WriteLine("============");
-                    Console.WriteLine("Total Charges pending: {0}", )
+                    Console.WriteLine("Total Charges pending: {0}", );
 
                     
                     

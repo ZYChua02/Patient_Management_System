@@ -301,7 +301,7 @@ namespace PRG2_T08_Team2
                 int index = Convert.ToInt32(Console.ReadLine());
                 //Bed b = SearchBed(bedList, bedNo);
                 
-                Console.WriteLine("Search Successful {0}", b.WardNo);
+                
                 if (bedList.Count<=index)
                 {
                     Bed b = bedList[index - 1];
@@ -386,18 +386,7 @@ namespace PRG2_T08_Team2
             }
             return null;
         }
-        static Bed SearchBed(List<Bed> bedList, int j)
-        {
-            for (int i = 0; i < bedList.Count; i++)
-            {
-                Console.WriteLine(i);
-                if (bedList[i].BedNo == j)
-                {
-                    return bedList[i];
-                }
-            }
-            return null;
-        }
+        
         static void RetrievePatientDetails(List<Patient> patientList, List<Bed> bedList)
         {
             DisplayPatients(patientList);

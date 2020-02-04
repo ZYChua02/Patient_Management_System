@@ -400,7 +400,6 @@ namespace PRG2_T08_Team2
             else
             {
                 Console.WriteLine("Patient not found!");
-                Console.WriteLine(p);
             }
         }
         static bool CheckOption(string opt)
@@ -483,9 +482,11 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Start of Bed Stay: " + startDate);
                         string endDate = DateToString(p.Stay.BedStayList[i].EndBedStay);
                         Console.WriteLine("End of Bed Stay: " + endDate);
-                        //ToString() EndBedStay?
-                    
                 }
+            }
+            else
+            {
+                Console.WriteLine("Patient not found!");
             }
         }
         static string DateToString(DateTime? date)
@@ -507,27 +508,40 @@ namespace PRG2_T08_Team2
             Console.Write("Enter patient ID number: ");
             string pNo = Console.ReadLine();
             Patient p = SearchPatient(patientList, pNo);
-            Stay s = p.Stay;
-            DisplayAllBeds(bedList);
-            Console.Write("Select Bed to transfer to: ");
-            int newBNo = Convert.ToInt32(Console.ReadLine());
-            if (newBNo <= bedList.Count && newBNo > 0)
+            if (p!= null)
             {
-                Bed b = bedList[newBNo - 1];
-            
-                Console.Write("Date of transfer [DD/MM/YYYY]: ");
-                DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
-
-                b.Available = false;
-                for (int i = 0; i < p.Stay.BedStayList.Count; i++)
+                Stay s = p.Stay;
+                DisplayAllBeds(bedList);
+                Console.Write("Select Bed to transfer to: ");
+                int newBNo = Convert.ToInt32(Console.ReadLine());
+                //validation to keep int entered in check
+                if (newBNo <= bedList.Count && newBNo > 0)
                 {
-                    p.Stay.BedStayList[i].EndBedStay = transferDate;
+                    Bed b = bedList[newBNo - 1];
+
+                    Console.Write("Date of transfer [DD/MM/YYYY]: ");
+                    DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
+
+                    b.Available = false;
+                    for (int i = 0; i < p.Stay.BedStayList.Count; i++)
+                    {
+                        p.Stay.BedStayList[i].EndBedStay = transferDate;
+                    }
+                    BedStay transferBed = new BedStay(transferDate, b);
+                    s.AddBedStay(transferBed);
+                    Console.WriteLine(p.Name + " will be transferred to Ward " + b.WardNo +
+                        " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
                 }
-                BedStay transferBed = new BedStay(transferDate, b);
-                s.AddBedStay(transferBed);
-                Console.WriteLine(p.Name + " will be transferred to Ward " + b.WardNo +
-                    " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
+                else
+                {
+                    Console.WriteLine("No such bed found!");
+                }
             }
+            else
+            {
+                Console.WriteLine("Patient not found!");
+            }
+            
         }
         static void DisplayCurrencyExchange()
         {

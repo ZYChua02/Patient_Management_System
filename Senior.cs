@@ -20,7 +20,8 @@ namespace PRG2_T08_Team2
         public override double CalculateCharges()
         {
             //NOT DONE: Need to associate with bedStayList
-            double charges = 0.0;
+            foreach (BedStay bes in p.Stay.)
+            //double charges = 0.0;
             return charges;
         }
 

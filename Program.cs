@@ -301,7 +301,7 @@ namespace PRG2_T08_Team2
                 int index = Convert.ToInt32(Console.ReadLine());
                 //Bed b = SearchBed(bedList, bedNo);
                 
-                Console.WriteLine("Search Successful {0}", b.WardNo);
+        
                 if (bedList.Count<=index)
                 {
                     Bed b = bedList[index - 1];
@@ -735,12 +735,7 @@ namespace PRG2_T08_Team2
         //For option 8 
         static void ViewMedicalRecords(Patient p)
         {
-            
-            
             int counter = 1;
-
-            
-
             Console.WriteLine("Name of patient: {0}", p.Name);
             Console.WriteLine("ID number: {0}", p.Id);
             Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
@@ -748,7 +743,6 @@ namespace PRG2_T08_Team2
             Console.WriteLine("Status: {0}", p.Status);
             Console.WriteLine("=====Stay=====");
             Console.WriteLine("Admission date: {0}", p.Stay.AdmittedDate);
-            Console.WriteLine("Discharge date: {0}", p.Stay.DischargeDate);
             foreach (MedicalRecord m in p.Stay.MedicalRecordList)
             {
                 Console.WriteLine("======Record #{0} =======", counter);

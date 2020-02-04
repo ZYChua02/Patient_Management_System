@@ -517,7 +517,9 @@ namespace PRG2_T08_Team2
             {
                 return;
             }
+            
             Stay s = p.Stay;
+            
             DisplayAllBeds(bedList);
             Console.Write("Select Bed to transfer to: ");
             int newBNo = Convert.ToInt32(Console.ReadLine());
@@ -525,24 +527,23 @@ namespace PRG2_T08_Team2
             if (newBNo <= bedList.Count && newBNo > 0)
             {
                 Bed b = bedList[newBNo - 1];
-
-                Console.Write("Date of transfer [DD/MM/YYYY]: ");
+               
+                    Console.Write("Date of transfer [DD/MM/YYYY]: ");
                 DateTime transferDate;
                 if (!DateTime.TryParse(Console.ReadLine(), out transferDate))
                 {
                     Console.WriteLine("Invalid date. Please match the requested format.");
                     return;
                 }
-
+                
                 b.Available = false;
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)
                 {
                     p.Stay.BedStayList[i].EndBedStay = transferDate;
                 }
                 BedStay transferBed = new BedStay(transferDate, b);
-                s.AddBedStay(transferBed);
-                Console.WriteLine(p.Name + " will be transferred to Ward " + b.WardNo +
-                    " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
+
+               
                 if (b is ClassABed)
                 {
                     Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
@@ -570,7 +571,9 @@ namespace PRG2_T08_Team2
                     clcb.PortableTv = CheckOption(pTV);
                     transferBed = new BedStay(transferDate, clcb);
                 }
-
+                s.AddBedStay(transferBed);
+                Console.WriteLine(p.Name + " will be transferred to Ward " + b.WardNo +
+                   " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
             }
             else
             {

@@ -55,7 +55,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "2")
                 {
-                    
+
                     Console.WriteLine("Option 2. View All Beds");
                     DisplayAllBeds(bedList);
                 }
@@ -82,7 +82,7 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Option 7 Add Medical record entry");
                     DisplayPatients(patientList);
                     AddMedicalRecord(patientList, StayList);
-                    
+
                 }
                 else if (option == "8")
                 {
@@ -117,22 +117,22 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Invalid Option! Please try again!");
                 }
 
-                
+
             }
             Console.ReadKey();
         }
-        
+
         //Menu 
         static void DisplayMenu()
         {
             //Header of Menu
             Console.WriteLine("\n================ M E N U =================");
-            List<string> menu = new List<string> 
+            List<string> menu = new List<string>
             {"Exit", "View all patients","View All Beds","Register Patient",
             "Add new bed","Register a Hospital Stay","Retrieve Patient Details","Add Medical Record Entry",
-            "View Medical Records", "Transfer patient to another bed","Discharge and Payment", 
+            "View Medical Records", "Transfer patient to another bed","Discharge and Payment",
             "Display Currencies Exchange Rate","Display PM 2.5 Information"};
-            
+
             /*Loop through the list and print the respective string 
               corresponding to the option, starting from 1 (Display Exit at the bottom)*/
             for (int i = 1; i < menu.Count; i++)
@@ -142,11 +142,11 @@ namespace PRG2_T08_Team2
 
             //Line of code to display "Exit" string
             Console.WriteLine("[0] " + menu[0] + "\n");
-           
+
         }
 
         // Ryan's Methods //
-        static void InitPatients(List <Patient> patientList)
+        static void InitPatients(List<Patient> patientList)
         {
             string[] patientRaw = File.ReadAllLines(@"patients.csv");
             for (int i = 1; i < patientRaw.Length; i++)
@@ -161,7 +161,7 @@ namespace PRG2_T08_Team2
                  * pData[5] : CDA/Medisave Balance (if any)
                  */
 
-                
+
                 int age = Convert.ToInt32(pData[2]);
                 string cs = pData[4];
                 string stat = "Registered";
@@ -209,7 +209,7 @@ namespace PRG2_T08_Team2
                     pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
             }
         }
-        static void RegisterPatient(List <Patient> patientList)
+        static void RegisterPatient(List<Patient> patientList)
         {
             Console.WriteLine("Option 3. Register Patient");
             Console.Write("Enter Name: ");
@@ -224,7 +224,7 @@ namespace PRG2_T08_Team2
             string cs = Console.ReadLine().ToUpper();
             string stat = "Registered";
             double subsidy = 0.0;
-            
+
             if (age >= 0 && age <= 12)
             {
                 // only if condition is met, subsidy will be updated accordingly
@@ -277,9 +277,9 @@ namespace PRG2_T08_Team2
             //Prompt for and read patient NRIC number
             Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
-                       
+
             Patient p = SearchPatient(patientList, pNo);
-           
+
             if (p != null)
             {
                 DisplayAllBeds(bedList);
@@ -288,10 +288,11 @@ namespace PRG2_T08_Team2
                 int bedNo = Convert.ToInt32(Console.ReadLine());
                 Bed b = SearchBed(bedList, bedNo);
                 Console.WriteLine("Search Successful {0}", b.WardNo);
-                if (b != null) { 
+                if (b != null)
+                {
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
-                    DateTime admDate= Convert.ToDateTime(Console.ReadLine()).Date;
+                    DateTime admDate = Convert.ToDateTime(Console.ReadLine()).Date;
 
                     Stay s = new Stay(admDate, p);
 
@@ -363,7 +364,7 @@ namespace PRG2_T08_Team2
         {
             foreach (Patient p in patientList)
             {
-                if(p.Id == j)
+                if (p.Id == j)
                 {
                     return p;
                 }
@@ -374,9 +375,9 @@ namespace PRG2_T08_Team2
         {
             for (int i = 0; i < bedList.Count; i++)
             {
-                if (bedList[i+1].BedNo == j)
+                if (bedList[i + 1].BedNo == j)
                 {
-                    return bedList[i+1];
+                    return bedList[i + 1];
                 }
             }
             return null;
@@ -390,10 +391,10 @@ namespace PRG2_T08_Team2
             Patient p = SearchPatient(patientList, pNo);
             if (p != null)
             {
-                Console.WriteLine("Name of Patient: " + p.Name + "\n" + 
+                Console.WriteLine("Name of Patient: " + p.Name + "\n" +
                     "ID Number: " + p.Id + "\n" + "Citizenship Status: " + p.CitizenStatus + "\n" +
                     "Gender: " + p.Gender + "\n" + "Status: " + p.Status + "\n\n");
-                if(p.Status == "Admitted")
+                if (p.Status == "Admitted")
                 {
                     Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate.ToString("dd/MM/yyyy") + "\n" +
                     "Discharge Date: " + p.Stay.DischargeDate + "\n");
@@ -416,7 +417,7 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
                         //ISSUE with this
                         Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
-                        if(p.Stay.BedStayList[i].Bed is ClassABed)
+                        if (p.Stay.BedStayList[i].Bed is ClassABed)
                         {
                             Console.WriteLine("Ward Class: A");
                         }
@@ -462,7 +463,7 @@ namespace PRG2_T08_Team2
                     }
                     BedStay transferBed = new BedStay(transferDate, b);
                     s.AddBedStay(transferBed);
-                    Console.WriteLine(pa.Name + " will be transferred to Ward " + b.WardNo + 
+                    Console.WriteLine(pa.Name + " will be transferred to Ward " + b.WardNo +
                         " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
                 }
             }
@@ -529,7 +530,7 @@ namespace PRG2_T08_Team2
 
             }
         }
-        static void DisplayAllBeds(List <Bed> bList)
+        static void DisplayAllBeds(List<Bed> bList)
         {
             Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10} ", "No", "Type", "Ward No", "Bed No", "Daily Rate", "Available");
             int counter = 1;//for the no of beds
@@ -537,7 +538,7 @@ namespace PRG2_T08_Team2
             {
                 if (b is ClassABed) //To display according to type
                 {
-                    
+
                     ClassABed abed = (ClassABed)b; //Downcasting
                     Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "A", abed.WardNo, abed.BedNo, abed.DailyRate, abed.Available);
                 }
@@ -546,19 +547,19 @@ namespace PRG2_T08_Team2
                 {
                     ClassBBed bbed = (ClassBBed)b; //Downcasting
                     Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "B", bbed.WardNo, bbed.BedNo, bbed.DailyRate, bbed.Available);
-                   
+
                 }
 
                 else if (b is ClassCBed)
                 {
                     ClassCBed cbed = (ClassCBed)b; //Downcasting
-                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "C" , cbed.WardNo, cbed.BedNo, cbed.DailyRate, cbed.Available);
+                    Console.WriteLine("{0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", counter, "C", cbed.WardNo, cbed.BedNo, cbed.DailyRate, cbed.Available);
                 }
                 counter++;
 
             }
         }
-        
+
         //For Option 4
         static void AddBed(List<Bed> bList)
         {
@@ -577,7 +578,7 @@ namespace PRG2_T08_Team2
             string bedfalse = "No";
             Console.WriteLine();
             Console.WriteLine("Bed added successfully");
-            
+
             if (wardtype == "A" && available == "Y") //Find out the class and availability
             {
                 ClassABed newabedtrue = new ClassABed(wardno, bedno, drate, true);
@@ -587,7 +588,7 @@ namespace PRG2_T08_Team2
                     string bed = "\n" + wardtype + ',' + wardno + ',' + bedno + ',' + bedtrue + ',' + drate;
                     file.Write(bed);
                 }
-                
+
             }
 
             else if (wardtype == "A" && available == "N") //if availability is no
@@ -664,7 +665,7 @@ namespace PRG2_T08_Team2
             Console.Write("Enter patient ID number: ");
             string patientid = Console.ReadLine();
             //Retrieve the patient
-            foreach(Patient p in patientlist)
+            foreach (Patient p in patientlist)
             {
                 if (p.Id == patientid)
                 {
@@ -679,17 +680,17 @@ namespace PRG2_T08_Team2
                     StayList.Add(s);
                     s.AddMedicalRecords(newrecord);
                     break;
-                    
+
 
 
                 }
-               
+
 
 
 
 
             }
-           
+
 
 
         }
@@ -731,19 +732,41 @@ namespace PRG2_T08_Team2
 
                             }
                         }
-                     
-                        
+
+
                     }
 
-                break;
+                    break;
                 }
-               
+
             }
-           
-            
-          
+
+
+
 
         }
+        //static void DischargePayment(List<Patient> patientlist)
+        //{
+        //    //Initalise patient
+        //    Patient payment = null;
+        //    foreach(Patient p in patientlist)
+        //    {
+        //        if (p.Status == "Admitted")
+        //        {
+        //            DisplayPatients(patientlist);
+        //        }
+        //    }
+        //    string patientid = Console.ReadLine();
+        //    foreach(Patient p in patientlist)
+        //    {
+        //        if (p.Id ==  )
+        //    }
+            
+
+        //}
+
+
+
 
     }
 }

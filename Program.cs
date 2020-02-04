@@ -725,6 +725,7 @@ namespace PRG2_T08_Team2
                 else if (p.Id != patientid)
                 {
                     Console.WriteLine("Invalid Patient. Try again!");
+                    break;
                 }
 
                 else
@@ -826,7 +827,7 @@ namespace PRG2_T08_Team2
                       
                         Console.WriteLine("======Bed #{0}=======", counter);
                         Console.WriteLine("Ward Number: {0}", bes.Bed.WardNo);
-                        Console.WriteLine("Start of bed stay: ", bes.StartBedStay);
+                        Console.WriteLine("Start of bed stay: ", p.Stay.AdmittedDate);
                         Console.WriteLine("End of bed stay: {0}", bes.EndBedStay);
                        
                         
@@ -858,6 +859,9 @@ namespace PRG2_T08_Team2
                         counter++;
 
                     }
+                    Console.WriteLine("============");
+                    Console.WriteLine("Total Charges pending: {0}", )
+
                     
                     
                    
@@ -867,6 +871,10 @@ namespace PRG2_T08_Team2
             }
            
 
+
+        }
+        static void charges()
+        {
 
         }
 

@@ -677,6 +677,12 @@ namespace PRG2_T08_Team2
                     file.Write(bed);
                 }
             }
+
+            else
+            {
+                Console.WriteLine("Bed added unsccesffuly. Please try again");
+                
+            }
         }
 
 
@@ -708,7 +714,12 @@ namespace PRG2_T08_Team2
                     DateTime today = DateTime.Now;
                     MedicalRecord newrecord = new MedicalRecord(diagonsis, temperature, today);
                     p.Stay.AddMedicalRecords(newrecord);
+                    Console.WriteLine("Medical Record added successfully.");
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Medical Record added unsuccessfully.");
                 }
 
 
@@ -743,8 +754,8 @@ namespace PRG2_T08_Team2
 
             }
 
-            }
         }
+     }
 
         //static void DischargePayment(List<Patient> patientlist)
         //{

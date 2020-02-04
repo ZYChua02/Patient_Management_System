@@ -164,6 +164,8 @@ namespace PRG2_T08_Team2
                  * pData[4] : Citizenship
                  * pData[5] : CDA/Medisave Balance (if any)
                  */
+
+
                 int age = Convert.ToInt32(pData[2]);
                 string cs = pData[4];
                 string stat = "Registered";
@@ -240,7 +242,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -256,7 +258,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -289,8 +291,9 @@ namespace PRG2_T08_Team2
                 Console.Write("Select bed to stay: ");
                 int bedNo = Convert.ToInt32(Console.ReadLine());
                 Bed b = SearchBed(bedList, bedNo);
-               
-                if (b != null) { 
+                Console.WriteLine("Search Successful {0}", b.WardNo);
+                if (b != null)
+                {
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end
                     DateTime admDate = Convert.ToDateTime(Console.ReadLine()).Date;
@@ -376,7 +379,7 @@ namespace PRG2_T08_Team2
         {
             for (int i = 0; i < bedList.Count; i++)
             {
-                if (bedList[i+1].BedNo == j)
+                if (bedList[i + 1].BedNo == j)
                 {
                     return bedList[i+1];
                 }
@@ -456,11 +459,7 @@ namespace PRG2_T08_Team2
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
-                    Bed b =  bedList[newBNo-1];
-                    if (b == null)
-                    {
-                        Console.WriteLine("Hi");
-                    }
+                    Bed b = SearchBed(bedList, newBNo);
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
                     b.Available = false;
@@ -727,7 +726,7 @@ namespace PRG2_T08_Team2
         }
 
         //For option 8 
-        static void ViewMedicalRecords(Patient P, List<Patient> patientlist)
+        static void ViewMedicalRecords(List<Patient> patientlist, List<Stay> StayList)
         {
             //Get patient ID
             Console.Write("Enter patient ID number: ");
@@ -735,26 +734,6 @@ namespace PRG2_T08_Team2
             //Initalise Patient
             Patient viewmedrecord = null;
             int counter = 1;
-            foreach(Patient p in patientlist)
-            {
-
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             foreach (Patient p in patientlist)
             {
                 if (p.Id == patientid)

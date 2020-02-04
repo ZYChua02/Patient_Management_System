@@ -84,7 +84,7 @@ namespace PRG2_T08_Team2
                 else if (option == "7")
                 {
                     Console.WriteLine("Option 7 Add Medical record entry");
-                    DisplayPatients(patientList);
+                    DisplayAdmittedPatients(patientList);
                     AddMedicalRecord(patientList);
 
                 }
@@ -687,8 +687,6 @@ namespace PRG2_T08_Team2
         //For option 7
         static void AddMedicalRecord(List<Patient> patientlist)
         {
-            //Initalise Patient
-            Patient MedRecord = null;
             //prompt user to enter patient ID number
             Console.Write("Enter patient ID number: ");
             string patientid = Console.ReadLine();
@@ -697,7 +695,7 @@ namespace PRG2_T08_Team2
             {
                 if (p.Id == patientid)
                 {
-                    MedRecord = p;
+                    
                     Console.Write("Patient temperature: ");
                     double temperature = Convert.ToDouble(Console.ReadLine());
                     Console.Write("Please enter patient observation: ");
@@ -708,9 +706,15 @@ namespace PRG2_T08_Team2
                     Console.WriteLine("Medical Record added successfully.");
                     break;
                 }
-                else
+                else if (p.Id != patientid)
+                {
+                    Console.WriteLine("Invalid Patient. Try again!");
+                }
+
+                else 
                 {
                     Console.WriteLine("Medical Record added unsuccessfully.");
+                    break;
                 }
 
 
@@ -729,21 +733,44 @@ namespace PRG2_T08_Team2
             Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
             Console.WriteLine("Gender: {0}", p.Gender);
             Console.WriteLine("Status: {0}", p.Status);
-            Console.WriteLine("=====Stay=====");
-            Console.WriteLine("Admission date: {0}", p.Stay.AdmittedDate);
-            foreach (MedicalRecord m in p.Stay.MedicalRecordList)
+            if (p.Stay == null)
             {
-                Console.WriteLine("======Record #{0} =======", counter);
-                Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
-                Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
-                Console.WriteLine("Diganosis: {0}", m.Diagnosis);
-                Console.WriteLine();
-                counter = counter + 1;
-
+                Console.WriteLine("This patient is not admitted. Please try again");
             }
+            else
+            {
+                Console.WriteLine("=====Stay=====");
+                Console.WriteLine("Admission date: {0}", p.Stay.AdmittedDate);
+                foreach (MedicalRecord m in p.Stay.MedicalRecordList)
+                {
+                    Console.WriteLine("======Record #{0} =======", counter);
+                    Console.WriteLine("Date/Time: {0}", m.DatetimeEntered);
+                    Console.WriteLine("Temperature: {0} deg. cel.", m.Temperature);
+                    Console.WriteLine("Diganosis: {0}", m.Diagnosis);
+                    Console.WriteLine();
+                    counter = counter + 1;
+
+                }
+            }
+           
+            
 
         }
-     }
+        static void DisplayAdmittedPatients(List<Patient> patientList)
+        {
+            Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                        "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
+            foreach (Patient pa in patientList)
+            {
+                if (pa.Status == "Admitted")
+                {
+                    Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
+                   pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
+                }
+               
+            }
+        }
+    }
 
         //static void DischargePayment(List<Patient> patientlist)
         //{

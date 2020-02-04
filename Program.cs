@@ -1006,10 +1006,50 @@ namespace PRG2_T08_Team2
 
 
         }
-        
+        static void DisplayPMinfo()
+        {
+            using (HttpClient client = new HttpClient())
+            {
 
-    } 
-}
+                client.BaseAddress = new Uri("https://api.data.gov.sg");
+
+            // HTTP GET
+            Task<HttpResponseMessage> responseTask
+                = client.GetAsync("/v1/environment/pm25");
+            responseTask.Wait();
+
+            // Response
+            HttpResponseMessage result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                Task<string> readTask = result.Content.ReadAsStringAsync();
+                readTask.Wait();
+
+                string data = readTask.Result;
+                RootObject obj = JsonConvert.DeserializeObject<RootObject>(data);
+
+                // header
+                Console.WriteLine("Region\t");
+                foreach (var item in obj.items)
+                {
+                    for (int i = 0; i < item.RegionMetaData.Count; i++)
+                    {
+                        string region = item.RegionMetaData[i].Carpark_number;
+                        int availLots =
+                            Convert.ToInt32(item.Carpark_data[i].Carpark_info[0].Lots_available);
+                        Console.WriteLine($"{carparkNumber}\t{availLots}");
+
+                    }
+
+
+
+                }
+
+
+                }
+
+            
+            }
 
 
 

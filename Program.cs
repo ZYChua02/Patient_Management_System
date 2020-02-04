@@ -537,6 +537,34 @@ namespace PRG2_T08_Team2
                 s.AddBedStay(transferBed);
                 Console.WriteLine(p.Name + " will be transferred to Ward " + b.WardNo +
                     " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
+                if (b is ClassABed)
+                {
+                    Console.Write("Any accompanying guest? (Additional $100 per day) [Y/N]: ");
+                    string accGuest = Console.ReadLine().ToUpper();
+                    //ClassABed cab = (ClassABed)b;
+                    ClassABed clab = new ClassABed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                    clab.AccompanyingPerson = CheckOption(accGuest);
+                    transferBed = new BedStay(transferDate, clab);
+                }
+                else if (b is ClassBBed)
+                {
+                    Console.Write("Do you want to upgrade to an Air-Conditioned variant? (Additional $50 per week) [Y/N]: ");
+                    string ac = Console.ReadLine().ToUpper();
+                    //ClassBBed cbb = (ClassBBed)b;
+                    ClassBBed clbb = new ClassBBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                    clbb.AirCon = CheckOption(ac);
+                    transferBed = new BedStay(transferDate, clbb);
+                }
+                else if (b is ClassCBed)
+                {
+                    Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
+                    string pTV = Console.ReadLine().ToUpper();
+                    //ClassCBed ccb = (ClassCBed)b;
+                    ClassCBed clcb = new ClassCBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
+                    clcb.PortableTv = CheckOption(pTV);
+                    transferBed = new BedStay(transferDate, clcb);
+                }
+                s.AddBedStay(transferBed);
             }
             else
             {
@@ -546,38 +574,36 @@ namespace PRG2_T08_Team2
         }
         static void DisplayCurrencyExchange()
         {
-            List<Record> recordList;
-            using (HttpClient client = new HttpClient())
+            //https://api.exchangeratesapi.io/latest?base=SGD
+
+            Rates currency;
+            Console.WriteLine("Option 11. Display currencies exchange rate");
+            string response = "/latest?base=SGD";
+            try
             {
-                client.BaseAddress = new Uri("https://eservices.mas.gov.sg");
-
-                //HTTP GET: Goes to specified URI
-                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6&limit=10&sort=end_of_month desc");
-
-                Console.WriteLine("Hi");
-                //wait for task to complete execution
-                responseTask.Wait();
-
-                //get JSON data and store in HTTPResponseMessage Type. 
-                HttpResponseMessage result = responseTask.Result;
-
-                //Boolean to check that response was successful (true) OR
-                //unsuccessful (false)
-                if (result.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    //Serialise to string
-                    Task<string> readTask = result.Content.ReadAsStringAsync();
-                    readTask.Wait();
-
-                    string data = readTask.Result;
-                    
-                    recordList = JsonConvert.DeserializeObject<List<Record>>(data);
-                    Console.WriteLine("{0, -10} {1, -15:.000}", "Currency Exchange", "Rate (to 3 d.p.)");
-                    for (int i = 0; i < recordList.Count; i++)
+                    client.BaseAddress = new Uri("https://api.exchangeratesapi.io");
+                    Task<HttpResponseMessage> responseTask = client.GetAsync(response);
+                    responseTask.Wait();
+                    HttpResponseMessage result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
                     {
-                        Console.WriteLine(recordList[i]);
+                        Task<string> readTask = result.Content.ReadAsStringAsync();
+                        readTask.Wait();
+                        string data = readTask.Result;
+                        currency = JsonConvert.DeserializeObject<Rates>(data);
+                        Console.WriteLine("1 SGD can be exchanged for: ");
+                        foreach (var property in currency.rates.GetType().GetProperties())
+                        {
+                            Console.WriteLine(property.Name + ": " + Convert.ToDouble(property.GetValue(currency.rates)).ToString("#,##0.00"));
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Unable to get currency information. Did you not connnect to the Internet?");
             }
         }
         // Zhe Yu's Methods //

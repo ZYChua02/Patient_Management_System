@@ -23,6 +23,10 @@ namespace PRG2_T08_Team2
            return CalculateCharges() - CdaBalance;
         }
 
+        //public new double CalculateCharges()
+        //{
+        //    return CalculateCharges() - CdaBalance;
+        //}
         public override string ToString()
         {
             return base.ToString() + "\tCda Balance:" + CdaBalance;

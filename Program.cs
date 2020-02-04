@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
 
@@ -714,7 +715,7 @@ namespace PRG2_T08_Team2
         {
             //inputs
             Console.Write("Enter Ward Type[A/B/C]: ");
-            string wardtype = Console.ReadLine();
+            string wardtype = Console.ReadLine().ToUpper();
             Console.Write("Enter Ward No: ");
             int wardno = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Bed No: ");
@@ -722,7 +723,7 @@ namespace PRG2_T08_Team2
             Console.Write("Enter Daily Rate:$ ");
             double drate = Convert.ToDouble(Console.ReadLine());
             Console.Write("Enter Available[Y/N]: ");
-            string available = Console.ReadLine();
+            string available = Console.ReadLine().ToUpper();
             string bedtrue = "Yes";
             string bedfalse = "No";
             Console.WriteLine();
@@ -900,7 +901,7 @@ namespace PRG2_T08_Team2
             string patientid = Console.ReadLine();
             Console.Write("Date of discharge (DD/MM/YYYY): ");
             DateTime disdate = Convert.ToDateTime(Console.ReadLine()).Date;
-
+            
             foreach (Patient p in patientlist)
             {
                 if (p.Id == patientid)
@@ -928,18 +929,30 @@ namespace PRG2_T08_Team2
 
                     foreach (BedStay bes in p.Stay.BedStayList)
                     {
-
+                        int result = DateTime.Compare(bes.EndBedStay, disdate);
                         Console.WriteLine("======Bed #{0}=======", counter);
                         Console.WriteLine("Ward Number: {0}", bes.Bed.WardNo);
                         Console.WriteLine("Start of bed stay: {0}", bes.StartBedStay);
-                        Console.WriteLine("End of bed stay: {0}", bes.EndBedStay);
-                        int staydays = (Convert.ToDateTime(bes.EndBedStay) - Convert.ToDateTime(bes.StartBedStay)).Days;
-                        //int staydays = ((TimeSpan)(bes.EndBedStay - bes.StartBedStay)).Days;
-                        if (bes.EndBedStay == null)
+                        BedStay last = p.Stay.BedStayList[p.Stay.BedStayList.Count - 1];
+                        if (result<0)
                         {
-                            bes.EndBedStay = disdate;
+                            last.EndBedStay = disdate;
+                            Console.WriteLine("End of bed stay: {0}", last.EndBedStay);
                         }
-                        else if (bes.Bed is ClassABed)
+                        else
+                        {
+                            Console.WriteLine("End of bed stay : {0}", bes.EndBedStay);
+                        }
+                       
+                       
+                        
+                       
+                        
+                       
+                        
+                        double staydays = (bes.EndBedStay.Date - bes.StartBedStay.Date).TotalDays;
+                        
+                        if (bes.Bed is ClassABed)
                         {
                             ClassABed abed = (ClassABed)bes.Bed;
                             Console.WriteLine("Ward Class: A");
@@ -993,8 +1006,9 @@ namespace PRG2_T08_Team2
 
 
                     Console.WriteLine("============");
-                    total = p.CalculateCharges() + total;
-                    Console.WriteLine("Total Charges pending: {0}", total);
+                    double charges = p.CalculateCharges();
+
+                    //Console.WriteLine("Total Charges pending: {0}", total);
 
 
 

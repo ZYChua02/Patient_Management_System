@@ -300,8 +300,8 @@ namespace PRG2_T08_Team2
                 Console.Write("Select bed to stay: ");
                 int index = Convert.ToInt32(Console.ReadLine());
                 //Bed b = SearchBed(bedList, bedNo);
-                if (bedList.Count<=index)
-                {
+                if (index <=bedList.Count)
+                {                                                                                                                                                                                                                                                   
                     Bed b = bedList[index - 1];
                     Console.Write("Enter date of admission [DD/MM/YYYY]: ");
                     //Issue with Time at the end

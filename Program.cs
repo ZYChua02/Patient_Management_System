@@ -376,9 +376,9 @@ namespace PRG2_T08_Team2
         {
             for (int i = 0; i < bedList.Count; i++)
             {
-                if (bedList[i+1].BedNo == j)
+                if (bedList[i].BedNo == j)
                 {
-                    return bedList[i+1];
+                    return bedList[i];
                 }
             }
             return null;

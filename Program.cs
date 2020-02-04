@@ -6,7 +6,7 @@
 
 /*====================== T O D O ============================
 Ryan   : Option 5 & 6 Problems: Admission Date has Time,  Bed Number Wrong
-
+        2.6 Time EndBedStay has issues.
 Zhe Yu : Option 2 and 4
 
 Both   :
@@ -395,8 +395,10 @@ namespace PRG2_T08_Team2
                     "Gender: " + p.Gender + "\n" + "Status: " + p.Status + "\n\n");
                 if(p.Status == "Admitted")
                 {
-                    Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate + "\n" +
+                    Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate.ToString("dd/MM/yyyy") + "\n" +
                     "Discharge Date: " + p.Stay.DischargeDate + "\n");
+                    //ToString() Discharge Date?
+
                     if (p.Stay.IsPaid == true)
                     {
                         Console.WriteLine("Payment Status: Paid");
@@ -426,7 +428,7 @@ namespace PRG2_T08_Team2
                         {
                             Console.WriteLine("Ward Class: C");
                         }
-                        Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay);
+                        Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay.ToString("dd/MM/yyyy"));
                         Console.WriteLine("End of Bed Stay: " + p.Stay.BedStayList[i].EndBedStay);
                     }
                 }
@@ -442,15 +444,26 @@ namespace PRG2_T08_Team2
                         "Name", "IC No. ", "Age", "Gender", "Citizenship", "Status");
                     Console.WriteLine("{0, -10} {1, -15} {2, -10} {3, -10} {4, -12} {5, -15}",
                     pa.Name, pa.Id, pa.Age, pa.Gender, pa.CitizenStatus, pa.Status);
-                    Stay s = pa.Stay;
                     Console.Write("Enter Patient ID Number: ");
+
+                    //Need to make use of this?
                     string pNo = Console.ReadLine();
-                   
+                    Stay s = pa.Stay;
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
                     Bed b = SearchBed(bedList, newBNo);
-
+                    Console.Write("Date of transfer [DD/MM/YYYY]: ");
+                    DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
+                    b.Available = false;
+                    for (int i = 0; i < pa.Stay.BedStayList.Count; i++)
+                    {
+                        pa.Stay.BedStayList[i].EndBedStay = transferDate;
+                    }
+                    BedStay transferBed = new BedStay(transferDate, b);
+                    s.AddBedStay(transferBed);
+                    Console.WriteLine(pa.Name + " will be transferred to Ward " + b.WardNo + 
+                        " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
                 }
             }
         }

@@ -21,7 +21,6 @@ namespace PRG2_T08_Team2
         public BedStay(DateTime start, Bed b)
         {
             StartBedStay = start;
-            
             Bed = b;
         }
 

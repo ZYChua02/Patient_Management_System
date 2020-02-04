@@ -30,8 +30,9 @@ namespace PRG2_T08_Team2
             CitizenStatus = cs;
             Status = stat;
         }
+        //Ryan's initial idea
         //public abstract double CalculateCharges();
-        
+        //Zhe Yu needs this to calculate charges
         public virtual double CalculateCharges()
         {
             double total = 0;

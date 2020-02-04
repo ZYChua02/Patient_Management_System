@@ -104,7 +104,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "11")
                 {
-                    DisplayCurrencyExchange();
+                    //DisplayCurrencyExchange();
                 }
                 else if (option == "12")
                 {
@@ -164,8 +164,6 @@ namespace PRG2_T08_Team2
                  * pData[4] : Citizenship
                  * pData[5] : CDA/Medisave Balance (if any)
                  */
-
-                
                 int age = Convert.ToInt32(pData[2]);
                 string cs = pData[4];
                 string stat = "Registered";

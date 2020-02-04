@@ -442,7 +442,7 @@ namespace PRG2_T08_Team2
             Console.Write("Enter Patient ID Number: ");
             string pNo = Console.ReadLine();
             Patient p = SearchPatient(patientList, pNo);
-            if (p != null || p.Status == "Admitted")
+            if (p != null)
             {
                 Console.WriteLine("Name of Patient: " + p.Name + "\n" +
                     "ID Number: " + p.Id + "\n" + "Citizenship Status: " + p.CitizenStatus + "\n" +

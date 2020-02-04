@@ -333,7 +333,7 @@ namespace PRG2_T08_Team2
                     else if (b is ClassCBed)
                     {
                         Console.Write("Do you want to rent a portable TV? (One-Time Cost of $30) [Y/N]: ");
-                        string pTV = Console.ReadLine();
+                        string pTV = Console.ReadLine().ToUpper();
                         //ClassCBed ccb = (ClassCBed)b;
                         ClassCBed clcb = new ClassCBed(b.WardNo, b.BedNo, b.DailyRate, b.Available);
                         clcb.PortableTv = CheckOption(pTV);
@@ -433,13 +433,27 @@ namespace PRG2_T08_Team2
                         {
                             Console.WriteLine("Ward Class: C");
                         }
-                        Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay.ToString("dd/MM/yyyy"));
-                        Console.WriteLine("End of Bed Stay: " + p.Stay.BedStayList[i].EndBedStay);
+                        string startDate = DateToString(p.Stay.BedStayList[i].StartBedStay);
+                        Console.WriteLine("Start of Bed Stay: " + startDate);
+                        string endDate = DateToString(p.Stay.BedStayList[i].EndBedStay);
+                        Console.WriteLine("End of Bed Stay: " + endDate);
                         //ToString() EndBedStay?
                     }
                 }
             }
         }
+        static string DateToString(DateTime? date)
+        {
+            if (date != null)
+            {
+                return date.Value.ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         static void TransferPatientToAnotherBed(List<Patient> patientList, List<Bed> bedList)
         {
             foreach (Patient pa in patientList)
@@ -462,6 +476,7 @@ namespace PRG2_T08_Team2
                     Bed b = bedList[newBNo - 1];
                     Console.Write("Date of transfer [DD/MM/YYYY]: ");
                     DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
+                    
                     b.Available = false;
                     for (int i = 0; i < pa.Stay.BedStayList.Count; i++)
                     {

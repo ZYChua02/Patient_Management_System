@@ -523,7 +523,13 @@ namespace PRG2_T08_Team2
             {
                 return;
             }
-            
+            for (int i = 0; i < p.Stay.BedStayList.Count; i++)
+            {
+                if(p.Stay.BedStayList[i].EndBedStay == null)
+                {
+                    p.Stay.BedStayList[i].Bed.Available = true;
+                }
+            }
             Stay s = p.Stay;
             
             DisplayAllBeds(bedList);

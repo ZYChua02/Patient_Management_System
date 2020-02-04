@@ -16,6 +16,10 @@ Both   :
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
+
 
 namespace PRG2_T08_Team2
 {
@@ -376,7 +380,7 @@ namespace PRG2_T08_Team2
             {
                 if (bedList[i+1].BedNo == j)
                 {
-                    return bedList[i+1];
+                    return bedList[i];
                 }
             }
             return null;
@@ -397,7 +401,7 @@ namespace PRG2_T08_Team2
                 {
                     Console.WriteLine("Admission Date: " + p.Stay.AdmittedDate.ToString("dd/MM/yyyy") + "\n" +
                     "Discharge Date: " + p.Stay.DischargeDate + "\n");
-                    //ToString() Discharge Date?
+                    
 
                     if (p.Stay.IsPaid == true)
                     {
@@ -430,6 +434,7 @@ namespace PRG2_T08_Team2
                         }
                         Console.WriteLine("Start of Bed Stay: " + p.Stay.BedStayList[i].StartBedStay.ToString("dd/MM/yyyy"));
                         Console.WriteLine("End of Bed Stay: " + p.Stay.BedStayList[i].EndBedStay);
+                        //ToString() EndBedStay?
                     }
                 }
             }
@@ -448,7 +453,8 @@ namespace PRG2_T08_Team2
 
                     //Need to make use of this?
                     string pNo = Console.ReadLine();
-                    Stay s = pa.Stay;
+                    Patient p = SearchPatient(patientList, pNo);
+                    Stay s = p.Stay;
                     DisplayAllBeds(bedList);
                     Console.Write("Select Bed to transfer to: ");
                     int newBNo = Convert.ToInt32(Console.ReadLine());
@@ -467,7 +473,31 @@ namespace PRG2_T08_Team2
                 }
             }
         }
+        static void DisplayCurrencyExchange()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://ictonejourney.com");
 
+                //HTTP GET: Goes to specified URI
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/books");
+
+                //wait for task to complete execution
+                responseTask.Wait();
+
+                //get JSON data and store in HTTPResponseMessage Type. 
+                HttpResponseMessage result = responseTask.Result;
+
+                //Boolean to check that response was successful (true) OR
+                //unsuccessful (false)
+                if (result.IsSuccessStatusCode)
+                {
+                    //Serialise to string
+                    Task<string> readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+                }
+            }
+        }
         // Zhe Yu's Methods //
 
         //For option 2

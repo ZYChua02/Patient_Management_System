@@ -21,6 +21,14 @@ namespace PRG2_T08_Team2
 
         public override double CalculateCharges(string citizenStatus, int noOfDays)
         {
+            if (citizenStatus == "SC")
+            {
+                DailyRate = DailyRate * 0.3;
+            }
+            else if (citizenStatus == "PR")
+            {
+                DailyRate = DailyRate * 0.6;
+            }
             return DailyRate * noOfDays;
         }
 

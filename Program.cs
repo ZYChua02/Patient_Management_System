@@ -552,9 +552,8 @@ namespace PRG2_T08_Team2
                 client.BaseAddress = new Uri("https://eservices.mas.gov.sg");
 
                 //HTTP GET: Goes to specified URI
-                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6&limit=10&sort=end_of_month desc");
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6&limit=10&sort=end_of_monthdesc");
 
-                Console.WriteLine("Hi");
                 //wait for task to complete execution
                 responseTask.Wait();
 

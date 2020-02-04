@@ -102,6 +102,10 @@ namespace PRG2_T08_Team2
                         {
                             ViewMedicalRecords(p);
                         }
+                        else
+                        {
+                            Console.WriteLine("Invalid patient. Please try again.");
+                        }
                     }
                 }
                 else if (option == "9")
@@ -715,7 +719,7 @@ namespace PRG2_T08_Team2
         {
             //inputs
             Console.Write("Enter Ward Type[A/B/C]: ");
-            string wardtype = Console.ReadLine().ToUpper();
+            string wardtype = Console.ReadLine().ToUpper(); //Validation
             Console.Write("Enter Ward No: ");
             int wardno = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Bed No: ");
@@ -723,7 +727,7 @@ namespace PRG2_T08_Team2
             Console.Write("Enter Daily Rate:$ ");
             double drate = Convert.ToDouble(Console.ReadLine());
             Console.Write("Enter Available[Y/N]: ");
-            string available = Console.ReadLine().ToUpper();
+            string available = Console.ReadLine().ToUpper(); //Validation
             string bedtrue = "Yes";
             string bedfalse = "No";
             Console.WriteLine();
@@ -849,12 +853,14 @@ namespace PRG2_T08_Team2
         //For option 8 
         static void ViewMedicalRecords(Patient p)
         {
+            //Display patient details using input
             int counter = 1;
             Console.WriteLine("Name of patient: {0}", p.Name);
             Console.WriteLine("ID number: {0}", p.Id);
             Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
             Console.WriteLine("Gender: {0}", p.Gender);
             Console.WriteLine("Status: {0}", p.Status);
+            //Check if patient is admitted
             if (p.Stay == null)
             {
                 Console.WriteLine("This patient is not admitted. Please try again");
@@ -893,19 +899,27 @@ namespace PRG2_T08_Team2
 
             }
         }
+        //For option 10
         static void DischargePayment(List<Patient> patientlist, List<Bed> bList)
         {
-            double total = 0;
+            //Extra charges
+            double charges = 0;
+            //For number of Bed records
             int counter = 1;
             Console.Write("Enter patient ID number to discharge: ");
+            //Input patient to discharge
             string patientid = Console.ReadLine();
+            //Input Date of discharge
             Console.Write("Date of discharge (DD/MM/YYYY): ");
             DateTime disdate = Convert.ToDateTime(Console.ReadLine()).Date;
+            
             
             foreach (Patient p in patientlist)
             {
                 if (p.Id == patientid)
                 {
+                    //Update status to discharged
+                    p.Status = "Discharged";
                     Console.WriteLine("Name of patient: {0}", p.Name);
                     Console.WriteLine("ID number: {0}", p.Id);
                     Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
@@ -914,11 +928,11 @@ namespace PRG2_T08_Team2
                     Console.WriteLine();
                     Console.WriteLine("=====Stay=====");
                     Console.WriteLine("Admission date: {0}", p.Stay.AdmittedDate);
-                    p.Stay.DischargeDate = disdate;
+                    p.Stay.DischargeDate = disdate; //Updating patient discharge date
                     Console.WriteLine("Discharge date: {0}", p.Stay.DischargeDate);
-                    if (p.Stay.IsPaid == true)
+                    if (p.Stay.IsPaid == true) //Payment status
                     {
-                        Console.WriteLine("Payment status: Unpaid");
+                        Console.WriteLine("Payment status: Paid");
                     }
 
                     else if (p.Stay.IsPaid == false)
@@ -929,40 +943,35 @@ namespace PRG2_T08_Team2
 
                     foreach (BedStay bes in p.Stay.BedStayList)
                     {
-                        int result = DateTime.Compare(bes.EndBedStay, disdate);
+                        //Bed records
                         Console.WriteLine("======Bed #{0}=======", counter);
                         Console.WriteLine("Ward Number: {0}", bes.Bed.WardNo);
                         Console.WriteLine("Start of bed stay: {0}", bes.StartBedStay);
                         BedStay last = p.Stay.BedStayList[p.Stay.BedStayList.Count - 1];
-                        if (result<0)
+                        int result = DateTime.Compare(last.EndBedStay, disdate);
+                        if (result == -1)
                         {
                             last.EndBedStay = disdate;
-                            Console.WriteLine("End of bed stay: {0}", last.EndBedStay);
+                            Console.WriteLine("End of bed stay: {0}", bes.EndBedStay); //ensure that the last object has a proper endbedstay object
                         }
                         else
                         {
                             Console.WriteLine("End of bed stay : {0}", bes.EndBedStay);
                         }
-                       
-                       
                         
-                       
-                        
-                       
-                        
+                        //Calculating number of days
                         double staydays = (bes.EndBedStay.Date - bes.StartBedStay.Date).TotalDays;
                         
-                        if (bes.Bed is ClassABed)
+                        if (bes.Bed is ClassABed) //Checking what type of bed is  it
                         {
                             ClassABed abed = (ClassABed)bes.Bed;
                             Console.WriteLine("Ward Class: A");
                             Console.WriteLine("Accompanying Person: {0} ", abed.AccompanyingPerson);
-                            if (abed.AccompanyingPerson == true)
+                            if (abed.AccompanyingPerson == true) //If have accompanying person it is 100 more
                             {
-                                total = total + 100;
+                                charges = charges + 100;
                             }
-                            double classarate = bes.Bed.DailyRate;
-                            total = classarate * staydays;
+                         
                         }
 
                         else if (bes.Bed is ClassBBed)
@@ -970,16 +979,15 @@ namespace PRG2_T08_Team2
                             ClassBBed bbed = (ClassBBed)bes.Bed;
                             Console.WriteLine("Ward Class: B");
                             Console.WriteLine("Air con: {0}", bbed.AirCon);
-                            if (bbed.AirCon == true && staydays >= 8)
+                            if (bbed.AirCon == true && staydays >= 8) //If have aircon and stay is longer than 8 days
                             {
-                                total = total + 100;
+                                charges = charges + 100;
                             }
-                            else if (bbed.AirCon == true)
+                            else if (bbed.AirCon == true) //If only have aircon
                             {
-                                total = total + 50;
+                                charges = charges + 50;
                             }
-                            double classbrate = bes.Bed.DailyRate;
-                            total = classbrate * staydays;
+                            
                         }
 
                         else if (bes.Bed is ClassCBed)
@@ -987,28 +995,79 @@ namespace PRG2_T08_Team2
                             ClassCBed cbed = (ClassCBed)bes.Bed;
                             Console.WriteLine("Ward Class: C");
                             Console.WriteLine("Portable TV {0}", cbed.PortableTv);
-                            if (cbed.PortableTv == true)
+                            if (cbed.PortableTv == true) //If have portable tv
                             {
-                                total = total + 30;
+                                charges = charges + 30;
                             }
-                            double classcrate = bes.Bed.DailyRate;
-                            total = classcrate * staydays;
+                           
 
                         }
                         Console.WriteLine();
                         Console.WriteLine("Number of days stayed: {0}", staydays);
-                        bes.Bed.Available = true;
-                        counter++;
+                        
+                        counter = counter + 1;//Increasing the number of records
 
 
 
                     }
-
-
                     Console.WriteLine("============");
-                    double charges = p.CalculateCharges();
+                    double patientcharge = charges + p.CalculateCharges();
+                    
+                    if (p is Child && p.CitizenStatus == "SC") //if is it child and Singaporean citizen
+                    {
+                        Child c = (Child)p; //Downcast
+                        Console.WriteLine("Total Charges pending: ${0}", patientcharge);
+                        Console.WriteLine("CDA balance: ${0}", c.CdaBalance);
+                        Console.WriteLine("To deduct from CDA: ${0}", c.CdaBalance);
+                        Console.WriteLine("[Press any key to proceed with payment]");
+                        Console.ReadKey();
+                        Console.WriteLine("Commencing payment...");
+                        Console.WriteLine();
+                        Console.WriteLine("${0} has been deducted from CDA balance.", c.CdaBalance);
+                        double childcharge = charges + c.CalculateCharges();
+                        Console.WriteLine("New CDA balance : $0");
+                        Console.WriteLine("Subtotal: ${0} has been paid by cash", childcharge);
+                        Console.WriteLine();
+                        p.Stay.IsPaid = true;
+                        p.Status = "Registered";
+                        Console.WriteLine("Payment successful");
+                        
+                    }
+                    else if (p is Adult && (p.CitizenStatus == "SC" || p.CitizenStatus == "PR")) //if it is adult and a citzen/PR
+                    {
+                        Adult a = (Adult)p; //Downcast
+                        Console.WriteLine("Total Charges pending: ${0}", patientcharge + a.MedisaveBalance);
+                        Console.WriteLine("Medisave Balance: {0}", a.MedisaveBalance);
+                        Console.WriteLine("To deduct from Medisave: {0}", a.MedisaveBalance);
+                        Console.WriteLine("[Press any key to proceed with payment]");
+                        Console.ReadKey();
+                        Console.WriteLine("Commencing payment...");
+                        Console.WriteLine();
+                        Console.WriteLine("${0} has been deducted from Medisave balance", a.MedisaveBalance);
+                        double adultcharge = charges + a.CalculateCharges();
+                        Console.WriteLine("New Medisave Balance: $0");
+                        Console.WriteLine("Subtotal: ${0} has been paid by cash", adultcharge);
+                        Console.WriteLine();
+                        p.Stay.IsPaid = true;
+                        p.Status = "Registered";
+                        Console.WriteLine("Payment successful");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Total Charges pending: ${0}", patientcharge);
+                        Console.WriteLine("[Press any key to proceed with payment]");
+                        Console.ReadKey();
+                        Console.WriteLine("Commencing payment...");
+                        Console.WriteLine();
+                        Console.WriteLine("Subtotal: ${0} has been paid by cash", patientcharge);
+                        Console.WriteLine();
+                        p.Stay.IsPaid = true;
+                        p.Status = "Registered";
+                        Console.WriteLine("Payment successful");
+                    }
 
-                    //Console.WriteLine("Total Charges pending: {0}", total);
+                   
+                   
 
 
 

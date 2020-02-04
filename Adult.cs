@@ -18,9 +18,9 @@ namespace PRG2_T08_Team2
         {
             MedisaveBalance = mb;
         }
-        public override double CalculateCharges()
+        public new double CalculateCharges()
         {
-            return CalculateCharges() - MedisaveBalance;
+            return base.CalculateCharges() - MedisaveBalance;
         }
 
         public override string ToString()

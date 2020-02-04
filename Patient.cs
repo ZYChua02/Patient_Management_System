@@ -30,8 +30,35 @@ namespace PRG2_T08_Team2
             CitizenStatus = cs;
             Status = stat;
         }
-        public abstract double CalculateCharges();
+        //public abstract double CalculateCharges();
         
+        public virtual double CalculateCharges()
+        {
+            double total = 0;
+            foreach(BedStay bes in Stay.BedStayList)
+            {
+                double staydays = (bes.EndBedStay.Date - bes.StartBedStay.Date).TotalDays;
+                int noofdays = Convert.ToInt32(staydays);
+                if (bes.Bed is ClassABed)
+                {
+                    ClassABed abed = (ClassABed)bes.Bed;
+                    total = total + abed.CalculateCharges(CitizenStatus, noofdays);
+                }
+                else if (bes.Bed is ClassBBed)
+                {
+                    ClassBBed bbed = (ClassBBed)bes.Bed;
+                    total = total + bbed.CalculateCharges(CitizenStatus, noofdays);
+                }
+                else if (bes.Bed is ClassCBed)
+                {
+                    ClassCBed cbed = (ClassCBed)bes.Bed;
+                    total = total + cbed.CalculateCharges(CitizenStatus, noofdays); 
+                }
+
+               
+            }
+            return total;
+        }
         public override string ToString()
         {
             return "Id: " + Id + "\tName: " + Name +

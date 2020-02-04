@@ -17,10 +17,10 @@ namespace PRG2_T08_Team2
         {
 
         }
-        public override double CalculateCharges()
+        public new double CalculateCharges()
         {
-            //NOT DONE: Need to associate with bedStayList
-            return CalculateCharges() * .5;
+          
+            return base.CalculateCharges() * .5;
 
 
         }

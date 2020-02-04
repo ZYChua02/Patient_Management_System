@@ -114,7 +114,7 @@ namespace PRG2_T08_Team2
                 }
                 else if (option == "11")
                 {
-                    //DisplayCurrencyExchange();
+                    DisplayCurrencyExchange();
                 }
                 else if (option == "12")
                 {
@@ -239,7 +239,7 @@ namespace PRG2_T08_Team2
             string id = Console.ReadLine();
             if (!readID(id))
             {
-                Console.WriteLine("Error!");
+                Console.WriteLine("Incorrect input type!");
                 return;
             }
             Console.Write("Enter Age: ");
@@ -249,12 +249,14 @@ namespace PRG2_T08_Team2
             if (!int.TryParse(userinput, out age))
             {
                 // ERROR
+                Console.WriteLine("Incorrect Input type! Enter an integer!");
                 return;
             }
             Console.Write("Enter Gender [M/F]: ");
             string g = Console.ReadLine().Trim().ToUpper();
             
             if (g != "M" && g != "F") {
+                Console.WriteLine("Incorrect Input type! Enter a character either M or F!");
                 return;
             }
 
@@ -262,6 +264,7 @@ namespace PRG2_T08_Team2
             string cs = Console.ReadLine().ToUpper().Trim();
             if (cs != "SC" && cs != "PR" && cs != "FOREIGNER")
             {
+                Console.WriteLine("Incorrect Citizenship Type!");
                 return;
             }
             string stat = "Registered";
@@ -281,7 +284,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line =  n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -297,7 +300,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -308,7 +311,7 @@ namespace PRG2_T08_Team2
                 patientList.Add(p);
                 using (StreamWriter file = new StreamWriter(@"Patients.csv", true))
                 {
-                    string line = "\n" + id + ',' + n + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
+                    string line = n + ',' + id + ',' + age + ',' + g + ',' + cs + ',' + subsidy;
                     file.Write(line);
                 }
                 Console.WriteLine($"\n{n} was successfully registered!\n");
@@ -400,7 +403,6 @@ namespace PRG2_T08_Team2
             else
             {
                 Console.WriteLine("Patient not found!");
-                Console.WriteLine(p);
             }
         }
         static bool CheckOption(string opt)
@@ -461,11 +463,12 @@ namespace PRG2_T08_Team2
                     }
                     Console.WriteLine("======================\n");
                 }
+                //May have issue
                 for (int i = 0; i < p.Stay.BedStayList.Count; i++)
                 {
                     
                         Console.WriteLine("Ward No: " + p.Stay.BedStayList[i].Bed.WardNo);
-                        //ISSUE with this
+                        
                         Console.WriteLine("Bed No: " + p.Stay.BedStayList[i].Bed.BedNo);
                         if (p.Stay.BedStayList[i].Bed is ClassABed)
                         {
@@ -483,9 +486,11 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Start of Bed Stay: " + startDate);
                         string endDate = DateToString(p.Stay.BedStayList[i].EndBedStay);
                         Console.WriteLine("End of Bed Stay: " + endDate);
-                        //ToString() EndBedStay?
-                    
                 }
+            }
+            else
+            {
+                Console.WriteLine("Patient not found!");
             }
         }
         static string DateToString(DateTime? date)
@@ -507,14 +512,19 @@ namespace PRG2_T08_Team2
             Console.Write("Enter patient ID number: ");
             string pNo = Console.ReadLine();
             Patient p = SearchPatient(patientList, pNo);
+            if (p == null || p.Status != "Admitted")
+            {
+                return;
+            }
             Stay s = p.Stay;
             DisplayAllBeds(bedList);
             Console.Write("Select Bed to transfer to: ");
             int newBNo = Convert.ToInt32(Console.ReadLine());
+            //validation to keep int entered in check
             if (newBNo <= bedList.Count && newBNo > 0)
             {
                 Bed b = bedList[newBNo - 1];
-            
+
                 Console.Write("Date of transfer [DD/MM/YYYY]: ");
                 DateTime transferDate = Convert.ToDateTime(Console.ReadLine());
 
@@ -528,16 +538,23 @@ namespace PRG2_T08_Team2
                 Console.WriteLine(p.Name + " will be transferred to Ward " + b.WardNo +
                     " Bed " + b.BedNo + " on " + transferDate.ToString("dd/MM/yyyy") + ".\n");
             }
+            else
+            {
+                Console.WriteLine("No such bed found!");
+            }
+            
         }
         static void DisplayCurrencyExchange()
         {
+            List<Record> recordList;
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://ictonejourney.com");
+                client.BaseAddress = new Uri("https://eservices.mas.gov.sg");
 
                 //HTTP GET: Goes to specified URI
-                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/books");
+                Task<HttpResponseMessage> responseTask = client.GetAsync("/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6&limit=10&sort=end_of_month desc");
 
+                Console.WriteLine("Hi");
                 //wait for task to complete execution
                 responseTask.Wait();
 
@@ -551,6 +568,15 @@ namespace PRG2_T08_Team2
                     //Serialise to string
                     Task<string> readTask = result.Content.ReadAsStringAsync();
                     readTask.Wait();
+
+                    string data = readTask.Result;
+                    
+                    recordList = JsonConvert.DeserializeObject<List<Record>>(data);
+                    Console.WriteLine("{0, -10} {1, -15:.000}", "Currency Exchange", "Rate (to 3 d.p.)");
+                    for (int i = 0; i < recordList.Count; i++)
+                    {
+                        Console.WriteLine(recordList[i]);
+                    }
                 }
             }
         }
@@ -921,7 +947,7 @@ namespace PRG2_T08_Team2
 
                     }
                     Console.WriteLine("============");
-                    Console.WriteLine("Total Charges pending: {0}");
+                    Console.WriteLine("Total Charges pending: {0}", )
 
                     
                     

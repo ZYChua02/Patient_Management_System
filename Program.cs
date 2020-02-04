@@ -105,6 +105,7 @@ namespace PRG2_T08_Team2
                         else
                         {
                             Console.WriteLine("Invalid patient. Please try again.");
+                            break;
                         }
                     }
                 }
@@ -918,8 +919,8 @@ namespace PRG2_T08_Team2
             {
                 if (p.Id == patientid)
                 {
-                    //Update status to discharged
-                    p.Status = "Discharged";
+                   
+                    //p.Status = "Discharged";
                     Console.WriteLine("Name of patient: {0}", p.Name);
                     Console.WriteLine("ID number: {0}", p.Id);
                     Console.WriteLine("Citizenship status: {0}", p.CitizenStatus);
@@ -944,11 +945,13 @@ namespace PRG2_T08_Team2
                     foreach (BedStay bes in p.Stay.BedStayList)
                     {
                         //Bed records
+                       
                         Console.WriteLine("======Bed #{0}=======", counter);
                         Console.WriteLine("Ward Number: {0}", bes.Bed.WardNo);
                         Console.WriteLine("Start of bed stay: {0}", bes.StartBedStay);
                         BedStay last = p.Stay.BedStayList[p.Stay.BedStayList.Count - 1];
-                        int result = DateTime.Compare(last.EndBedStay, disdate);
+                        DateTime lastendstaydate = Convert.ToDateTime(last.EndBedStay);
+                        int result = DateTime.Compare(lastendstaydate, disdate);
                         if (result == -1)
                         {
                             last.EndBedStay = disdate;
@@ -958,9 +961,10 @@ namespace PRG2_T08_Team2
                         {
                             Console.WriteLine("End of bed stay : {0}", bes.EndBedStay);
                         }
-                        
+
                         //Calculating number of days
-                        double staydays = (bes.EndBedStay.Date - bes.StartBedStay.Date).TotalDays;
+                        DateTime endstaydate = Convert.ToDateTime(bes.EndBedStay);
+                        double staydays = (endstaydate - bes.StartBedStay.Date).TotalDays;
                         
                         if (bes.Bed is ClassABed) //Checking what type of bed is  it
                         {
@@ -994,7 +998,7 @@ namespace PRG2_T08_Team2
                         {
                             ClassCBed cbed = (ClassCBed)bes.Bed;
                             Console.WriteLine("Ward Class: C");
-                            Console.WriteLine("Portable TV {0}", cbed.PortableTv);
+                            Console.WriteLine("Portable TV: {0}", cbed.PortableTv);
                             if (cbed.PortableTv == true) //If have portable tv
                             {
                                 charges = charges + 30;
@@ -1029,7 +1033,7 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Subtotal: ${0} has been paid by cash", childcharge);
                         Console.WriteLine();
                         p.Stay.IsPaid = true;
-                        p.Status = "Registered";
+                        p.Status = "Discharged";
                         Console.WriteLine("Payment successful");
                         
                     }
@@ -1049,7 +1053,7 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Subtotal: ${0} has been paid by cash", adultcharge);
                         Console.WriteLine();
                         p.Stay.IsPaid = true;
-                        p.Status = "Registered";
+                        p.Status = "Discharged";
                         Console.WriteLine("Payment successful");
                     }
                     else
@@ -1062,7 +1066,7 @@ namespace PRG2_T08_Team2
                         Console.WriteLine("Subtotal: ${0} has been paid by cash", patientcharge);
                         Console.WriteLine();
                         p.Stay.IsPaid = true;
-                        p.Status = "Registered";
+                        p.Status = "Discharged";
                         Console.WriteLine("Payment successful");
                     }
 

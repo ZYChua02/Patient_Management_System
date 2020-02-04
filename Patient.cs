@@ -37,7 +37,9 @@ namespace PRG2_T08_Team2
             double total = 0;
             foreach(BedStay bes in Stay.BedStayList)
             {
-                double staydays = (bes.EndBedStay.Date - bes.StartBedStay.Date).TotalDays;
+                DateTime endstaydate = Convert.ToDateTime(bes.EndBedStay);
+                double staydays = (endstaydate - bes.StartBedStay.Date).TotalDays;
+                
                 int noofdays = Convert.ToInt32(staydays);
                 if (bes.Bed is ClassABed)
                 {

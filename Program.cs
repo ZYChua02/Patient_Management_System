@@ -288,6 +288,7 @@ namespace PRG2_T08_Team2
                 //Prompt for and read preferred bed
                 Console.Write("Select bed to stay: ");
                 int bedNo = Convert.ToInt32(Console.ReadLine());
+                
                 Bed b = SearchBed(bedList, bedNo);
                
                 if (b != null) { 
@@ -376,6 +377,7 @@ namespace PRG2_T08_Team2
         {
             for (int i = 0; i < bedList.Count; i++)
             {
+                Console.WriteLine(i);
                 if (bedList[i].BedNo == j)
                 {
                     return bedList[i];

@@ -574,9 +574,6 @@ namespace PRG2_T08_Team2
         }
         static void DisplayCurrencyExchange()
         {
-
-            //https://api.exchangeratesapi.io/latest?base=SGD
-
             Currency currency;
             Console.WriteLine("Option 11. Display currencies exchange rate");
             string response = "/latest?base=SGD";

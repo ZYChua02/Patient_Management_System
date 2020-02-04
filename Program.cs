@@ -591,9 +591,10 @@ namespace PRG2_T08_Team2
                         readTask.Wait();
                         string data = readTask.Result;
                         currency = JsonConvert.DeserializeObject<Currency>(data);
-                        Console.WriteLine("1 SGD can be exchanged for: ");
+                        Console.WriteLine("SGD 1 can be exchanged for the following: ");
                         foreach (var p in currency.rates.GetType().GetProperties())
                         {
+                            //format to max 2dp
                             Console.WriteLine(p.Name + ": " + Convert.ToDouble(p.GetValue(currency.rates)).ToString("#,##0.00"));
                         }
                     }

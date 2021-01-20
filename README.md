@@ -5,4 +5,4 @@ Assignment for Programming II (PRG2) module
 Ryan Ng
 
 #Student 2
-Chua Zhe YU
+Chua Zhe Yu
